@@ -1,0 +1,82 @@
+//speed meter
+
+setScale #DEFAULTSCALE
+setCursor 400, 300
+setScale #NOSCALE
+moveCursor 0, 50
+setColor 1, 1, 1, 1
+
+if 1 & %SHOW_SPEED
+	//horizontal bar
+	setAlign #CENTER, #MIDDLE
+	setSize 140, 2
+	drawPicByName gfx/ui/white
+	
+	//description
+	if 0 == 4 & %SHOW_SPEED
+		// old - "bitstream_7"
+		setFontFamily "Droid Sans"
+		setFontSize 7
+		setAlign #CENTER, #BOTTOM
+		drawString "speed"
+	endif
+
+	//vertical bar
+	moveCursor 16, 16
+	setAlign #CENTER, #MIDDLE
+	setSize 2, 30
+	drawPicByName gfx/ui/white
+	
+	//speed number
+	//black background
+	moveCursor -6, -1
+	setAlign #RIGHT, #MIDDLE
+	setFontFamily "Virtue"
+	setFontSize 22
+	setColor 0, 0, 0, 1
+	drawStringNum %SPEED
+	moveCursor 0, 4
+	drawStringNum %SPEED
+	moveCursor 4, -4
+	drawStringNum %SPEED
+	moveCursor 0, 4
+	drawStringNum %SPEED
+	//white number
+	moveCursor -2, -2
+	setColor 1, 1, 1, 1
+	drawStringNum %SPEED
+	
+	//rocketaccel number
+	moveCursor 8, -5
+	setAlign #LEFT, #MIDDLE
+	setFontFamily "Virtue"
+	setFontSize 12
+	if 0 <= %ROCKETACCEL
+		setColor 0, 1, 0, 1
+		drawString "+ " //space prevents warsow from using "+" as operator
+		moveCursor 10, 0
+		drawStringNum %ROCKETACCEL
+		moveCursor -10, 0
+	endif
+	if 0 > %ROCKETACCEL
+		setColor 1, 0, 0, 1
+		drawStringNum %ROCKETACCEL
+	endif
+
+	//jumpspeed number
+	moveCursor 9, 14
+	setColor 0, 0, 1, 1
+	drawStringNum %JUMPSPEED
+endif
+
+//old speed number
+if 2 & %SHOW_SPEED
+if 0 == 1 & %SHOW_SPEED
+	setFontFamily "Virtue"
+	setFontSize 12
+	setAlign #CENTER, #MIDDLE
+	drawStringNum %SPEED
+endif
+endif
+
+

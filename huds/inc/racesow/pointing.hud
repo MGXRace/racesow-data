@@ -1,0 +1,23 @@
+// pointing
+if %VIDHEIGHT >= 768
+    // old - con_fontSystemMedium
+    setFontFamily "Droid Sans"
+    setFontSize 16
+endif
+if %VIDHEIGHT < 768
+    if %VIDHEIGHT >= 600
+	// old - bitstream_9
+	setFontFamily "Droid Sans"
+	setFontSize 9
+    endif
+    if %VIDHEIGHT < 600
+	// old - bitstream_7
+	setFontFamily "Droid Sans"
+	setFontSize 7
+    endif
+endif
+setColor 1 1 1 1
+setAlign #CENTER #MIDDLE
+setScale #DEFAULTSCALE
+setCursor #WIDTH / 2 #HEIGHT / 2 + 32
+drawPointing

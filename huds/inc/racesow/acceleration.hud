@@ -18,7 +18,7 @@ if 0 == 16 & %SHOW_SPEED
 	moveCursor 3, 0
 	setSize 200, 10
 	setColor 0, 1, 0, 0.3
-	drawBar 1000 * %ACCELERATION, %MAX_ACCEL
+	drawBar %ACCELERATION, %MAX_ACCEL
 
 //alternative way, draws a black line where acceleration is maximum
 //drawBar %ACCELERATION, 200000

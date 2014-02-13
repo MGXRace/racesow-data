@@ -3,9 +3,11 @@
  * @version 1.1.0
  */
 
-RS_Player[] players( maxClients );
+RS_Player@[] players( maxClients );
 RS_Map @map;
 RS_Gametype @rsGametype;
+
+int numCheckpoints;
 
 Cvar g_gametype( "g_gametype", "race", CVAR_ARCHIVE );
 
@@ -18,7 +20,7 @@ Cvar g_gametype( "g_gametype", "race", CVAR_ARCHIVE );
  * @param int argc
  * @return void
  */
-bool GT_Command( Client @client, String &cmdString, String &argsString, int argc )
+bool GT_Command( Client @client, const String &cmdString, const String &argsString, int argc )
 {
     return rsGametype.Command( @client, cmdString, argsString, argc );
 }
@@ -72,9 +74,9 @@ String @GT_ScoreboardMessage( uint maxlen )
  * @param String &args
  * @return void
  */
-void GT_scoreEvent( Client @client, String &score_event, String &args )
+void GT_ScoreEvent( Client @client, const String &score_event, const String &args )
 {
-    rsGametype.scoreEvent( @client, score_event, args );
+    rsGametype.ScoreEvent( @client, score_event, args );
 }
 
 /**
@@ -88,9 +90,9 @@ void GT_scoreEvent( Client @client, String &score_event, String &args )
  * @param int new_team
  * @return void
  */
-void GT_playerRespawn( Entity @ent, int old_team, int new_team )
+void GT_PlayerRespawn( Entity @ent, int old_team, int new_team )
 {
-    rsGametype.playerRespawn( @ent, old_team, new_team );
+    rsGametype.PlayerRespawn( @ent, old_team, new_team );
 }
 
 /**

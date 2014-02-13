@@ -1,0 +1,17 @@
+/shared/constants.as;
+/shared/files.as;
+/shared/utils.as;
+
+generic/items.as;
+generic/matchstates.as;
+
+legacy/quake1_items.as;
+legacy/quake2_items.as;
+legacy/quake3_items.as;
+
+racesow/gametype.as;
+racesow/player.as;
+racesow/map.as;
+racesow/race.as;
+racesow/main.as;
+racesow/gametypes/race.as;

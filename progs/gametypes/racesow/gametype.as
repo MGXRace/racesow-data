@@ -7,8 +7,49 @@
  */
 class RS_Gametype
 {
+    /**
+     * InitGametype
+     * Setup the gametype
+     * @return void
+     */
     void InitGametype()
     {
+        G_Print( "Init Gametype" );
+        gametype.title = "Racesow";
+        gametype.version = "1.1.0";
+        gametype.author = "inc.mgxrace.net";
+
+        gametype.spawnableItemsMask = ( IT_WEAPON | IT_AMMO | IT_ARMOR | IT_POWERUP | IT_HEALTH );
+        if ( gametype.isInstagib )
+          gametype.spawnableItemsMask &= ~uint(G_INSTAGIB_NEGATE_ITEMMASK);
+
+        gametype.respawnableItemsMask = gametype.spawnableItemsMask;
+        gametype.dropableItemsMask = 0;
+        gametype.pickableItemsMask = 0;
+
+        gametype.isRace = true;
+
+        gametype.ammoRespawn = 0;
+        gametype.armorRespawn = 0;
+        gametype.weaponRespawn = 0;
+        gametype.healthRespawn = 0;
+        gametype.powerupRespawn = 0;
+        gametype.megahealthRespawn = 0;
+        gametype.ultrahealthRespawn = 0;
+
+        gametype.readyAnnouncementEnabled = false;
+        gametype.scoreAnnouncementEnabled = false;
+        gametype.countdownEnabled = false;
+        gametype.mathAbortDisabled = true;
+        gametype.shootingDisabled = false;
+        gametype.infiniteAmmo = true;
+        gametype.canForceModels = true;
+        gametype.canShowMinimap = false;
+        gametype.teamOnlyMinimap = true;
+
+        // set spawnsystem type
+        for ( int team = TEAM_PLAYERS; team < GS_MAX_TEAMS; team++ )
+          gametype.setTeamSpawnsystem( team, SPAWNSYSTEM_INSTANT, 0, 0, false );
     }
 
     void SpawnGametype()
@@ -30,10 +71,26 @@ class RS_Gametype
 
     void ThinkRules()
     {
+        RS_Player @player;
+
+        for( int i = 0; i < maxClients; i++ )
+        {
+            @player = @players[i];
+            if( @player is null )
+                continue;
+
+            player.setHUD();
+        }
     }
 
     void PlayerRespawn( Entity @ent, int old_team, int new_team )
     {
+        if( ent.isGhosting() )
+            return;
+
+        RS_Player @player = RS_getPlayer( @ent );
+        if( @player !is null )
+            player.cancelRace();
     }
 
     /**

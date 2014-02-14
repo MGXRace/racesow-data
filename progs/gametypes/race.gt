@@ -9,6 +9,9 @@ legacy/quake1_items.as;
 legacy/quake2_items.as;
 legacy/quake3_items.as;
 
+racesow/entities/target_starttimer.as;
+racesow/entities/target_stoptimer.as;
+
 racesow/gametype.as;
 racesow/player.as;
 racesow/map.as;

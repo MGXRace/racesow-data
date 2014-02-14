@@ -10,6 +10,7 @@ RS_Gametype @rsGametype;
 int numCheckpoints;
 
 Cvar g_gametype( "g_gametype", "race", CVAR_ARCHIVE );
+Cvar g_warmup_timelimit( "g_warmup_timelimit", "0", CVAR_ARCHIVE);
 
 /**
  * GT_Command

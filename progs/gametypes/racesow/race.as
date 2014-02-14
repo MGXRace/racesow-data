@@ -115,8 +115,8 @@ class RS_Race
         checkpoints[cpNum] = player.client.uCmdTimeStamp - startTime;
 
         uint newTime = checkpoints[cpNum];
-        uint personalBest = @player.recordRace is null ? 0 : player.recordRace.getTime();
-        uint refBest = @serverRecord is null ? 0 : serverRecord.getTime();
+        uint personalBest = @player.recordRace is null ? 0 : player.recordRace.checkpoints[cpNum];
+        uint refBest = @serverRecord is null ? 0 : serverRecord.checkpoints[cpNum];
         report += S_COLOR_ORANGE + "#" + ( cpNum + 1 ) + ": "
                 + S_COLOR_WHITE + TimeToString( newTime )
                 + S_COLOR_ORANGE + " Speed: " + S_COLOR_WHITE + player.getSpeed()

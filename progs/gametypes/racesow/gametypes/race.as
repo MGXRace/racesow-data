@@ -46,13 +46,6 @@ class RS_GT_Race : RS_Gametype
         G_ConfigString( CS_SCB_PLAYERTAB_LAYOUT, "%n 112 %s 52 %t 96 %i 48 %l 48 %s 85" );
         G_ConfigString( CS_SCB_PLAYERTAB_TITLES, "Name Clan Time Speed Ping State" );
 
-        // Initialize Commands
-        // Until angelscript supports static class members/methods or better
-        // namespacing we can't make a proper plugin achitecture
-        RS_CMD_RaceRestart cmd_racerestart;
-        RS_CommandByName.set( cmd_racerestart.name, @cmd_racerestart );
-        @RS_CommandByIndex[RS_CommandCount++] = @cmd_racerestart;
-
         RS_InitCommands();
     }
 

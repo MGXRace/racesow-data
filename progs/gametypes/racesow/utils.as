@@ -138,3 +138,18 @@ void sendCenterMessage( RS_Player @player, String message )
 
     G_CenterPrintMsg( player.client.getEnt(), message );
 }
+
+/**
+ * sendMessage
+ * Send a message to a player's chat
+ * @param RS_Player player
+ * @param String message
+ * @return void
+ */
+ void sendMessage( RS_Player @player, String message )
+ {
+    if( @player.client is null )
+        return;
+
+    G_PrintMsg( player.client.getEnt(), message );
+ }

@@ -25,10 +25,28 @@ class RS_Race
     uint endTime;
 
     /**
+     * Speed when starting the race
+     * @var uint
+     */
+    uint startSpeed;
+
+    /**
+     * Speed when finishing the race
+     * @var uint
+     */
+    uint endSpeed;
+
+    /**
      * Checkpoints of the race
      * @var uint
      */
     uint[] checkpoints;
+
+    /**
+     * Report message for the race
+     * @var String
+     */
+    String report;
 
     /**
      * Constructor
@@ -48,6 +66,21 @@ class RS_Race
         @this.player = @player;
         checkpoints.resize( numCheckpoints );
         startTime = player.client.uCmdTimeStamp;
+        startSpeed = player.getSpeed();
+
+        // Calculate player height
+        Vec3 mins, maxs;
+        Entity @ent = @player.client.getEnt();
+        ent.getSize( mins, maxs );
+        Vec3 down = Vec3( ent.origin.x, ent.origin.y, ent.origin.z - 5000 );
+        Trace tr;
+        int height = tr.doTrace( ent.origin, mins, maxs, down, ent.entNum, MASK_PLAYERSOLID ) ?
+                     int( ent.origin.z - tr.get_endPos().z ) : 0;
+
+        // Initialize report string
+        report = S_COLOR_ORANGE + "Start speed: " + S_COLOR_WHITE + player.getSpeed()
+               + ( height == 0 ? "" : S_COLOR_ORANGE + " Height: " + S_COLOR_WHITE + height )
+               + "\n";
     }
 
     /**
@@ -64,6 +97,7 @@ class RS_Race
      */
     void stopRace()
     {
+        endSpeed = player.getSpeed();
         endTime = player.client.uCmdTimeStamp;
     }
 
@@ -79,6 +113,15 @@ class RS_Race
             return false;
 
         checkpoints[cpNum] = player.client.uCmdTimeStamp - startTime;
+
+        uint newTime = checkpoints[cpNum];
+        uint personalBest = @player.recordRace is null ? 0 : player.recordRace.getTime();
+        uint refBest = @serverRecord is null ? 0 : serverRecord.getTime();
+        report += S_COLOR_ORANGE + "#" + ( cpNum + 1 ) + ": "
+                + S_COLOR_WHITE + TimeToString( newTime )
+                + S_COLOR_ORANGE + " Speed: " + S_COLOR_WHITE + player.getSpeed()
+                + S_COLOR_ORANGE + " Personal: " + S_COLOR_WHITE + diffString( personalBest, newTime )
+                + S_COLOR_ORANGE + " Server: " + S_COLOR_WHITE + diffString( refBest, newTime ) + "\n";
         return true;
     }
 

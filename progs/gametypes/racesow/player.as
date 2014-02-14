@@ -98,6 +98,7 @@ class RS_Player
 
         // stop the race and save its time to the HUD
         race.stopRace();
+        raceReport();
 
         if( @serverRecord is null || serverRecord.getTime() > race.getTime() )
         {
@@ -137,7 +138,34 @@ class RS_Player
      */
     void cancelRace()
     {
+        raceReport();
         @race = null;
+    }
+
+    /**
+     * raceReport
+     * Print to player's chat the current race report.
+     * @return void
+     */
+    void raceReport()
+    {
+        if( @race is null )
+            return;
+
+        uint newTime = race.getTime();
+        uint personalBest = @recordRace is null ? 0 : recordRace.getTime();
+        uint refBest = @serverRecord is null ? 0 : serverRecord.getTime();
+
+        sendMessage( @this, race.report );
+
+        if( race.endTime == 0 ) // race wasn't finished
+            return;
+
+        sendMessage( @this, S_COLOR_WHITE + "Race finished: " + TimeToString( newTime )
+                + S_COLOR_ORANGE + " Speed: " + S_COLOR_WHITE + race.endSpeed // finish speed
+                + S_COLOR_ORANGE + " Personal: " + S_COLOR_WHITE + diffString(personalBest, newTime) // personal best
+                + S_COLOR_ORANGE + " Server: " + S_COLOR_WHITE + diffString(refBest, newTime) // server best
+                + "\n");
     }
 
     /**
@@ -162,7 +190,7 @@ class RS_Player
             execSpectators( @func, @this, S_COLOR_GREEN + "#" + ( cpNum + 1 ) + " checkpoint record!" );
 
         else if( newTime < personalBest || personalBest == 0 )
-            execSpectators( @func, @this, S_COLOR_GREEN + "#" + ( cpNum + 1 ) + " checkpoint personal record!" );
+            execSpectators( @func, @this, S_COLOR_YELLOW + "#" + ( cpNum + 1 ) + " checkpoint personal record!" );
 
         @func = @sendCenterMessage;
         String message = "Current: " + TimeToString( newTime ) + ( refBest == 0 ? "" : ( "\n" + diffString( refBest, newTime ) ) );
@@ -193,5 +221,17 @@ class RS_Player
             return recordRace.getTime();
 
         return 0;
+    }
+
+    /**
+     * getSpeed
+     * Return the player's current speed
+     * @return uint
+     */
+    uint getSpeed()
+    {
+        Vec3 globalSpeed = client.getEnt().velocity;
+        Vec3 horizontalSpeed = Vec3( globalSpeed.x, globalSpeed.y, 0 );
+        return uint( horizontalSpeed.length() );
     }
 }

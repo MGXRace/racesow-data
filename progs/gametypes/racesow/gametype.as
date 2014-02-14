@@ -74,6 +74,12 @@ class RS_Gametype
         // set spawnsystem type
         for ( int team = TEAM_PLAYERS; team < GS_MAX_TEAMS; team++ )
           gametype.setTeamSpawnsystem( team, SPAWNSYSTEM_INSTANT, 0, 0, false );
+
+        // Initialize Commands common to all race gametypes
+        // Until angelscript supports static class members/methods or better
+        // namespacing we can't make a proper plugin achitecture
+        RS_CMD_RaceRestart cmd_racerestart;
+        RS_CMD_Help cmd_help;
     }
 
     void SpawnGametype()
@@ -252,7 +258,6 @@ class RS_Gametype
      */
     bool Command( Client @client, String &cmdString, String &args, int argc )
     {
-        G_PrintMsg( client.getEnt(), cmdString );
         RS_Player @player = RS_getPlayer( @client );
         RS_Command @command;
         if( @player is null )

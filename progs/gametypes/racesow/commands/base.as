@@ -51,9 +51,20 @@ class RS_Command
 	
     /**
      * Default constructor
+     * Registers the command on instantiation. Use these as singletons.
      */
     RS_Command()
     {
+    }
+
+    /**
+     * Register the command
+     * @return void
+     */
+    void register()
+    {
+    	RS_CommandByName.set( name, @this );
+    	@RS_CommandByIndex[RS_CommandCount++] = @this;
     }
 
     /**

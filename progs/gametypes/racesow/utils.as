@@ -153,3 +153,18 @@ void sendCenterMessage( RS_Player @player, String message )
 
     G_PrintMsg( player.client.getEnt(), message );
  }
+
+/**
+ * sendErrorMessage
+ * Send an error message to a player's chat
+ * @param RS_Player player
+ * @param String message
+ * @return void
+ */
+ void sendErrorMessage( RS_Player @player, String message )
+ {
+    if( @player.client is null )
+        return;
+
+    G_PrintMsg( player.client.getEnt(), S_COLOR_RED + "Error: " + S_COLOR_WHITE + message + "\n" );
+ }

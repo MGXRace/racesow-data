@@ -9,6 +9,7 @@ class RS_CMD_RaceRestart : RS_Command
 		name = "racerestart";
     	description = "Go back to the start area";
     	usage = "";
+    	register();
 	}
 
     bool execute(RS_Player @player, String &args, int argc)

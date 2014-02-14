@@ -41,6 +41,19 @@ class RS_GT_Race : RS_Gametype
 
         // disallow warmup, no matter what config files say, because it's bad for racesow timelimit.
         g_warmup_timelimit.set("0");
+
+        // Set scoreboard config
+        G_ConfigString( CS_SCB_PLAYERTAB_LAYOUT, "%n 112 %s 52 %t 96 %i 48 %l 48 %s 85" );
+        G_ConfigString( CS_SCB_PLAYERTAB_TITLES, "Name Clan Time Speed Ping State" );
+
+        // Initialize Commands
+        // Until angelscript supports static class members/methods or better
+        // namespacing we can't make a proper plugin achitecture
+        RS_CMD_RaceRestart cmd_racerestart;
+        RS_CommandByName.set( cmd_racerestart.name, @cmd_racerestart );
+        @RS_CommandByIndex[RS_CommandCount++] = @cmd_racerestart;
+
+        RS_InitCommands();
     }
 
     /**
@@ -60,6 +73,50 @@ class RS_GT_Race : RS_Gametype
         // set player movement to pass through other players and remove gunblade auto attacking
         ent.client.set_pmoveFeatures( ent.client.pmoveFeatures & ~PMFEAT_GUNBLADEAUTOATTACK | PMFEAT_GHOSTMOVE );
         ent.client.inventorySetCount( WEAP_GUNBLADE, 1 );
+        ent.client.selectWeapon( -1 );
         ent.client.stats.setScore( RS_getPlayer( ent ).bestTime() );
+    }
+
+    /**
+     * ScoreboardMessage
+     * Generate the scoreboard message
+     * @param uint maxlen Maximum length of the message
+     * @return String
+     */
+    String @ScoreboardMessage( uint maxlen )
+    {
+        RS_Gametype::ScoreboardMessage( maxlen );
+        String scoreboardMessage, entry;
+        Team @team;
+        Entity @ent;
+        int i, playerID;
+        int racing;
+        //int readyIcon;
+
+        @team = @G_GetTeam( TEAM_PLAYERS );
+
+        // &t = team tab, team tag, team score (doesn't apply), team ping (doesn't apply)
+        entry = "&t " + int( TEAM_PLAYERS ) + " 0 " + team.ping + " ";
+        if ( scoreboardMessage.len() + entry.len() < maxlen )
+            scoreboardMessage += entry;
+
+        // "Name Time Ping State"
+        for ( i = 0; @team.ent( i ) != null; i++ )
+        {
+            @ent = @team.ent( i );
+            RS_Player @player = @RS_getPlayer( ent );
+
+            int playerID = ( ent.isGhosting() && ( match.getState() == MATCH_STATE_PLAYTIME ) ) ? -( ent.get_playerNum() + 1 ) : ent.get_playerNum();
+            
+            entry = "&p " + playerID + " " + ent.client.clanName + " "
+                + player.bestTime() + " "
+                + player.highestSpeed + " "
+                + ent.client.ping + " " + player.getState() + " ";
+            if ( scoreboardMessage.len() + entry.len() < maxlen )
+                scoreboardMessage += entry;
+        }
+
+        playerList = scoreboardMessage;
+        return @scoreboardMessage;
     }
 }

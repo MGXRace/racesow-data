@@ -240,8 +240,30 @@ class RS_Gametype
         return false;
     }
 
-    bool Command( Client @client, const String @cmdString, const String @argsString, int argc )
+    /**
+     * GT_Command
+     * Find and execute a matching command
+     *
+     * @param cClient client,
+     * @param String cmdString
+     * @param String args
+     * @param int argc
+     * @return void
+     */
+    bool Command( Client @client, String &cmdString, String &args, int argc )
     {
-        return false;
+        G_PrintMsg( client.getEnt(), cmdString );
+        RS_Player @player = RS_getPlayer( @client );
+        RS_Command @command;
+        if( @player is null )
+            return false;
+
+        if( !RS_CommandByName.get( cmdString, @command ) )
+            return false;
+
+        if( !command.validate( @player, args, argc ) )
+            return false;
+
+        return command.execute( @player, args, args );
     }
 }

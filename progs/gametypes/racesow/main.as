@@ -16,13 +16,13 @@ Cvar g_warmup_timelimit( "g_warmup_timelimit", "0", CVAR_ARCHIVE);
 /**
  * GT_Command
  *
- * @param Client @client,
+ * @param Client @client
  * @param String &cmdString
  * @param String &argsString
  * @param int argc
  * @return void
  */
-bool GT_Command( Client @client, const String &cmdString, const String &argsString, int argc )
+bool GT_Command( Client @client, const String &cmdString,  const String &argsString, int argc )
 {
     return rsGametype.Command( @client, cmdString, argsString, argc );
 }

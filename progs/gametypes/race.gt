@@ -13,6 +13,9 @@ racesow/entities/target_starttimer.as;
 racesow/entities/target_stoptimer.as;
 racesow/entities/target_checkpoint.as;
 
+racesow/commands/base.as;
+racesow/commands/racerestart.as;
+
 racesow/utils.as;
 racesow/gametype.as;
 racesow/player.as;

@@ -55,6 +55,18 @@ class RS_Player
     RS_Race @recordRace;
 
     /**
+     * The players highest speed
+     * @var uint
+     */
+    uint highestSpeed;
+
+    /**
+     * Stores all spectators of the player in a list "(int)id (int)ping"
+     * @var String
+     */
+    String challengerList;
+
+    /**
      * Constructor
      * @param Client client The client to associate with the player
      */
@@ -199,14 +211,22 @@ class RS_Player
     }
 
     /**
-     * setHUD
-     * Sets the HUD variables for a player
+     * Think
+     * Perform think actions for the player.
      * @return void
      */
-    void setHUD()
+    void Think()
     {
+        // update highest speed
+        uint hspeed = getSpeed();
+        if( hspeed > highestSpeed )
+            highestSpeed = hspeed;
+
+        // Update HUD variables
         if( @race !is null )
             client.setHUDStat( STAT_TIME_SELF, race.getTime() / 100 );
+        if( @serverRecord !is null )
+            client.setHUDStat( STAT_TIME_RECORD, serverRecord.getTime() / 100 );
         client.setHUDStat( STAT_TIME_BEST, bestTime() / 100 );
     }
 
@@ -233,5 +253,15 @@ class RS_Player
         Vec3 globalSpeed = client.getEnt().velocity;
         Vec3 horizontalSpeed = Vec3( globalSpeed.x, globalSpeed.y, 0 );
         return uint( horizontalSpeed.length() );
+    }
+
+    /**
+     * getState
+     * The current racing state of the player: "prerace", "racing"
+     * @return String
+     */
+    String getState()
+    {
+        return @race is null ? "^3prerace" : "^2racing";
     }
 }

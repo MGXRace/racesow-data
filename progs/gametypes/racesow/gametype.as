@@ -8,6 +8,30 @@
 class RS_Gametype
 {
     /**
+     * Leveltime of last scoreboard update
+     * @var uint
+     */
+    uint scoreboardUpdate;
+
+    /**
+     * Flag to push the updated scoreboard in the next Think
+     * @var bool
+     */
+    bool scoreboardSend;
+
+    /**
+     * List of spectators in the form "(int)id (int)ping"
+     * @var String
+     */
+    String spectatorList;
+
+    /**
+     * Main Scoreboard message string
+     * @var String
+     */
+    String playerList;
+
+    /**
      * InitGametype
      * Setup the gametype
      * @return void
@@ -24,8 +48,8 @@ class RS_Gametype
           gametype.spawnableItemsMask &= ~uint(G_INSTAGIB_NEGATE_ITEMMASK);
 
         gametype.respawnableItemsMask = gametype.spawnableItemsMask;
-        gametype.dropableItemsMask = 0;
-        gametype.pickableItemsMask = 0;
+        gametype.dropableItemsMask = gametype.spawnableItemsMask;
+        gametype.pickableItemsMask = gametype.spawnableItemsMask;
 
         gametype.isRace = true;
 
@@ -60,13 +84,32 @@ class RS_Gametype
     {
     }
 
-    bool MatchStateFinished( int incomingMathState )
+    bool MatchStateFinished( int incomingMatchState )
     {
         return true;
     }
 
+    /**
+     * Perform setup for a match state
+     * @return void
+     */
     void MatchStateStarted()
     {
+        switch( match.getState() )
+        {
+        case MATCH_STATE_WARMUP:
+            match.launchState( MATCH_STATE_PLAYTIME );
+            break;
+
+        case MATCH_STATE_PLAYTIME:
+            break;
+
+        case MATCH_STATE_POSTMATCH:
+            gametype.pickableItemsMask = 0;
+            gametype.dropableItemsMask = 0;
+            GENERIC_SetUpEndMatch();
+            break;
+        }
     }
 
     void ThinkRules()
@@ -79,7 +122,15 @@ class RS_Gametype
             if( @player is null )
                 continue;
 
-            player.setHUD();
+            player.Think();
+
+            if( scoreboardSend && player.challengerList != "" )
+            {
+                String cmd = "scb \"" + playerList + " "
+                           + "&s " + spectatorList + " "
+                           + "&w " + player.challengerList + "\"";
+                player.client.execGameCommand( cmd );
+            }
         }
     }
 
@@ -130,8 +181,52 @@ class RS_Gametype
         }
     }
 
+    /**
+     * ScoreboardMessage
+     * Generate the scoreboard message
+     * @param uint maxlen Maximum length of the message
+     * @return String
+     */
     String @ScoreboardMessage( uint maxlen )
     {
+        RS_Player @player;
+
+        if( levelTime > scoreboardUpdate + 1800 )
+        {
+            for( int i = 0; i < maxClients; i++ )
+            {
+                if( players[i] is null )
+                    continue;
+                players[i].challengerList = "";
+            }
+
+            Team @spectators = @G_GetTeam( TEAM_SPECTATOR );
+            Entity @other;
+            spectatorList = "";
+
+            for( int i = 0; @spectators.ent( i ) !is null; i++ )
+            {
+                @other = @spectators.ent( i );
+                if( @other.client is null )
+                    continue;
+
+                if( !other.client.connecting && other.client.state() >= CS_SPAWNED )
+                    spectatorList += other.client.get_playerNum() + " " + other.client.ping + " ";
+
+                else if( other.client.connecting )
+                    spectatorList += other.client.get_playerNum() + " -1 ";
+
+                if( other.client.chaseActive && other.client.chaseTarget != 0 )
+                {
+                    @player = players[other.client.chaseTarget - 1];
+                    player.challengerList += other.client.get_playerNum() + " " + other.client.ping + " ";
+                }
+            }
+
+            scoreboardUpdate = levelTime;
+            scoreboardSend = true;
+        }
+
         return null;
     }
 

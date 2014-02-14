@@ -93,15 +93,41 @@ class RS_Player
         if( @race is null )
             return;
 
+        uint refBest = @serverRecord is null ? 0 : serverRecord.getTime();
+        uint newTime = race.getTime();
+
         // stop the race and save its time to the HUD
         race.stopRace();
+
+        if( @serverRecord is null || serverRecord.getTime() > race.getTime() )
+        {
+            // new server record
+            @serverRecord = @race;
+
+            // Send record award to player and spectators
+            specCallback @func = @sendAward;
+            execSpectators( @func, @this, S_COLOR_GREEN + "New server record!" );
+
+            // Print record message to chat
+            G_PrintMsg(null, client.name + " "
+                             + S_COLOR_YELLOW + "made a new server record: "
+                             + TimeToString( race.getTime() ) + "\n");
+        }
 
         if( @recordRace is null || recordRace.getTime() > race.getTime() )
         {
             // First record or New record
             @recordRace = @race;
             @race = null;
+
+            // Send record award to player and spectators
+            specCallback @func = @sendAward;
+            execSpectators( @func, @this, "Personal record!" );
         }
+
+        specCallback @func = @sendCenterMessage;
+        String message = "Time: " + TimeToString( newTime ) + ( refBest == 0 ? "" : ( "\n" + diffString( refBest, newTime ) ) );
+        execSpectators( @func, @this, message );
     }
 
     /**
@@ -112,6 +138,36 @@ class RS_Player
     void cancelRace()
     {
         @race = null;
+    }
+
+    /**
+     * addCheckpoint
+     * Add a checkpoint if we are in a race
+     * @param int cpNum Number of the checkpoint to add
+     * @return bool True if the checkpoint was saved, False otherwise.
+     */
+    bool addCheckpoint( int cpNum )
+    {
+        if( @race is null || !race.addCheckpoint( cpNum ) )
+            return false;
+
+        // Make the checkpoint message
+        RS_Race @refRace = @serverRecord;
+        uint newTime = race.checkpoints[cpNum];
+        uint refBest = @refRace is null ? 0 : refRace.checkpoints[cpNum];
+        uint personalBest = @recordRace is null ? 0 : recordRace.checkpoints[cpNum];
+        specCallback @func = @sendAward;
+
+        if( newTime < refBest || refBest == 0 )
+            execSpectators( @func, @this, S_COLOR_GREEN + "#" + ( cpNum + 1 ) + " checkpoint record!" );
+
+        else if( newTime < personalBest || personalBest == 0 )
+            execSpectators( @func, @this, S_COLOR_GREEN + "#" + ( cpNum + 1 ) + " checkpoint personal record!" );
+
+        @func = @sendCenterMessage;
+        String message = "Current: " + TimeToString( newTime ) + ( refBest == 0 ? "" : ( "\n" + diffString( refBest, newTime ) ) );
+        execSpectators( @func, @this, message );
+        return true;
     }
 
     /**

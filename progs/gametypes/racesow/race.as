@@ -25,6 +25,12 @@ class RS_Race
     uint endTime;
 
     /**
+     * Checkpoints of the race
+     * @var uint
+     */
+    uint[] checkpoints;
+
+    /**
      * Constructor
      */
     RS_Race()
@@ -40,6 +46,7 @@ class RS_Race
     RS_Race( RS_Player @player )
     {
         @this.player = @player;
+        checkpoints.resize( numCheckpoints );
         startTime = player.client.uCmdTimeStamp;
     }
 
@@ -58,6 +65,21 @@ class RS_Race
     void stopRace()
     {
         endTime = player.client.uCmdTimeStamp;
+    }
+
+    /**
+     * addCheckpoint
+     * Add a checkpoint to the race
+     * @param int cpNum Number of the checkpoint to add
+     * @return bool True if the checkpoint was saved, false otherwise
+     */
+    bool addCheckpoint( int cpNum )
+    {
+        if( checkpoints[cpNum] != 0 || @player is null )
+            return false;
+
+        checkpoints[cpNum] = player.client.uCmdTimeStamp - startTime;
+        return true;
     }
 
     /**

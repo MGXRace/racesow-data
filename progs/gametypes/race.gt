@@ -11,10 +11,13 @@ legacy/quake3_items.as;
 
 racesow/entities/target_starttimer.as;
 racesow/entities/target_stoptimer.as;
+racesow/entities/target_checkpoint.as;
 
+racesow/utils.as;
 racesow/gametype.as;
 racesow/player.as;
 racesow/map.as;
 racesow/race.as;
 racesow/main.as;
+
 racesow/gametypes/race.as;

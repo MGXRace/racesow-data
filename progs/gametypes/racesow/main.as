@@ -6,6 +6,7 @@
 RS_Player@[] players( maxClients );
 RS_Map @map;
 RS_Gametype @rsGametype;
+RS_Race @serverRecord;
 
 int numCheckpoints;
 

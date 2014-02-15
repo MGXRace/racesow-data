@@ -162,7 +162,7 @@ class RS_Player
         if( practicing )
         {
             race.stopRace();
-            sendMessage( @this, S_COLOR_CYAN + "You completed the map in practicemode, no time was set");
+            sendAward( @this, S_COLOR_CYAN + "You completed the map in practicemode, no time was set");
             return;
         }
 

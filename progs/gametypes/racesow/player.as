@@ -112,6 +112,15 @@ class RS_Player
         race.stopRace();
         raceReport();
 
+        if( race.prejumped )
+        {
+            @race = null;
+            specCallback @func = @sendCenterMessage;
+            execSpectators( @func, @this, "Prejump Time: " + TimeToString( newTime ) );
+            sendMessage( @this, "Prejump records are not recorded.");
+            return;
+        }
+
         if( @serverRecord is null || serverRecord.getTime() > race.getTime() )
         {
             // new server record

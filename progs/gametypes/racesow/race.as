@@ -49,6 +49,12 @@ class RS_Race
     String report;
 
     /**
+     * True if the race was prejumped
+     * @var bool
+     */
+    bool prejumped;
+
+    /**
      * Constructor
      */
     RS_Race()
@@ -67,6 +73,10 @@ class RS_Race
         checkpoints.resize( numCheckpoints );
         startTime = player.client.uCmdTimeStamp;
         startSpeed = player.getSpeed();
+        prejumped = RS_QueryPjState( player.client.get_playerNum() );
+
+        if( prejumped )
+            sendAward( player, S_COLOR_RED + "Prejumped" );
 
         // Calculate player height
         Vec3 mins, maxs;

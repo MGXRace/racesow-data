@@ -79,6 +79,8 @@ class RS_Gametype
         // Until angelscript supports static class members/methods or better
         // namespacing we can't make a proper plugin achitecture
         RS_CMD_RaceRestart cmd_racerestart;
+        RS_CMD_Join cmd_join;
+        RS_CMD_Kill cmd_kill;
         RS_CMD_Help cmd_help;
     }
 

@@ -23,3 +23,25 @@ class RS_CMD_RaceRestart : RS_Command
         return true;
     }
 }
+
+class RS_CMD_Join : RS_CMD_RaceRestart
+{
+	RS_CMD_Join()
+	{
+		name = "join";
+		description = "Go back to the start area";
+		usage = "";
+		register();
+	}
+}
+
+class RS_CMD_Kill : RS_CMD_RaceRestart
+{
+	RS_CMD_Kill()
+	{
+		name = "kill";
+		description = "Go back to the start area";
+		usage = "";
+		register();
+	}
+}

@@ -24,7 +24,6 @@ Cvar g_warmup_timelimit( "g_warmup_timelimit", "0", CVAR_ARCHIVE);
  */
 bool GT_Command( Client @client, const String &cmdString,  const String &argsString, int argc )
 {
-    G_Print( cmdString );
     return rsGametype.Command( @client, cmdString, argsString, argc );
 }
 

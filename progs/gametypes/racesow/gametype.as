@@ -38,7 +38,6 @@ class RS_Gametype
      */
     void InitGametype()
     {
-        G_Print( "Init Gametype" );
         gametype.title = "Racesow";
         gametype.version = "1.1.0";
         gametype.author = "inc.mgxrace.net";

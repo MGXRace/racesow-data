@@ -82,6 +82,7 @@ class RS_Gametype
         RS_CMD_Join cmd_join;
         RS_CMD_Kill cmd_kill;
         RS_CMD_Help cmd_help;
+        RS_CMD_Position cmd_position;
     }
 
     void SpawnGametype()

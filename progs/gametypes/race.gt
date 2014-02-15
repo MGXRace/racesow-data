@@ -16,9 +16,11 @@ racesow/entities/target_checkpoint.as;
 racesow/commands/base.as;
 racesow/commands/racerestart.as;
 racesow/commands/help.as;
+racesow/commands/position.as;
 
 racesow/utils.as;
 racesow/gametype.as;
+racesow/position.as;
 racesow/player.as;
 racesow/map.as;
 racesow/race.as;

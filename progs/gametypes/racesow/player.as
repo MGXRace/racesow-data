@@ -61,6 +61,12 @@ class RS_Player
     uint highestSpeed;
 
     /**
+     * Position object for position command
+     * @var RS_Position
+     */
+    RS_Position position;
+
+    /**
      * Stores all spectators of the player in a list "(int)id (int)ping"
      * @var String
      */
@@ -73,6 +79,7 @@ class RS_Player
     RS_Player( Client @client )
     {
         @this.client = @client;
+        position = RS_Position( @this );
     }
 
     /**
@@ -272,5 +279,56 @@ class RS_Player
     String getState()
     {
         return @race is null ? "^3prerace" : "^2racing";
+    }
+
+    /**
+     * teleport
+     * Teleport the player to a given location
+     * @param Vec3 origin The target location
+     * @param Vec3 origin The target facing
+     * @param bool keepVelocity Whether to maintain velocity
+     * @param bool keepVelocity Whether to telefrag on exit
+     * @param bool keepVelocity Whether to show a teleport effect
+     * @return bool True if successful
+     */
+    bool teleport( Vec3 origin, Vec3 angles, bool keepVelocity, bool kill, bool effects )
+    {
+        Entity @ent = @this.client.getEnt();
+        if( @ent is null )
+            return false;
+
+        if( ent.team != TEAM_SPECTATOR )
+        {
+            Vec3 mins, maxs;
+            ent.getSize(mins, maxs);
+            Trace tr;
+            if( tr.doTrace( origin, mins, maxs, origin, 0, MASK_PLAYERSOLID ) )
+            {
+                Entity @other = @G_GetEntity( tr.entNum );
+                if( @other !is null && @other == @ent && kill && other.type == ET_PLAYER )
+                {
+                    // FIXME: return false if both players clip?
+                    // Maybe that case won't even show in the trace
+                    other.sustainDamage( @other, null, Vec3(0,0,0), 9999, 0, 0, MOD_TELEFRAG );
+                    Entity @gravestone = @G_SpawnEntity( "gravestone" );
+                    gravestone.origin = other.origin + Vec3( 0.0f, 0.0f, 50.0f );
+                    // RS_getPlayer( other ).setupTelekilled( @gravestone ); TODO
+                }
+            }
+        }
+
+        if( effects && ent.team != TEAM_SPECTATOR )
+            ent.teleportEffect( true );
+
+        if(!keepVelocity)
+            ent.velocity = Vec3(0,0,0);
+
+        ent.origin = origin;
+        ent.angles = angles;
+
+        if( effects && ent.team != TEAM_SPECTATOR )
+            ent.teleportEffect( false );
+
+        return true;
     }
 }

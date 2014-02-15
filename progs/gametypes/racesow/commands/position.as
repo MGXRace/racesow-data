@@ -12,6 +12,7 @@ class RS_CMD_Position : RS_Command
             + "position save - Save current position\n"
             + "position speed <speed> - Set saved position speed\n"
             + "position load - Teleport to saved position\n"
+            + "position prerace - Set the prerace spawn point\n"
 			+ "position player <id> - Teleport to a player\n"
 			+ "position cp <id> - Teleport to a checkpoint (id order may vary)\n"
             + "position set <x> <y> <z> <pitch> <yaw> - Teleport to specified position\n"
@@ -23,12 +24,6 @@ class RS_CMD_Position : RS_Command
 
 	bool validate(RS_Player @player, String &args, int argc)
 	{
-		if( argc != 0 &&
-			args.getToken( 0 ) != "save" &&
-			args.getToken( 0 ) != "load" &&
-			args.getToken( 0 ) != "speed" )
-			return false;
-
 		return true;
 	}
 
@@ -36,6 +31,19 @@ class RS_CMD_Position : RS_Command
     {
     	if( args.getToken( 0 ) == "save" )
 			return player.position.save();
+
+		if( args.getToken( 0 ) == "prerace" )
+		{
+			if( player.getState() != RS_STATE_PRERACE ||
+				@player.client is null ||
+				player.client.team != TEAM_PLAYERS )
+			{
+				sendMessage( @player, "Prerace postion must be set in prerace state\n");
+				return false;
+			}
+
+			return player.positionPrerace.save();
+		}
 
 		else if( args.getToken( 0 ) == "load" )
 			return player.position.load();

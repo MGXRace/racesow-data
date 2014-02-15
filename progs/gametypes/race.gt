@@ -17,6 +17,7 @@ racesow/commands/base.as;
 racesow/commands/racerestart.as;
 racesow/commands/help.as;
 racesow/commands/position.as;
+racesow/commands/practicemode.as;
 
 racesow/utils.as;
 racesow/gametype.as;

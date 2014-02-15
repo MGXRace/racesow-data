@@ -100,11 +100,27 @@ class RS_GT_Race : RS_Gametype
             RS_Player @player = @RS_getPlayer( ent );
 
             int playerID = ( ent.isGhosting() && ( match.getState() == MATCH_STATE_PLAYTIME ) ) ? -( ent.get_playerNum() + 1 ) : ent.get_playerNum();
+
+            String playerState;
+            switch( player.getState() )
+            {
+            case RS_STATE_PRACTICE:
+                playerState = "^5practicing";
+                break;
+
+            case RS_STATE_RACING:
+                playerState = "^2racing";
+                break;
+                
+            case RS_STATE_PRERACE:
+                playerState = "^3prerace";
+                break;
+            }
             
             entry = "&p " + playerID + " " + ent.client.clanName + " "
                 + player.bestTime() + " "
                 + player.highestSpeed + " "
-                + ent.client.ping + " " + player.getState() + " ";
+                + ent.client.ping + " " + playerState + " ";
             if ( scoreboardMessage.len() + entry.len() < maxlen )
                 scoreboardMessage += entry;
         }

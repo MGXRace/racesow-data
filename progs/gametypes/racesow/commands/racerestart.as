@@ -17,9 +17,7 @@ class RS_CMD_RaceRestart : RS_Command
         if( @player.client is null )
         	return false;
 
-        player.cancelRace();
-        player.client.team = TEAM_PLAYERS;
-        player.client.respawn( false );
+		player.respawn();
         return true;
     }
 }

@@ -1,3 +1,7 @@
+const int RS_STATE_PRERACE = 1;
+const int RS_STATE_RACING = 2;
+const int RS_STATE_PRACTICE = 4;
+
 /**
  * RS_getPlayer
  * Get the RS_Player associated with a given entity
@@ -67,10 +71,22 @@ class RS_Player
     RS_Position position;
 
     /**
+     * Position object for position prerace command
+     * @var RS_Position
+     */
+    RS_Position positionPrerace;
+
+    /**
      * Stores all spectators of the player in a list "(int)id (int)ping"
      * @var String
      */
     String challengerList;
+
+    /**
+     * True if player is in practicemode
+     * @var bool
+     */
+    bool practicing;
 
     /**
      * Constructor
@@ -80,6 +96,7 @@ class RS_Player
     {
         @this.client = @client;
         position = RS_Position( @this );
+        positionPrerace = RS_Position( @this );
     }
 
     /**
@@ -87,6 +104,29 @@ class RS_Player
      */
     ~RS_Player()
     {
+    }
+
+    /**
+     * respawn
+     * Respawn the player and restore saved state if applicable
+     * @return void
+     */
+    void respawn()
+    {
+        cancelRace();
+
+        if( @client.getEnt() !is null )
+            G_RemoveProjectiles( client.getEnt() );
+
+        if( client.team != TEAM_PLAYERS )
+            client.team = TEAM_PLAYERS;
+
+        client.respawn( false );
+
+        if( practicing && position.saved )
+            position.load();
+        else if( positionPrerace.saved )
+            positionPrerace.load();
     }
 
     /**
@@ -111,6 +151,13 @@ class RS_Player
     {
         if( @race is null )
             return;
+
+        if( practicing )
+        {
+            race.stopRace();
+            sendMessage( @this, S_COLOR_CYAN + "You completed the map in practicemode, no time was set");
+            return;
+        }
 
         uint refBest = @serverRecord is null ? 0 : serverRecord.getTime();
         uint newTime = race.getTime();
@@ -273,12 +320,15 @@ class RS_Player
 
     /**
      * getState
-     * The current racing state of the player: "prerace", "racing"
-     * @return String
+     * The current racing state of the player
+     * @return int
      */
-    String getState()
+    int getState()
     {
-        return @race is null ? "^3prerace" : "^2racing";
+        if( practicing )
+            return RS_STATE_PRACTICE;
+
+        return @race is null ? RS_STATE_PRERACE : RS_STATE_RACING;
     }
 
     /**

@@ -18,6 +18,7 @@ racesow/commands/racerestart.as;
 racesow/commands/help.as;
 racesow/commands/position.as;
 racesow/commands/practicemode.as;
+racesow/commands/machinegun.as;
 
 racesow/utils.as;
 racesow/gametype.as;

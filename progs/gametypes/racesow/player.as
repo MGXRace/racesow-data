@@ -89,6 +89,12 @@ class RS_Player
     bool practicing;
 
     /**
+     * Time the player should respawn at
+     * @var uint
+     */
+    uint respawnTime;
+
+    /**
      * Constructor
      * @param Client client The client to associate with the player
      */
@@ -114,6 +120,7 @@ class RS_Player
     void respawn()
     {
         cancelRace();
+        respawnTime = 0;
 
         if( @client.getEnt() !is null )
             G_RemoveProjectiles( client.getEnt() );
@@ -165,6 +172,7 @@ class RS_Player
         // stop the race and save its time to the HUD
         race.stopRace();
         raceReport();
+        respawnTime = realTime + 3000;
 
         if( race.prejumped )
         {
@@ -280,6 +288,10 @@ class RS_Player
      */
     void Think()
     {
+        // repawn check
+        if( respawnTime != 0 && realTime > respawnTime)
+            respawn();
+
         // update highest speed
         uint hspeed = getSpeed();
         if( hspeed > highestSpeed )

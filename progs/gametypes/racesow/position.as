@@ -90,7 +90,7 @@ class RS_Position
 		}
 
 		if( ent.moveType == MOVETYPE_NOCLIP )
-			weapon = WEAP_NONE;
+			weapon = player.noclipWeapon;
 		else
 			weapon = player.client.weapon;
 

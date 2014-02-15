@@ -95,6 +95,18 @@ class RS_Player
     uint respawnTime;
 
     /**
+     * True if player is in noclip state
+     * @var bool
+     */
+    bool inNoClip;
+
+    /**
+     * Weapon selected before entering noclip mode
+     * @var int
+     */
+    int noclipWeapon;
+
+    /**
      * Constructor
      * @param Client client The client to associate with the player
      */
@@ -103,6 +115,7 @@ class RS_Player
         @this.client = @client;
         position = RS_Position( @this );
         positionPrerace = RS_Position( @this );
+        noclipWeapon = WEAP_NONE;
     }
 
     /**
@@ -128,12 +141,63 @@ class RS_Player
         if( client.team != TEAM_PLAYERS )
             client.team = TEAM_PLAYERS;
 
-        client.respawn( false );
+        if( !inNoClip )
+            client.respawn( false );
 
         if( practicing && position.saved )
             position.load();
         else if( positionPrerace.saved )
             positionPrerace.load();
+
+        if( practicing )
+            startRace();
+    }
+
+    /**
+     * noclip
+     * Toggles the noclip state for the player
+     * @return bool Success boolean
+     */
+    bool noclip()
+    {
+        Entity @ent = @client.getEnt();
+        if( @ent is null )
+            return false;
+
+        if( ent.moveType == MOVETYPE_NOCLIP )
+        {
+            // Disable noclip - only if we are in free space
+            Vec3 mins, maxs;
+            ent.getSize( mins, maxs );
+            Trace tr;
+            uint contentMask;
+
+            if( client.pmoveFeatures & PMFEAT_GHOSTMOVE == 0 )
+                contentMask = MASK_PLAYERSOLID;
+            else
+                contentMask = MASK_DEADSOLID;
+
+            if( tr.doTrace( ent.origin, mins, maxs, ent.origin, 0, contentMask ) )
+            {
+                sendErrorMessage( @this, "Can't switch noclip back when in something solid.\n" );
+                return false;
+            }
+
+            ent.moveType = MOVETYPE_PLAYER;
+            ent.solid = SOLID_YES;
+            client.selectWeapon( noclipWeapon );
+            inNoClip = false;
+        }
+        else
+        {
+            // Enable noclip - always possible
+            ent.moveType = MOVETYPE_NOCLIP;
+            ent.solid = SOLID_NOT;
+            noclipWeapon = client.weapon;
+            inNoClip = true;
+        }
+
+        return true;
     }
 
     /**
@@ -163,6 +227,7 @@ class RS_Player
         {
             race.stopRace();
             sendAward( @this, S_COLOR_CYAN + "You completed the map in practicemode, no time was set");
+            @race = null;
             return;
         }
 

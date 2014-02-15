@@ -75,7 +75,7 @@ class RS_Race
         startSpeed = player.getSpeed();
         prejumped = RS_QueryPjState( player.client.get_playerNum() );
 
-        if( prejumped )
+        if( prejumped && !player.practicing )
             sendAward( player, S_COLOR_RED + "Prejumped" );
 
         // Calculate player height

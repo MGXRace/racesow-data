@@ -85,6 +85,7 @@ class RS_Gametype
         RS_CMD_PracticeMode cmd_practicemode;
         RS_CMD_Machinegun cmd_machinegun;
         RS_CMD_NoClip cmd_noclip;
+        RS_CMD_Privsay cmd_privsay;
     }
 
     void SpawnGametype()

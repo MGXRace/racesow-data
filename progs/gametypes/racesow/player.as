@@ -33,6 +33,40 @@ RS_Player@ RS_getPlayer( Client @client )
 }
 
 /**
+ * RS_getPlayer
+ * Get the RS_Player associated with a given client number
+ *
+ * @param int clientNum The number of the client
+ * @return RS_Player The player associated with the client or null
+ */
+RS_Player@ RS_getPlayer( int clientNum )
+{
+    if( clientNum < 0 || clientNum >= maxClients )
+        return null;
+
+    return @players[clientNum];
+}
+
+/**
+ * RS_getPlayer
+ * Get the RS_Player associated with a name
+ *
+ * @param String name The simplified name of the player (case insensitive)
+ * @return RS_Player The player associated with the client or null
+ */
+RS_Player@ RS_getPlayer( String name )
+{
+    for( int i = 0; i < maxClients; i++ )
+    {
+        if( @players[i] !is null &&
+            players[i].client.name.removeColorTokens().tolower() == name.tolower() )
+            return @players[i];
+    }
+
+    return null;
+}
+
+/**
  * Racesow Player Model
  *
  * @package Racesow
@@ -107,6 +141,18 @@ class RS_Player
     int noclipWeapon;
 
     /**
+     * Privsay floodprotection timer
+     * @var uint[]
+     */
+    uint[] privsayTimes;
+
+    /**
+     * Current privsayTimes index
+     * @var uint
+     */
+    uint privsayCount;
+
+    /**
      * Constructor
      * @param Client client The client to associate with the player
      */
@@ -116,6 +162,7 @@ class RS_Player
         position = RS_Position( @this );
         positionPrerace = RS_Position( @this );
         noclipWeapon = WEAP_NONE;
+        privsayTimes.resize( PRIVSAY_FLOODCOUNT );
     }
 
     /**

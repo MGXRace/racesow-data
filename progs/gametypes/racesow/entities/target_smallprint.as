@@ -19,11 +19,11 @@ void target_smallprint( Entity @ent )
 void target_smallprint_use( Entity @ent, Entity @other, Entity @activator )
 {
 	if( @activator.client is null ||
-        ent_smallprint_times[activator.get_playerNum()] + ENT_SMALLPRINT_TIMEOUT > realTime )
+        ent_smallprint_times[activator.get_playerNum()] > realTime )
         return;
 
     String @message;
     ent_smallprint_messages.get( String( ent.entNum ), @message );
-    ent_smallprint_times[activator.get_playerNum()] = realTime;
+    ent_smallprint_times[activator.get_playerNum()] = realTime + ENT_SMALLPRINT_TIMEOUT + uint( ent.wait );
 	G_CenterPrintMsg( activator, message );
 }

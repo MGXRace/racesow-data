@@ -87,6 +87,7 @@ class RS_Gametype
         RS_CMD_NoClip cmd_noclip;
         RS_CMD_Privsay cmd_privsay;
         RS_CMD_MapName cmd_mapname;
+        RS_CMD_WhoIsGod cmd_whoisgod;
     }
 
     void SpawnGametype()

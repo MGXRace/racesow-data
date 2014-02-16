@@ -21,6 +21,7 @@ racesow/commands/practicemode.as;
 racesow/commands/machinegun.as;
 racesow/commands/noclip.as;
 racesow/commands/privsay.as;
+racesow/commands/mapname.as;
 
 racesow/utils.as;
 racesow/gametype.as;

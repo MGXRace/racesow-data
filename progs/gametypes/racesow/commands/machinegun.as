@@ -7,7 +7,7 @@ class RS_CMD_Machinegun : RS_Command
 	RS_CMD_Machinegun()
 	{
 		name = "machinegun";
-    	description = "Gives yuo a machinegun";
+    	description = "Gives you a machinegun";
     	usage = "";
     	register();
 	}

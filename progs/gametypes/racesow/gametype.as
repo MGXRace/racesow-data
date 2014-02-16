@@ -150,9 +150,6 @@ class RS_Gametype
 
     void PlayerRespawn( Entity @ent, int old_team, int new_team )
     {
-        if( ent.isGhosting() )
-            return;
-
         RS_Player @player = RS_getPlayer( @ent );
         if( @player !is null )
             player.cancelRace();

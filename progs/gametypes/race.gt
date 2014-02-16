@@ -12,9 +12,11 @@ legacy/quake3_items.as;
 racesow/entities/target_starttimer.as;
 racesow/entities/target_stoptimer.as;
 racesow/entities/target_checkpoint.as;
+racesow/entities/target_delay.as;
 racesow/entities/target_kill.as;
 racesow/entities/target_relay.as;
 racesow/entities/target_smallprint.as;
+racesow/entities/target_teleporter.as;
 racesow/entities/replacementitem.as;
 racesow/entities/shooters.as;
 

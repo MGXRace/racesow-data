@@ -18,7 +18,7 @@ void trigger_push_velocity( Entity @ent )
 	ent.moveType = MOVETYPE_NONE;
     ent.setupModel( ent.model );
 	ent.svflags &= ~SVF_NOCLIENT;
-	ent.svflags |= SVF_TRANSMITORIGIN2 // |SVF_NOCULLATORIGIN2 Removed in Warsow 0.7
+	ent.svflags |= SVF_TRANSMITORIGIN2; // |SVF_NOCULLATORIGIN2 Removed in Warsow 0.7
 	ent.wait = 1;
 	ent.linkEntity();
 }

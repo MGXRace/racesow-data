@@ -13,6 +13,9 @@ racesow/entities/target_starttimer.as;
 racesow/entities/target_stoptimer.as;
 racesow/entities/target_checkpoint.as;
 racesow/entities/replacementitem.as;
+racesow/entities/target_kill.as;
+racesow/entities/target_relay.as;
+racesow/entities/target_smallprint.as;
 
 racesow/commands/base.as;
 racesow/commands/racerestart.as;

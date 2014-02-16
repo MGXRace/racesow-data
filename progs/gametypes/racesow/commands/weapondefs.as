@@ -6,6 +6,7 @@ class RS_CMD_WeaponDefs : RS_Command
 {
 	String[] cvarNames = {
 		"g_gravity",
+        "g_self_knockback",
 		"rs_grenade_minKnockback",
 		"rs_grenade_maxKnockback",
 		"rs_grenade_splash",
@@ -34,6 +35,7 @@ class RS_CMD_WeaponDefs : RS_Command
 	// Values copied from g_racesow.cpp
 	String[] defaults = {
 		"850",	// "g_gravity",
+        "1.18", // "g_self_knockback",
 		"5",	// "rs_grenade_minKnockback",
 		"90",	// "rs_grenade_maxKnockback",
 		"160",	// "rs_grenade_splash",
@@ -64,7 +66,7 @@ class RS_CMD_WeaponDefs : RS_Command
 	RS_CMD_WeaponDefs()
 	{
 		name = "weapondefs";
-    	description = "List or change the physics cvars\n";
+    	description = "List or change the physics cvars";
     	usage = "list - list all cvars, values, and default values\n"
     		+ "set <cvar> <value> - Set a cvar to a specific value\n"
     		+ "reset <cvar> - Reset a specific cvar to its default value\n"

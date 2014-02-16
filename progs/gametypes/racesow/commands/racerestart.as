@@ -22,7 +22,7 @@ class RS_CMD_RaceRestart : RS_Command
     }
 }
 
-class RS_CMD_Join : RS_CMD_RaceRestart
+class RS_CMD_Join : RS_Command
 {
 	RS_CMD_Join()
 	{
@@ -31,9 +31,18 @@ class RS_CMD_Join : RS_CMD_RaceRestart
 		usage = "";
 		register();
 	}
+
+    bool execute(RS_Player @player, String &args, int argc)
+    {
+        if( @player.client is null )
+        	return false;
+
+		player.respawn();
+        return true;
+    }
 }
 
-class RS_CMD_Kill : RS_CMD_RaceRestart
+class RS_CMD_Kill : RS_Command
 {
 	RS_CMD_Kill()
 	{
@@ -42,4 +51,13 @@ class RS_CMD_Kill : RS_CMD_RaceRestart
 		usage = "";
 		register();
 	}
+
+    bool execute(RS_Player @player, String &args, int argc)
+    {
+        if( @player.client is null )
+        	return false;
+
+		player.respawn();
+        return true;
+    }
 }

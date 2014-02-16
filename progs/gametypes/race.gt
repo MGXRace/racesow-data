@@ -17,6 +17,7 @@ racesow/entities/target_kill.as;
 racesow/entities/target_relay.as;
 racesow/entities/target_smallprint.as;
 racesow/entities/target_teleporter.as;
+racesow/entities/trigger_push_velocity.as;
 racesow/entities/replacementitem.as;
 racesow/entities/shooters.as;
 

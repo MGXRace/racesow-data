@@ -104,12 +104,14 @@ class RS_CMD_WeaponDefs : RS_Command
 
         	cvar = Cvar( cvarNames[i], defaults[i], CVAR_ARCHIVE );
         	cvar.set( args.getToken( 2 ) );
+        	G_PrintMsg( null, S_COLOR_ORANGE + cvarNames[i] + S_COLOR_WHITE + " set to " + args.getToken( 2 ) + "\n" );
         	return true;
         }
 
         // Reset a specific cvar
         else if( args.getToken( 0 ) == "reset" && argc == 1 )
         {
+        	G_PrintMsg( null, S_COLOR_ORANGE + "Physics Cvars reset\n" );
         	for( int i = 0; i < numCvars; i++ )
         		resetCvar( cvarNames[i], defaults[i] );
         }
@@ -122,6 +124,7 @@ class RS_CMD_WeaponDefs : RS_Command
         		return false;
 
         	resetCvar( cvarNames[i], defaults[i] );
+        	G_PrintMsg( null, S_COLOR_ORANGE + cvarNames[i] + S_COLOR_WHITE + " was reset\n" );
         	return true;	
         }
 

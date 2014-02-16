@@ -20,7 +20,7 @@ if %STRAFEANGLE > 0
 		setColor 1, 0, 0, 0.8
 	endif
 	//good strafe: green
-	if 0.8 < 1000 * %ACCELERATION / %MAX_ACCEL
+	if 0.8 < %ACCELERATION / %MAX_ACCEL
 		setColor 0, 1, 0, 0.8
 	endif
 

@@ -93,6 +93,46 @@ class RS_Gametype
 
     void SpawnGametype()
     {
+        for( int i = 0; i < numEntities; i++ )
+        {
+            Entity @ent = @G_GetEntity( i );
+            if( @ent is null )
+                continue;
+
+            if( ent.classname == "trigger_multiple" && entityTargets( @ent, "target_startTimer" ) )
+            {
+                ent.wait = 0;
+            }
+
+            else if( ent.classname == "target_give" )
+            {
+                array<Entity@> targets = ent.findTargets();
+                for( uint i = 0; i < targets.length(); i++ )
+                {
+                    Entity @target = targets[i];
+                    if( @target is null )
+                    {
+                        G_Print( S_COLOR_ORANGE  + "Warning: " + S_COLOR_WHITE + "target_give is missing targets\n" );
+                        ent.unlinkEntity();
+                        ent.freeEntity();
+                        break;
+                    }
+                }
+            }
+
+            else if( ent.type == ET_ITEM )
+            {
+                Item @item = @ent.item;
+                if( @item !is null && 
+                    ent.classname == item.classname && 
+                    ent.solid != SOLID_NOT &&
+                    !entityTargetedBy( @ent, "target_give" ) )
+                {
+                    ent.classname = "AS_" + item.classname;
+                    replacementItem( @ent );
+                }
+            }
+        }
     }
 
     void Shutdown()

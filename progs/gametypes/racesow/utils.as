@@ -168,3 +168,51 @@ void sendCenterMessage( RS_Player @player, String message )
 
     G_PrintMsg( player.client.getEnt(), S_COLOR_RED + "Error: " + S_COLOR_WHITE + message + "\n" );
  }
+
+/**
+ * entityTargets
+ * Determines if an entity targets another entity with a given name
+ * @param String targetName The target name in camelCase (for defrag compat)
+ */
+ bool entityTargets( Entity @ent, String targetName )
+ {
+    if( @ent is null )
+        return false;
+
+    array<Entity@> targets = ent.findTargets();
+    Entity @target;
+    for( uint i = 0; i < targets.length(); i++ )
+    {
+        @target = targets[i];
+        if( @target is null || target.classname != targetName || target.classname != targetName.tolower() )
+            continue;
+
+        return true;
+    }
+
+    return false;
+ }
+
+ /**
+  * entityTargetedBy
+  * Determines if an entity target is targeted by another entity with a given name
+  * @param String targetName The target name in camelCase (for defrag compat)
+  */
+ bool entityTargetedBy( Entity @ent, String targetName )
+ {
+    if( @ent is null )
+        return false;
+
+    array<Entity@> targets = ent.findTargeting();
+    Entity @target;
+    for( uint i = 0; i < targets.length(); i++ )
+    {
+        @target = targets[i];
+        if( @target is null || target.classname != targetName || target.classname != targetName.tolower() )
+            continue;
+
+        return true;
+    }
+
+    return false;
+ }

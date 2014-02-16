@@ -23,6 +23,7 @@ racesow/commands/noclip.as;
 racesow/commands/privsay.as;
 racesow/commands/mapname.as;
 racesow/commands/whoisgod.as;
+racesow/commands/weapondefs.as;
 
 racesow/utils.as;
 racesow/gametype.as;

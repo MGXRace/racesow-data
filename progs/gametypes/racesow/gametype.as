@@ -88,6 +88,7 @@ class RS_Gametype
         RS_CMD_Privsay cmd_privsay;
         RS_CMD_MapName cmd_mapname;
         RS_CMD_WhoIsGod cmd_whoisgod;
+        RS_CMD_WeaponDefs cmd_weapondefs;
     }
 
     void SpawnGametype()
@@ -274,6 +275,6 @@ class RS_Gametype
         if( !command.validate( @player, args, argc ) )
             return false;
 
-        return command.execute( @player, args, args );
+        return command.execute( @player, args, argc );
     }
 }

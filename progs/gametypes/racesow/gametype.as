@@ -169,6 +169,12 @@ class RS_Gametype
 
     void ThinkRules()
     {
+        if ( match.timeLimitHit() )
+            match.launchState( match.getState() + 1 );
+
+        if ( match.getState() >= MATCH_STATE_POSTMATCH )
+            return;
+
         RS_Player @player;
 
         for( int i = 0; i < maxClients; i++ )

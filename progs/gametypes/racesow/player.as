@@ -179,6 +179,7 @@ class RS_Player
      */
     void respawn()
     {
+        RS_ResetPjState( client.get_playerNum() );
         cancelRace();
         respawnTime = 0;
 

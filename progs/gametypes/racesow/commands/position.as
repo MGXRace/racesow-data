@@ -42,6 +42,18 @@ class RS_CMD_Position : RS_Command
 				return false;
 			}
 
+			if( player.getHeight() != 0 )
+			{
+				sendMessage( @player, "Prerace position must be set on solid ground\n");
+				return false;
+			}
+
+			if( player.client.getEnt().velocity.length() > .01 )
+			{
+				sendMessage( @player, "Prerace position must be set while standing still\n");
+				return false;
+			}
+
 			return player.positionPrerace.save();
 		}
 

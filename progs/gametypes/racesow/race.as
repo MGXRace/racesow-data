@@ -79,17 +79,11 @@ class RS_Race
             sendAward( player, S_COLOR_RED + "Prejumped" );
 
         // Calculate player height
-        Vec3 mins, maxs;
-        Entity @ent = @player.client.getEnt();
-        ent.getSize( mins, maxs );
-        Vec3 down = Vec3( ent.origin.x, ent.origin.y, ent.origin.z - 5000 );
-        Trace tr;
-        int height = tr.doTrace( ent.origin, mins, maxs, down, ent.entNum, MASK_PLAYERSOLID ) ?
-                     int( ent.origin.z - tr.get_endPos().z ) : 0;
+        int height = player.getHeight();
 
         // Initialize report string
         report = S_COLOR_ORANGE + "Start speed: " + S_COLOR_WHITE + player.getSpeed()
-               + ( height == 0 ? "" : S_COLOR_ORANGE + " Height: " + S_COLOR_WHITE + height )
+               + ( height > 0 ? S_COLOR_ORANGE + " Height: " + S_COLOR_WHITE + height : "" )
                + "\n";
     }
 

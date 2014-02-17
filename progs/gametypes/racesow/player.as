@@ -447,6 +447,22 @@ class RS_Player
     }
 
     /**
+     * getHeight
+     * Return the players distance above the closest floor
+     * @return int
+     */
+    int getHeight()
+    {
+        Vec3 mins, maxs;
+        Entity @ent = @client.getEnt();
+        ent.getSize( mins, maxs );
+        Vec3 down = Vec3( ent.origin.x, ent.origin.y, ent.origin.z - 5000 );
+        Trace tr;
+        return tr.doTrace( ent.origin, mins, maxs, down, ent.entNum, MASK_PLAYERSOLID ) ?
+                     int( ent.origin.z - tr.get_endPos().z ) : -1;
+    }
+
+    /**
      * getState
      * The current racing state of the player
      * @return int

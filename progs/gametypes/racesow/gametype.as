@@ -89,6 +89,7 @@ class RS_Gametype
         RS_CMD_MapName cmd_mapname;
         RS_CMD_WhoIsGod cmd_whoisgod;
         RS_CMD_WeaponDefs cmd_weapondefs;
+        RS_CMD_Give cmd_give;
     }
 
     void SpawnGametype()

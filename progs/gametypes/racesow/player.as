@@ -274,35 +274,35 @@ class RS_Player
         if( @race is null )
             return;
 
+        race.stopRace();
+        RS_Race @lastRace = @race;
+        @race = null;
+
         if( practicing )
         {
-            race.stopRace();
             sendAward( @this, S_COLOR_CYAN + "You completed the map in practicemode, no time was set");
-            @race = null;
             return;
         }
 
         uint refBest = @serverRecord is null ? 0 : serverRecord.getTime();
-        uint newTime = race.getTime();
+        uint newTime = lastRace.getTime();
 
         // stop the race and save its time to the HUD
-        race.stopRace();
-        raceReport();
+        raceReport( @lastRace );
         respawnTime = realTime + 3000;
 
-        if( race.prejumped )
+        if( lastRace.prejumped )
         {
-            @race = null;
             specCallback @func = @sendCenterMessage;
             execSpectators( @func, @this, "Prejump Time: " + TimeToString( newTime ) );
             sendMessage( @this, "Prejump records are not recorded.");
             return;
         }
 
-        if( @serverRecord is null || serverRecord.getTime() > race.getTime() )
+        if( @serverRecord is null || serverRecord.getTime() > newTime )
         {
             // new server record
-            @serverRecord = @race;
+            @serverRecord = @lastRace;
 
             // Send record award to player and spectators
             specCallback @func = @sendAward;
@@ -311,14 +311,13 @@ class RS_Player
             // Print record message to chat
             G_PrintMsg(null, client.name + " "
                              + S_COLOR_YELLOW + "made a new server record: "
-                             + TimeToString( race.getTime() ) + "\n");
+                             + TimeToString( newTime ) + "\n");
         }
 
-        if( @recordRace is null || recordRace.getTime() > race.getTime() )
+        if( @recordRace is null || recordRace.getTime() > newTime )
         {
             // First record or New record
-            @recordRace = @race;
-            @race = null;
+            @recordRace = @lastRace;
 
             // Send record award to player and spectators
             specCallback @func = @sendAward;
@@ -337,16 +336,17 @@ class RS_Player
      */
     void cancelRace()
     {
-        raceReport();
+        raceReport( @race );
         @race = null;
     }
 
     /**
      * raceReport
      * Print to player's chat the current race report.
+     * @param RS_Race The race to report on
      * @return void
      */
-    void raceReport()
+    void raceReport( RS_Race @race )
     {
         if( @race is null )
             return;

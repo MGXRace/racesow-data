@@ -315,7 +315,7 @@ class RS_Player
         {
             specCallback @func = @sendCenterMessage;
             execSpectators( @func, @this, "Prejump Time: " + TimeToString( newTime ) );
-            sendMessage( @this, "Prejump records are not recorded.");
+            sendMessage( @this, "Prejumped records are not recorded.");
             return;
         }
 

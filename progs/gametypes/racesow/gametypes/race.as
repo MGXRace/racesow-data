@@ -7,6 +7,8 @@
  */
 class RS_GT_Race : RS_Gametype
 {
+    Cvar rs_dash_speed( "rs_dash_speed", "450", CVAR_ARCHIVE );
+
     /**
      * Constructor Method
      */
@@ -65,6 +67,7 @@ class RS_GT_Race : RS_Gametype
 
         // set player movement to pass through other players and remove gunblade auto attacking
         ent.client.set_pmoveFeatures( ent.client.pmoveFeatures & ~PMFEAT_GUNBLADEAUTOATTACK | PMFEAT_GHOSTMOVE );
+        ent.client.set_pmoveDashSpeed( rs_dash_speed.get_value() );
         ent.client.inventorySetCount( WEAP_GUNBLADE, 1 );
         ent.client.selectWeapon( -1 );
         ent.client.stats.setScore( RS_getPlayer( ent ).bestTime() );

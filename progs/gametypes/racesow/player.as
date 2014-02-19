@@ -153,6 +153,12 @@ class RS_Player
     uint privsayCount;
 
     /**
+     * Flag to call "dstop" on next respawn
+     * @var bool
+     */
+    bool dstop;
+
+    /**
      * Constructor
      * @param Client client The client to associate with the player
      */
@@ -162,6 +168,7 @@ class RS_Player
         position = RS_Position( @this );
         positionPrerace = RS_Position( @this );
         noclipWeapon = WEAP_NONE;
+        dstop = false;
         privsayTimes.resize( PRIVSAY_FLOODCOUNT );
     }
 
@@ -183,6 +190,17 @@ class RS_Player
         cancelRace();
         respawnTime = 0;
 
+        if( dstop )
+        {
+            int time =  @recordRace is null ? 0 : recordRace.getTime();
+            client.execGameCommand( "dstop " + time );
+            dstop = false;
+        }
+        else
+        {
+            client.execGameCommand( "dcancel" );
+        }
+
         if( @client.getEnt() !is null )
             G_RemoveProjectiles( client.getEnt() );
 
@@ -202,6 +220,8 @@ class RS_Player
 
         if( practicing )
             startRace();
+        else
+            client.execGameCommand( "dstart" );
     }
 
     /**
@@ -318,6 +338,7 @@ class RS_Player
         {
             // First record or New record
             @recordRace = @lastRace;
+            dstop = true;
 
             // Send record award to player and spectators
             specCallback @func = @sendAward;

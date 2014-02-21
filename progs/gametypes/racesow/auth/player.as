@@ -19,7 +19,8 @@ class RS_PlayerAuth
 	bool authenticated;
 
 	/**
-	 * serverTime used to generate tokens
+	 * realTime used to generate tokens
+	 * TODO: use UNIX timestamp
 	 * @var uint
 	 */
 	uint authTime;
@@ -57,15 +58,15 @@ class RS_PlayerAuth
 		if( authenticated || pending || thinkTime > realTime )
 			return;
 
-		if( authTime == 0 || authTime + 10000 < serverTime )
+		if( authTime == 0 || authTime + 10000 < realTime )
 		{
 			sendMessage( @player, "Generating token\n" );
 			// Regenerate the token every 10 seconds
-			authTime = serverTime;
+			authTime = realTime;
 			player.client.execGameCommand( "utoken \"" + authTime + "\"" );
 		}
 
-		else if( authTime + 1000 < serverTime )
+		else if( authTime + 1000 < realTime )
 		{
 			thinkTime = realTime + 1000;
 			String authUser = player.client.getUserInfoKey( "rs_authUser" );

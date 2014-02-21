@@ -34,6 +34,9 @@ racesow/commands/whoisgod.as;
 racesow/commands/weapondefs.as;
 racesow/commands/give.as;
 
+racesow/auth/player.as;
+racesow/auth/callbacks.as;
+
 racesow/utils.as;
 racesow/gametype.as;
 racesow/position.as;

@@ -81,6 +81,12 @@ class RS_Player
     Client @client;
 
     /**
+     * The clients auth credentials
+     * @var RS_PlayerAuth
+     */
+    RS_PlayerAuth auth;
+
+    /**
      * The player's inprogress or just finished race
      * @var RS_Race
      */
@@ -167,6 +173,7 @@ class RS_Player
         @this.client = @client;
         position = RS_Position( @this );
         positionPrerace = RS_Position( @this );
+        auth = RS_PlayerAuth( @this );
         noclipWeapon = WEAP_NONE;
         dstop = false;
         privsayTimes.resize( PRIVSAY_FLOODCOUNT );
@@ -425,6 +432,9 @@ class RS_Player
      */
     void Think()
     {
+        // auth check
+        auth.Think();
+
         // repawn check
         if( respawnTime != 0 && realTime > respawnTime)
             respawn();

@@ -100,15 +100,16 @@ class RS_Position
 
 	/**
 	 * Load the player's position, facing, velocity, and weapon loadout
+     * @param floodProtect Set to true to flood check the load call
 	 * @return bool True if succesful
 	 */
-	bool load()
+	bool load( bool floodProtect = false )
 	{
 		Entity @ent = @player.client.getEnt();
 		if( !saved || @ent is null )
 			return false;
 
-		if( lastcmd + 500 > realTime ) // Not sure why we flood protect this
+		if( floodProtect && lastcmd + 500 > realTime ) // Not sure why we flood protect this
 		{
 			sendMessage( @player, "Cannot load position now (flood protection)" );
 			return false;

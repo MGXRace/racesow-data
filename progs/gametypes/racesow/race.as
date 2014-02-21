@@ -60,6 +60,9 @@ class RS_Race
     RS_Race()
     {
         @player = null;
+        checkpoints.resize( numCheckpoints );
+        startSpeed = 0;
+        prejumped = false;
     }
 
     /**
@@ -120,7 +123,7 @@ class RS_Race
 
         uint newTime = checkpoints[cpNum];
         uint personalBest = @player.recordRace is null ? 0 : player.recordRace.checkpoints[cpNum];
-        uint refBest = @serverRecord is null ? 0 : serverRecord.checkpoints[cpNum];
+        uint refBest = @map.record is null ? 0 : map.record.checkpoints[cpNum];
         report += S_COLOR_ORANGE + "#" + ( cpNum + 1 ) + ": "
                 + S_COLOR_WHITE + TimeToString( newTime )
                 + S_COLOR_ORANGE + " Speed: " + S_COLOR_WHITE + player.getSpeed()

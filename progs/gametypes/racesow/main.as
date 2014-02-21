@@ -6,7 +6,6 @@
 RS_Player@[] players( maxClients );
 RS_Map @map;
 RS_Gametype @rsGametype;
-RS_Race @serverRecord;
 
 int numCheckpoints;
 
@@ -183,6 +182,7 @@ void GT_InitGametype()
     {
         @rsGametype = @RS_GT_Race();
     }
+    @map = @RS_Map();
 
     rsGametype.InitGametype();
 }

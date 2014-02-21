@@ -131,4 +131,14 @@ class RS_GT_Race : RS_Gametype
         playerList = scoreboardMessage;
         return @scoreboardMessage;
     }
+
+    /**
+     * Think rules specific to the race gametype
+     * @return void
+     */
+    void ThinkRules()
+    {
+        RS_Gametype::ThinkRules();
+        map.Think();
+    }
 }

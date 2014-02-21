@@ -311,7 +311,7 @@ class RS_Player
             return;
         }
 
-        uint refBest = @serverRecord is null ? 0 : serverRecord.getTime();
+        uint refBest = @map.record is null ? 0 : map.record.getTime();
         uint newTime = lastRace.getTime();
 
         // stop the race and save its time to the HUD
@@ -326,10 +326,10 @@ class RS_Player
             return;
         }
 
-        if( @serverRecord is null || serverRecord.getTime() > newTime )
+        if( @map.record is null || map.record.getTime() > newTime )
         {
             // new server record
-            @serverRecord = @lastRace;
+            @map.record = @lastRace;
 
             // Send record award to player and spectators
             specCallback @func = @sendAward;
@@ -381,7 +381,7 @@ class RS_Player
 
         uint newTime = race.getTime();
         uint personalBest = @recordRace is null ? 0 : recordRace.getTime();
-        uint refBest = @serverRecord is null ? 0 : serverRecord.getTime();
+        uint refBest = @map.record is null ? 0 : map.record.getTime();
 
         sendMessage( @this, race.report );
 
@@ -407,7 +407,7 @@ class RS_Player
             return false;
 
         // Make the checkpoint message
-        RS_Race @refRace = @serverRecord;
+        RS_Race @refRace = @map.record;
         uint newTime = race.checkpoints[cpNum];
         uint refBest = @refRace is null ? 0 : refRace.checkpoints[cpNum];
         uint personalBest = @recordRace is null ? 0 : recordRace.checkpoints[cpNum];
@@ -447,8 +447,8 @@ class RS_Player
         // Update HUD variables
         if( @race !is null )
             client.setHUDStat( STAT_TIME_SELF, race.getTime() / 100 );
-        if( @serverRecord !is null )
-            client.setHUDStat( STAT_TIME_RECORD, serverRecord.getTime() / 100 );
+        if( @map.record !is null )
+            client.setHUDStat( STAT_TIME_RECORD, map.record.getTime() / 100 );
         client.setHUDStat( STAT_TIME_BEST, bestTime() / 100 );
     }
 

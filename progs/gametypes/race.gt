@@ -35,6 +35,7 @@ racesow/commands/weapondefs.as;
 racesow/commands/give.as;
 
 racesow/auth/player.as;
+racesow/auth/map.as;
 racesow/auth/callbacks.as;
 
 racesow/utils.as;

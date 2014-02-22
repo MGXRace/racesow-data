@@ -238,6 +238,12 @@ class RS_Gametype
             // Release the associated RS_Player object
             @players[client.get_playerNum()] = null;
         }
+        else if( score_event == 'userinfochanged' )
+        {
+            RS_Player @player = RS_getPlayer( client );
+            if( @player !is null )
+              player.auth.UserInfoChanged();
+        }
     }
 
     /**

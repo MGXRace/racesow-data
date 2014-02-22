@@ -1,9 +1,39 @@
 /**
  * Callback for player auth
  */
-void RS_AuthPlayer_Done( int status, Json @data )
+void RS_AuthPlayer_Done( int status, Client @client, Json @data )
+{	
+	if( @client is null )
+		return;
+
+	RS_Player @player = RS_getPlayer( @client );
+	if( @player is null )
+		return;
+
+	player.auth.pending = false;
+	if( status == 200 )
+		player.auth.parseAuth( @data );
+	else
+		player.auth.resetAuth();
+}
+
+/**
+ * Callback for player auth
+ */
+void RS_AuthNick_Done( int status, Client @client, Json @data )
 {
-	G_PrintMsg( null, "Status: " + status + "\n" );
+	if( @client is null )
+		return;
+
+	RS_Player @player = RS_getPlayer( @client );
+	if( @player is null )
+		return;
+
+	player.auth.pending = false;
+	if( status == 200 )
+		player.auth.parseNick( @data );
+	else
+		player.auth.resetNick();
 }
 
 /**
@@ -23,35 +53,18 @@ void RS_AuthMap_Done( int status, Json @data )
 			name = node.getName();
 
 			if( name == "id" )
-			{
-				G_Print( "Map Id: " + node.valueint + "\n" );
 				map.auth.id = node.valueint;
-			}
+
 			else if( name == "time" )
-			{
-				G_Print( "Map Time: " + node.valueint + "\n" );
 				record.endTime = node.valueint;
-			}
+
 			else if( name == "checkpoints" )
-			{
-				Json @cpNode = @node.child;
-				while( @cpNode !is null )
-				{
-					int num = cpNode.getName().toInt();
-					uint time = uint(cpNode.valueint);
-					G_Print( "Checkpoint " + num + " " + time + "\n" );
-
-					if( num < numCheckpoints )
-						record.checkpoints[num] = time;
-
-					@cpNode = @cpNode.next;
-				}
-			}
+				record.parseCheckpoints( @node.child );
 
 			@node = @node.next;
 		}
 
-		if( record.endTime > 0 )
+		if( record.getTime() > 0 )
 			@map.record = @record;
 	}
 }

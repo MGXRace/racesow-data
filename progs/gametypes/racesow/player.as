@@ -326,6 +326,10 @@ class RS_Player
             return;
         }
 
+        // Not practicing or prejumped, report the race
+        if( auth.id != 0 and map.auth.id != 0 )
+            RS_ReportRace( client, auth.id, map.auth.id, lastRace.getTime(), @lastRace.checkpoints );
+
         if( @map.record is null || map.record.getTime() > newTime )
         {
             // new server record

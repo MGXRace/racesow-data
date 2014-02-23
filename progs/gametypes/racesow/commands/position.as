@@ -29,8 +29,14 @@ class RS_CMD_Position : RS_Command
 
     bool execute(RS_Player @player, String &args, int argc)
     {
+        bool success;
     	if( args.getToken( 0 ) == "save" )
-			return player.position.save();
+        {
+			success = player.position.save();
+            if( success )
+                sendMessage( @player, "Position saved\n" );
+            return success;
+        }
 
 		if( args.getToken( 0 ) == "prerace" )
 		{
@@ -54,7 +60,10 @@ class RS_CMD_Position : RS_Command
 				return false;
 			}
 
-			return player.positionPrerace.save();
+			success = player.positionPrerace.save();
+            if( success )
+                sendMessage( @player, "Position prerace saved\n" );
+            return success;
 		}
 
 		else if( args.getToken( 0 ) == "load" )

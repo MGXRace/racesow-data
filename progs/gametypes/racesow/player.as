@@ -436,7 +436,10 @@ class RS_Player
 
         // Update HUD variables
         if( @race !is null )
+        {
             client.setHUDStat( STAT_TIME_SELF, race.getTime() / 100 );
+            client.setHUDStat( STAT_START_SPEED, race.startSpeed );
+        }
         if( @serverRecord !is null )
             client.setHUDStat( STAT_TIME_RECORD, serverRecord.getTime() / 100 );
         client.setHUDStat( STAT_TIME_BEST, bestTime() / 100 );

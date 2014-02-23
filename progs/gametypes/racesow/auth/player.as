@@ -104,7 +104,6 @@ class RS_PlayerAuth
 
 		if( failTime != 0 )
 		{
-			RS_RenameClient( player.client, "player" );
 			// Fakenick kick countdown
 			if( nick.tolower() == authNick.tolower() )
 			{
@@ -112,8 +111,17 @@ class RS_PlayerAuth
 				return;
 			}
 			int remaining = 30 - ( ( int(realTime) - int(failTime) ) / 1000 );
-			sendMessage( @player, S_COLOR_ORANGE + "Warning: " + nick + S_COLOR_WHITE + " is protected, change your name or auth within " + remaining + " seconds.\n" );
-			thinkTime = realTime + 1000;
+
+			if( remaining < 1 )
+			{
+				failTime = 0;
+				RS_RenameClient( player.client, "player" );
+			}
+			else
+			{
+				sendMessage( @player, S_COLOR_ORANGE + "Warning: " + nick + S_COLOR_WHITE + " is protected, change your name or auth within " + remaining + " seconds.\n" );
+				thinkTime = realTime + 1000;
+			}
 		}
 	}
 

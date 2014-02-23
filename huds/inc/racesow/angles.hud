@@ -1,7 +1,6 @@
 //mouse angles
-
 setFontFamily "Virtue"
-setFontSize 12
+setFontSize 13
 
 setScale #DEFAULTSCALE
 setCursor 400, 300
@@ -25,21 +24,54 @@ if 0 == 2 & %SHOW_SPEED
 	setAlign #RIGHT, #MIDDLE
 	drawPicByName gfx/ui/white
 
+
+
+
 	//angle number
-	moveCursor -9, 0
+	setColor 0, 0, 0, 1
+	moveCursor -8, -1
 	setAlign #RIGHT, #TOP
 	drawStringNum 0.01 * %MOUSE_Y
 	setAlign #LEFT, #TOP
-	drawString "Â°"
+	drawString "°"
+	moveCursor 2, 0
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+	moveCursor 0, 2
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+	moveCursor -2, 0
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+	setColor 1, 1, 1, 1
+	moveCursor 1, -1
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+
+
+
+
+
+
 
 	//description
 	if 0 == 4 & %SHOW_SPEED
 		moveCursor 7, 0
 		// old - "bitstream_7"
 		setFontFamily "Droid Sans"
-		setFontSize 7
+		setFontSize 10
 		setAlign #RIGHT, #BOTTOM
+		moveCursor 0, -3
 		drawString "angle"
+		moveCursor 0, 3
 	endif
 endif
 endif

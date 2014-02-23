@@ -14,11 +14,13 @@ if 1 & %SHOW_SPEED
 	
 	//description
 	if 0 == 4 & %SHOW_SPEED
-		// old - "bitstream_7"
+		// old - "bitstream_12"
 		setFontFamily "Droid Sans"
-		setFontSize 7
+		setFontSize 10
 		setAlign #CENTER, #BOTTOM
+		moveCursor 0, -3
 		drawString "speed"
+		moveCursor 0, 3
 	endif
 
 	//vertical bar
@@ -35,14 +37,14 @@ if 1 & %SHOW_SPEED
 	setFontSize 22
 	setColor 0, 0, 0, 1
 	drawStringNum %SPEED
-	moveCursor 0, 4
+	moveCursor 0, 2
 	drawStringNum %SPEED
-	moveCursor 4, -4
+	moveCursor 2, -2
 	drawStringNum %SPEED
-	moveCursor 0, 4
+	moveCursor 0, 2
 	drawStringNum %SPEED
 	//white number
-	moveCursor -2, -2
+	moveCursor -1, -1
 	setColor 1, 1, 1, 1
 	drawStringNum %SPEED
 	

@@ -33,28 +33,28 @@ if 0 == 2 & %SHOW_SPEED
 	setAlign #RIGHT, #TOP
 	drawStringNum 0.01 * %MOUSE_Y
 	setAlign #LEFT, #TOP
-	drawString "°"
+	drawString "Â°"
 	moveCursor 2, 0
 	setAlign #RIGHT, #TOP
 	drawStringNum 0.01 * %MOUSE_Y
 	setAlign #LEFT, #TOP
-	drawString "°"
+	drawString "Â°"
 	moveCursor 0, 2
 	setAlign #RIGHT, #TOP
 	drawStringNum 0.01 * %MOUSE_Y
 	setAlign #LEFT, #TOP
-	drawString "°"
+	drawString "Â°"
 	moveCursor -2, 0
 	setAlign #RIGHT, #TOP
 	drawStringNum 0.01 * %MOUSE_Y
 	setAlign #LEFT, #TOP
-	drawString "°"
+	drawString "Â°"
 	setColor 1, 1, 1, 1
 	moveCursor 1, -1
 	setAlign #RIGHT, #TOP
 	drawStringNum 0.01 * %MOUSE_Y
 	setAlign #LEFT, #TOP
-	drawString "°"
+	drawString "Â°"
 
 
 

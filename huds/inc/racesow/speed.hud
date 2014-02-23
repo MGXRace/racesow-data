@@ -14,7 +14,6 @@ if 1 & %SHOW_SPEED
 	
 	//description
 	if 0 == 4 & %SHOW_SPEED
-		// old - "bitstream_12"
 		setFontFamily "Droid Sans"
 		setFontSize 10
 		setAlign #CENTER, #BOTTOM

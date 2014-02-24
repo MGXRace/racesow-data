@@ -165,6 +165,18 @@ class RS_Player
     bool dstop;
 
     /**
+     * Amount of time spent playing
+     * @var uint
+     */
+    uint playTime;
+
+    /**
+     * Number of races finished on the map
+     * @var uint
+     */
+    uint races;
+
+    /**
      * Constructor
      * @param Client client The client to associate with the player
      */
@@ -311,22 +323,24 @@ class RS_Player
             return;
         }
 
-        uint refBest = @map.record is null ? 0 : map.record.getTime();
-        uint newTime = lastRace.getTime();
-
-        // stop the race and save its time to the HUD
-        raceReport( @lastRace );
-        respawnTime = realTime + 3000;
-
         if( lastRace.prejumped )
         {
             specCallback @func = @sendCenterMessage;
-            execSpectators( @func, @this, "Prejump Time: " + TimeToString( newTime ) );
+            execSpectators( @func, @this, "Prejump Time: " + TimeToString( lastRace.getTime() ) );
             sendMessage( @this, "Prejumped records are not recorded.");
             return;
         }
 
-        // Not practicing or prejumped, report the race
+        // Not practicing or prejumped, its a real race
+
+        uint refBest = @map.record is null ? 0 : map.record.getTime();
+        uint newTime = lastRace.getTime();
+        raceReport( @lastRace );
+        respawnTime = realTime + 3000;
+        races += 1;
+        map.races += 1;
+
+        // Report the race
         if( auth.id != 0 and map.auth.id != 0 )
             RS_ReportRace( client, auth.id, map.auth.id, lastRace.getTime(), @lastRace.checkpoints );
 
@@ -438,6 +452,11 @@ class RS_Player
     {
         // auth check
         auth.Think();
+
+        // update playtime
+        // TODO: afk check incase we dont autoremove afks
+        if( client.team == TEAM_PLAYERS )
+            playTime += frameTime;
 
         // repawn check
         if( respawnTime != 0 && realTime > respawnTime)

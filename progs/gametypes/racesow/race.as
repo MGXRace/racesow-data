@@ -139,7 +139,7 @@ class RS_Race
      */
     uint getTime()
     {
-        if( endTime != 0 )
+        if( endTime != 0 || @player is null )
             return endTime - startTime;
 
         return player.client.uCmdTimeStamp - startTime;

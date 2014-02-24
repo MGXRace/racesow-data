@@ -19,6 +19,18 @@ class RS_Map
     RS_MapAuth auth;
 
     /**
+     * Number of real races finished this session
+     * @var uint
+     */
+    uint races;
+
+    /**
+     * Milliseconds the map has been played this session
+     * @var uint
+     */
+    uint playTime;
+
+    /**
      * Constructor
      */
     RS_Map()
@@ -40,6 +52,9 @@ class RS_Map
      */
     void Think()
     {
+        if( G_GetTeam( TEAM_PLAYERS ).numPlayers > 0 )
+            playTime += frameTime;
+
         auth.Think();
     }
 }

@@ -180,18 +180,9 @@ class RS_PlayerAuth
 		if( data.type != cJSON_Object )
 		{
 			// Auth failed
-			id = 0;
+			resetPlayer();
 			playerStatus = AUTH_STATUS_FAILED;
-			nick = "";
 			sendErrorMessage( @player, "Failed to authenticate as " + user );
-
-			// Set the nick protection again if necessary
-			if( nickProtected )
-			{
-				failTime = failTime == 0 ? realTime : failTime;
-				thinkTime = thinkTime == 0 ? realTime : thinkTime;
-				nickStatus = AUTH_STATUS_FAILED;
-			}
 			return;
 		}
 
@@ -238,6 +229,19 @@ class RS_PlayerAuth
 			@node = @node.next;
 		}
 
+		// De-Authenticate any other players logged in with the same user
+		RS_Player @other;
+		for( int i = 0; i < maxClients; i++ )
+		{
+			@other = players[i];
+			if( @other is null || @other is @player )
+				continue;
+
+			sendMessage( @other, "You have been logged out\n" );
+			other.auth.resetPlayer();
+			other.auth.playerStatus = AUTH_STATUS_FAILED;
+		}
+
 		if( race.getTime() != 0 )
 			@player.recordRace = @race;
 
@@ -256,6 +260,14 @@ class RS_PlayerAuth
 		user = "";
 		token = "";
 		nick = "";
+
+		// Set the nick protection again if necessary
+		if( nickProtected )
+		{
+			failTime = failTime == 0 ? realTime : failTime;
+			thinkTime = thinkTime == 0 ? realTime : thinkTime;
+			nickStatus = AUTH_STATUS_FAILED;
+		}
 	}
 
 	/**

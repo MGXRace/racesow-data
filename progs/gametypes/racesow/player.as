@@ -199,6 +199,15 @@ class RS_Player
     }
 
     /**
+     * Returns the client's name without color tokens and in lowercase
+     * @return The client's simplified name
+     */
+    String simpleNick()
+    {
+        return client.get_name().removeColorTokens();
+    }
+
+    /**
      * respawn
      * Respawn the player and restore saved state if applicable
      * @return void

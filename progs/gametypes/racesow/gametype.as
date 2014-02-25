@@ -242,7 +242,7 @@ class RS_Gametype
         {
             RS_Player @player = RS_getPlayer( client );
             if( @player !is null )
-              player.auth.UserInfoChanged();
+              player.auth.UserInfoChanged( args );
         }
     }
 

@@ -13,18 +13,16 @@ class RS_PlayerAuth
 	RS_Player @player;
 
 	/**
-	 * True if the authentication query was successful
-	 * May be true even if the player failed to authenticate
-	 * Use `id > 0` to check for succesful authentication
-	 * @var bool
+	 * Player id
+	 * @var uint
 	 */
-	bool authenticated;
+	uint id;
 
 	/**
-	 * True if we have a pending request
+	 * Status of the player auth query
 	 * @var bool
 	 */
-	bool pending;
+	uint playerStatus;
 
 	/**
 	 * Users authentication username
@@ -33,37 +31,34 @@ class RS_PlayerAuth
 	String user;
 
 	/**
-	 * Users authentication nickname
+	 * Users authentication token
 	 * @var String
 	 */
-	String authNick;
+	String token;
 
 	/**
-	 * Nickname at last QueryNick call
-	 * @var string
+	 * Users authentication nickname
+	 * @var String
 	 */
 	String nick;
 
 	/**
-	 * True if the nick query was successful
-	 * May be true even if the player is nick faking
-	 * use `failTime == 0 && nickAuthenticated` to test if the nick is valid
+	 * Status of the protected nick query
 	 * @var bool
 	 */
-	bool nickAuthenticated;
+	uint nickStatus;
 
 	/**
-	 * Player id
-	 * @var uint
+	 * True if the player is using protected nickname
+	 * @var bool
 	 */
-	uint id;
+	bool nickProtected;
 
 	/**
-	 * realTime used to generate tokens
-	 * TODO: use UNIX timestamp
+	 * Unix timestamp used to generate tokens
 	 * @var uint
 	 */
-	uint authTime;
+	uint uTime;
 
 	/**
 	 * realTime for next think
@@ -72,7 +67,7 @@ class RS_PlayerAuth
 	uint thinkTime;
 
 	/**
-	 * realTime when the kick countdown beings
+	 * realTime when the kick countdown begins
 	 * @var uint
 	 */
 	uint failTime;
@@ -84,7 +79,10 @@ class RS_PlayerAuth
 	RS_PlayerAuth( RS_Player @player )
 	{
 		@this.player = @player;
-		resetAuth();
+		user = player.client.getUserInfoKey( "rs_authUser" );
+		token = player.client.getUserInfoKey( "rs_authToken" );		
+		GenerateToken();
+		QueryNick();
 	}
 
 	/**
@@ -93,169 +91,231 @@ class RS_PlayerAuth
 	 */
 	void Think()
 	{
-		if( thinkTime > realTime || map.auth.id == 0 )
-			return;
-
-		if( !authenticated )
-			QueryPlayer();
-
-		if( !nickAuthenticated )
-			QueryNick();
-
-		if( failTime != 0 )
+		// Protected nick countdown
+		if( thinkTime != 0 && thinkTime < realTime && failTime != 0 && nickStatus != AUTH_STATUS_PENDING )
 		{
-			// Fakenick kick countdown
-			if( nick.tolower() == authNick.tolower() )
-			{
-				failTime = 0;
-				return;
-			}
-			int remaining = 30 - ( ( int(realTime) - int(failTime) ) / 1000 );
+			int remaining = ( 30500 - int(realTime) + int(failTime) ) / 1000;
 
+			// Out of time, rename them
 			if( remaining < 1 )
 			{
+				sendMessage( @player, "Renaming" );
 				failTime = 0;
+				thinkTime = 0;
 				RS_RenameClient( player.client, "player" );
+				return;
 			}
+
+			// Send a message and set the next think time
+			sendMessage( @player, S_COLOR_ORANGE + "Warning: " + player.client.get_name() + S_COLOR_WHITE + " is protected, change your name or login within " + remaining + " seconds.\n" );
+			if( remaining > 5 )
+				thinkTime = realTime + 5000;
 			else
-			{
-				sendMessage( @player, S_COLOR_ORANGE + "Warning: " + nick + S_COLOR_WHITE + " is protected, change your name or auth within " + remaining + " seconds.\n" );
 				thinkTime = realTime + 1000;
-			}
 		}
 	}
 
 	/**
 	 * Check if the player changed any important userinfo variables and reauth as needed
 	 */
-	void UserInfoChanged()
+	void UserInfoChanged( String oldnick )
 	{
 		if( user != player.client.getUserInfoKey( "rs_authUser" ) )
 		{
-			resetAuth();
+			resetPlayer();
+			user = player.client.getUserInfoKey( "rs_authUser" );
+			GenerateToken();
 			return;
 		}
 
-		if( player.client.get_name().removeColorTokens().tolower() != nick.tolower() )
+		if( token != player.client.getUserInfoKey( "rs_authToken" ) )
+		{
+			token = player.client.getUserInfoKey( "rs_authToken" );
+			QueryPlayer();
+		}
+
+		// User changed name
+		String simpleNick = oldnick.removeColorTokens().tolower();
+		if( simpleNick != player.simpleNick() )
+		{
 			resetNick();
+			QueryNick();
+		}
 	}
 
+	/**
+	 * Force the user to regenerate a new auth token
+	 * @return void
+	 */
+	void GenerateToken()
+	{
+		uTime = realTime; // TODO: use Unix Timestamp
+		player.client.execGameCommand( "utoken \"" + uTime + "\"" );
+	}
+
+	/**
+	 * Make the 
+	 * @return void
+	 */
 	void QueryPlayer()
 	{
-		if( pending )
-			return;
-
-		if( authTime == 0 || authTime + 10000 < realTime )
-		{
-			// Regenerate the token every 10 seconds
-			authTime = realTime;
-			thinkTime = realTime + 1000;
-			player.client.execGameCommand( "utoken \"" + authTime + "\"" );
-			return;
-		}
-
-		thinkTime = realTime + 500;
-		user = player.client.getUserInfoKey( "rs_authUser" );
-		String authToken = player.client.getUserInfoKey( "rs_authToken" );
-
-		if( user.empty() || authToken.empty() )
+		if( user.empty() || token.empty() )
 		{
 			id = 0;
-			authenticated = true;
+			playerStatus = AUTH_STATUS_FAILED;
 			sendErrorMessage( @player, "You are not authenticated. Login with 'rs_login <user> <pass>'" );
+			return;
 		}
 		
-		pending = true;
-		RS_AuthPlayer( @player.client, user, authToken, authTime, map.auth.id );
+		playerStatus = AUTH_STATUS_PENDING;
+		RS_AuthPlayer( @player.client, user, token, uTime, map.auth.id );
 	}
 
 	/**
 	 * Parse the server response
 	 * @param Json data The response data
 	 */
-	void parseAuth( Json @data )
+	void parsePlayer( Json @data )
 	{
-		authenticated = true;
-
-		if( data.type == cJSON_Object )
+		if( data.type != cJSON_Object )
 		{
-			// Parse a valid response
-			RS_Race @race = @RS_Race();
-			Json @node = @data.child;
-			String name;
+			// Auth failed
+			id = 0;
+			playerStatus = AUTH_STATUS_FAILED;
+			nick = "";
+			sendErrorMessage( @player, "Failed to authenticate as " + user );
 
-			while( @node !is null )
+			// Set the nick protection again if necessary
+			if( nickProtected )
 			{
-				G_Print( "ParseNode " + node.getName() + " " + node.getString() + "\n" );
-				name = node.getName();
-				if( name == "nick")
-					authNick = node.getString();
+				failTime = failTime == 0 ? realTime : failTime;
+				thinkTime = thinkTime == 0 ? realTime : thinkTime;
+				nickStatus = AUTH_STATUS_FAILED;
+			}
+			return;
+		}
 
-				if( name == "id")
-					id = node.valueint;
+		// Parse a valid response
+		RS_Race @race = @RS_Race();
+		Json @node = @data.child;
+		String name;
 
-				if( name == "checkpoints" )
-					race.parseCheckpoints( @node.child );
+		// TODO: Make sure each of these is hit exactly once
+		// Would be better to add a cJSON.get method
+		while( @node !is null )
+		{
+			name = node.getName();
+			if( name == "nick")
+			{
+				nick = node.getString();
 
-				if( name == "time" )
-					race.endTime = node.valueint;
-
-				@node = @node.next;
+				// Check if we authorized the protected nick
+				String simpleNick = nick.removeColorTokens().tolower();
+				if( nickProtected && simpleNick != player.simpleNick() )
+				{
+					// Still not authorized
+					failTime = failTime == 0 ? realTime : failTime;
+					thinkTime = thinkTime == 0 ? realTime : thinkTime;
+					nickStatus = AUTH_STATUS_FAILED;
+				}
+				else if( nickProtected )
+				{
+					// Authorized
+					failTime = 0;
+					nickStatus = AUTH_STATUS_SUCCESS;
+				}
 			}
 
-			if( race.getTime() != 0 )
-				@player.recordRace = @race;
+			if( name == "id")
+				id = node.valueint;
 
-			sendMessage( @player, "Authenticated as " + user + "\n" );
+			if( name == "checkpoints" )
+				race.parseCheckpoints( @node.child );
+
+			if( name == "time" )
+				race.endTime = node.valueint;
+
+			@node = @node.next;
 		}
-		else
-		{
-			// Player failed to authenticate
-			id = 0;
-			sendErrorMessage( @player, "Failed to authenticate as " + user );
-		}
+
+		if( race.getTime() != 0 )
+			@player.recordRace = @race;
+
+		playerStatus = AUTH_STATUS_SUCCESS;
+		sendMessage( @player, "Authenticated as " + user + "\n" );
+	}
+
+	/**
+	 * Reset the player's auth state
+	 * @return void
+	 */
+	void resetPlayer()
+	{
+		id = 0;
+		playerStatus = AUTH_STATUS_NONE;
+		user = "";
+		token = "";
+		nick = "";
+	}
+
+	/**
+	 * Query if the player is using a protected nick
+	 * @return void
+	 */
+	void QueryNick()
+	{
+		nickStatus = AUTH_STATUS_PENDING;
+		RS_AuthNick( player.client, player.simpleNick() );
 	}
 
 	/**
 	 * Parse the server response
-	 * @param Json data The response data
+	 * @param data The server response data
+	 * @return void
 	 */
-	void resetAuth()
-	{
-		id = 0;
-		authenticated = false;
-		thinkTime = 0;
-		user = "";
-		authNick = "";
-		resetNick();
-	}
-
-	void QueryNick()
-	{
-		if( pending )
-			return;
-
-		thinkTime = realTime + 500;
-		pending = true;
-		nick = player.client.get_name().removeColorTokens();
-		RS_AuthNick( player.client, nick );
-	}
-
 	void parseNick( Json @data )
 	{
-		// Player changed name before the callback appeared
-		if( nick != player.client.get_name().removeColorTokens() )
+		// Malformed response, give them benefit of the doubt
+		if( data.type != cJSON_Object )
+		{
+			nickProtected = false;
+			nickStatus = AUTH_STATUS_SUCCESS;
 			return;
+		}
 
-		nickAuthenticated = true;
-		if( data.type == cJSON_True )
-			failTime = realTime;
+		Json @node = @data.child;
+		String protectedNick = node.getName();
+		String simpleNick = protectedNick.removeColorTokens().tolower();
+		nickProtected = node.type == cJSON_True ? true : false;
+
+		// player changed name since the request, ignore this and wait for that response
+		if( simpleNick != player.simpleNick() )
+		{
+			nickProtected = false;
+			nickStatus = AUTH_STATUS_NONE;
+			return;
+		}
+
+		// Not authorized to use this nickname
+		if( nickProtected && simpleNick != nick )
+		{
+			failTime = failTime == 0 ? realTime : failTime;
+			thinkTime = thinkTime == 0 ? realTime : thinkTime;
+			nickStatus = AUTH_STATUS_FAILED;
+			return;
+		}
+
+		// Authorized to use the nickname
+		nickStatus = AUTH_STATUS_SUCCESS;
 	}
 
+	/**
+	 * Reset protected nick variables
+	 * @return void
+	 */
 	void resetNick()
 	{
-		thinkTime = realTime + 500;
-		nick = "";
-		nickAuthenticated = false;
+		nickProtected = false;
+		nickStatus = AUTH_STATUS_NONE;
 	}
 }

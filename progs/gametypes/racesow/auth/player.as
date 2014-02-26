@@ -20,9 +20,15 @@ class RS_PlayerAuth
 
 	/**
 	 * Status of the player auth query
-	 * @var bool
+	 * @var uint
 	 */
 	uint playerStatus;
+
+	/**
+	 * Is the user a superuser?
+	 * @var bool
+	 */
+	bool admin;
 
 	/**
 	 * Users authentication username
@@ -80,7 +86,7 @@ class RS_PlayerAuth
 	{
 		@this.player = @player;
 		user = player.client.getUserInfoKey( "rs_authUser" );
-		token = player.client.getUserInfoKey( "rs_authToken" );		
+		token = player.client.getUserInfoKey( "rs_authToken" );
 		GenerateToken();
 		QueryNick();
 	}
@@ -99,7 +105,6 @@ class RS_PlayerAuth
 			// Out of time, rename them
 			if( remaining < 1 )
 			{
-				sendMessage( @player, "Renaming" );
 				failTime = 0;
 				thinkTime = 0;
 				RS_RenameClient( player.client, "player" );
@@ -177,56 +182,42 @@ class RS_PlayerAuth
 	 */
 	void parsePlayer( Json @data )
 	{
-		if( data.type != cJSON_Object )
-		{
-			// Auth failed
-			resetPlayer();
-			playerStatus = AUTH_STATUS_FAILED;
-			sendErrorMessage( @player, "Failed to authenticate as " + user );
-			return;
-		}
-
 		// Parse a valid response
 		RS_Race @race = @RS_Race();
-		Json @node = @data.child;
-		String name;
+		Json @node;
 
-		// TODO: Make sure each of these is hit exactly once
-		// Would be better to add a cJSON.get method
-		while( @node !is null )
+		// TODO: Handle malformed queries
+		// Really wish we had try/catch blocks :S
+		@node = data.getItem("name");
+		nick = node.getString();
+
+		// Check if we authorized the protected nick
+		String simpleNick = nick.removeColorTokens().tolower();
+		if( nickProtected && simpleNick != player.simpleNick() )
 		{
-			name = node.getName();
-			if( name == "nick")
-			{
-				nick = node.getString();
+			// Still not authorized
+			failTime = failTime == 0 ? realTime : failTime;
+			thinkTime = thinkTime == 0 ? realTime : thinkTime;
+			nickStatus = AUTH_STATUS_FAILED;
+		}
+		else if( nickProtected )
+		{
+			// Authorized
+			failTime = 0;
+			nickStatus = AUTH_STATUS_SUCCESS;
+		}
 
-				// Check if we authorized the protected nick
-				String simpleNick = nick.removeColorTokens().tolower();
-				if( nickProtected && simpleNick != player.simpleNick() )
-				{
-					// Still not authorized
-					failTime = failTime == 0 ? realTime : failTime;
-					thinkTime = thinkTime == 0 ? realTime : thinkTime;
-					nickStatus = AUTH_STATUS_FAILED;
-				}
-				else if( nickProtected )
-				{
-					// Authorized
-					failTime = 0;
-					nickStatus = AUTH_STATUS_SUCCESS;
-				}
-			}
+		@node = data.getItem("id");
+		id = node.valueint;
 
-			if( name == "id")
-				id = node.valueint;
+		@node = data.getItem("admin");
+		admin = node.type == cJSON_True;
 
-			if( name == "checkpoints" )
-				race.parseCheckpoints( @node.child );
-
-			if( name == "time" )
-				race.endTime = node.valueint;
-
-			@node = @node.next;
+		@node = data.getItem("record");
+		if( @node !is null && node.type == cJSON_Object )
+		{
+			RS_Race @record = @RS_Race( node );
+			@player.record = @record;
 		}
 
 		// De-Authenticate any other players logged in with the same user
@@ -242,11 +233,8 @@ class RS_PlayerAuth
 			other.auth.playerStatus = AUTH_STATUS_FAILED;
 		}
 
-		if( race.getTime() != 0 )
-			@player.recordRace = @race;
-
 		playerStatus = AUTH_STATUS_SUCCESS;
-		sendMessage( @player, "Authenticated as " + user + "\n" );
+		sendMessage( @player, "Authenticated as " + user + (admin ? " with admin" : "" ) + "\n" );
 	}
 
 	/**

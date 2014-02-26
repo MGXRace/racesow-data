@@ -139,7 +139,7 @@ class RS_Race
         checkpoints[cpNum] = player.client.uCmdTimeStamp - startTime;
 
         uint newTime = checkpoints[cpNum];
-        uint personalBest = @player.recordRace is null ? 0 : player.recordRace.checkpoints[cpNum];
+        uint personalBest = @player.record is null ? 0 : player.record.checkpoints[cpNum];
         uint refBest = @map.record is null ? 0 : map.record.checkpoints[cpNum];
         report += S_COLOR_ORANGE + "#" + ( cpNum + 1 ) + ": "
                 + S_COLOR_WHITE + TimeToString( newTime )

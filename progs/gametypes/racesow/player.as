@@ -96,7 +96,7 @@ class RS_Player
      * The player's best race
      * @var RS_Race
      */
-    RS_Race @recordRace;
+    RS_Race @record;
 
     /**
      * The players highest speed
@@ -220,7 +220,7 @@ class RS_Player
 
         if( dstop )
         {
-            int time =  @recordRace is null ? 0 : recordRace.getTime();
+            int time =  @record is null ? 0 : record.getTime();
             client.execGameCommand( "dstop " + time );
             dstop = false;
         }
@@ -368,10 +368,10 @@ class RS_Player
                              + TimeToString( newTime ) + "\n");
         }
 
-        if( @recordRace is null || recordRace.getTime() > newTime )
+        if( @record is null || record.getTime() > newTime )
         {
             // First record or New record
-            @recordRace = @lastRace;
+            @record = @lastRace;
             dstop = true;
 
             // Send record award to player and spectators
@@ -407,7 +407,7 @@ class RS_Player
             return;
 
         uint newTime = race.getTime();
-        uint personalBest = @recordRace is null ? 0 : recordRace.getTime();
+        uint personalBest = @record is null ? 0 : record.getTime();
         uint refBest = @map.record is null ? 0 : map.record.getTime();
 
         sendMessage( @this, race.report );
@@ -437,7 +437,7 @@ class RS_Player
         RS_Race @refRace = @map.record;
         uint newTime = race.checkpoints[cpNum];
         uint refBest = @refRace is null ? 0 : refRace.checkpoints[cpNum];
-        uint personalBest = @recordRace is null ? 0 : recordRace.checkpoints[cpNum];
+        uint personalBest = @record is null ? 0 : record.checkpoints[cpNum];
         specCallback @func = @sendAward;
 
         if( newTime < refBest || refBest == 0 )
@@ -491,8 +491,8 @@ class RS_Player
      */
     uint bestTime()
     {
-        if( @recordRace !is null )
-            return recordRace.getTime();
+        if( @record !is null )
+            return record.getTime();
 
         return 0;
     }

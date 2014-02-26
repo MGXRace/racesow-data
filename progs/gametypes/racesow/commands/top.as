@@ -1,3 +1,6 @@
+const uint CMD_TOP_FLOODTIME = 3000;
+uint[] CMD_TOP_TIMES(maxClients);
+
 /**
  * top Command
  * Register the user with his current login credentials
@@ -15,6 +18,15 @@ class RS_CMD_Top : RS_Command
 
 	bool validate(RS_Player @player, String &args, int argc)
 	{
+        if( @player is null || @player.client is null )
+            return false;
+
+        uint time = CMD_TOP_TIMES[player.client.get_playerNum()];
+        if( time > realTime )
+        {
+            sendErrorMessage( @player, "Please wait " + (CMD_TOP_FLOODTIME / 1000) + " seconds between top calls." );
+            return false;
+        }
         return true;
 	}
 
@@ -28,6 +40,7 @@ class RS_CMD_Top : RS_Command
         else
             RS_QueryTop( @player.client, args.getToken( 0 ), args.getToken( 1 ).toInt() );
 
+        CMD_TOP_TIMES[player.client.get_playerNum()] = realTime + CMD_TOP_FLOODTIME;
 		return true;
     }
 }

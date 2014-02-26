@@ -79,6 +79,12 @@ class RS_PlayerAuth
 	uint failTime;
 
 	/**
+	 * Points the player has on the map
+	 * @var int
+	 */
+	int points;
+
+	/**
 	 * Base constructor
 	 * @return void
 	 */
@@ -221,6 +227,7 @@ class RS_PlayerAuth
 		{
 			RS_Race @record = @RS_Race( node );
 			@player.record = @record;
+			points = node.getItem( "points" ).valueint;
 		}
 
 		// De-Authenticate any other players logged in with the same user

@@ -96,3 +96,28 @@ void RS_AuthMap_Done( int status, Json @data )
 
 	map.auth.status = AUTH_STATUS_SUCCESS;
 }
+
+/**
+ * Callback for race reporting
+ */
+void RS_ReportRace_Done( int status, Client @client, Json @data )
+{
+	RS_Player @player = RS_getPlayer( @client );
+	if( @player is null || @data is null || data.type != cJSON_Object )
+		return;
+
+	if( status != 200 )
+	{
+		sendErrorMessage( @player, "Race could not be saved");
+		if( @data !is null )
+			sendErrorMessage( @player, data.getItem( "error" ).getString() );
+	}
+
+	// update points
+	int points = data.getItem( "points" ).valueint;
+	if( points > player.auth.points )
+	{
+		sendMessage( @player, "You earned " + ( points - player.auth.points ) + " points!" );
+		player.auth.points = points;
+	}
+}

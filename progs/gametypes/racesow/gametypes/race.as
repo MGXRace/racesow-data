@@ -48,6 +48,7 @@ class RS_GT_Race : RS_Gametype
         G_ConfigString( CS_SCB_PLAYERTAB_LAYOUT, "%n 112 %s 52 %t 96 %i 48 %l 48 %s 85" );
         G_ConfigString( CS_SCB_PLAYERTAB_TITLES, "Name Clan Time Speed Ping State" );
 
+        RS_CMD_Top cmd_top;
         RS_InitCommands();
     }
 

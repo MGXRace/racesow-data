@@ -34,6 +34,7 @@ racesow/commands/mapname.as;
 racesow/commands/whoisgod.as;
 racesow/commands/weapondefs.as;
 racesow/commands/give.as;
+racesow/commands/top.as;
 
 racesow/auth/player.as;
 racesow/auth/map.as;

@@ -204,7 +204,7 @@ class RS_Player
      */
     String simpleNick()
     {
-        return client.get_name().removeColorTokens();
+        return client.get_name().removeColorTokens().tolower();
     }
 
     /**

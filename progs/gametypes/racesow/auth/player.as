@@ -307,6 +307,8 @@ class RS_PlayerAuth
 		}
 
 		// Authorized to use the nickname
+		failTime = 0;
+		thinkTime = 0;
 		nickStatus = AUTH_STATUS_SUCCESS;
 	}
 

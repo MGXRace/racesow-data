@@ -100,7 +100,7 @@ class RS_PlayerAuth
 		// Protected nick countdown
 		if( thinkTime != 0 && thinkTime < realTime && failTime != 0 && nickStatus != AUTH_STATUS_PENDING )
 		{
-			int remaining = ( 30500 - int(realTime) + int(failTime) ) / 1000;
+			int remaining = ( 15500 - int(realTime) + int(failTime) ) / 1000;
 
 			// Out of time, rename them
 			if( remaining < 1 )
@@ -245,8 +245,6 @@ class RS_PlayerAuth
 	{
 		id = 0;
 		playerStatus = AUTH_STATUS_NONE;
-		user = "";
-		token = "";
 		nick = "";
 
 		// Set the nick protection again if necessary

@@ -18,7 +18,7 @@ void RS_AuthPlayer_Done( int status, Client @client, Json @data )
 	{
 		player.auth.resetPlayer();
 		player.auth.playerStatus = AUTH_STATUS_FAILED;
-		sendErrorMessage( @player, "Failed to authenticate as " + user );
+		sendErrorMessage( @player, "Failed to authenticate as " + player.auth.user );
 	}
 }
 

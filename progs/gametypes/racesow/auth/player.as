@@ -135,15 +135,11 @@ class RS_PlayerAuth
 
 		if( token != player.client.getUserInfoKey( "rs_authToken" ) )
 		{
+			token = player.client.getUserInfoKey( "rs_authToken" );
 			if( playerStatus == AUTH_STATUS_REGISTER )
-			{
 				RS_AuthRegister( player.client, user, token, player.client.get_name() );
-			}
 			else
-			{
-				token = player.client.getUserInfoKey( "rs_authToken" );
 				QueryPlayer();
-			}
 		}
 
 		// User changed name
@@ -161,7 +157,7 @@ class RS_PlayerAuth
 	 */
 	void GenerateToken()
 	{
-		uTime = realTime; // TODO: use Unix Timestamp
+		uTime = RS_GetTime();
 		player.client.execGameCommand( "utoken \"" + uTime + "\"" );
 	}
 

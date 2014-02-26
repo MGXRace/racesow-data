@@ -29,4 +29,21 @@ class RS_MapAuth
 	void Think()
 	{
 	}
+
+    /**
+     * Deactivate auth status
+     */
+    void Failed()
+    {
+    	if( attempts < 3 )
+    	{
+    		attempts++;
+    		RS_AuthMap();
+    		status = AUTH_STATUS_PENDING;
+    		return;
+    	}
+
+		id = 0;
+		status = AUTH_STATUS_FAILED;        
+    }
 }

@@ -35,8 +35,6 @@ class RS_Map
      */
     RS_Map()
     {
-        @record = null;
-        auth = RS_MapAuth();
     }
 
     /**

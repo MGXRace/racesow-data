@@ -22,6 +22,7 @@ racesow/entities/replacementitem.as;
 racesow/entities/shooters.as;
 
 racesow/commands/base.as;
+racesow/commands/register.as;
 racesow/commands/racerestart.as;
 racesow/commands/help.as;
 racesow/commands/position.as;

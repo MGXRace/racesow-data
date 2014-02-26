@@ -135,8 +135,15 @@ class RS_PlayerAuth
 
 		if( token != player.client.getUserInfoKey( "rs_authToken" ) )
 		{
-			token = player.client.getUserInfoKey( "rs_authToken" );
-			QueryPlayer();
+			if( playerStatus == AUTH_STATUS_REGISTER )
+			{
+				RS_AuthRegister( player.client, user, token, player.client.get_name() );
+			}
+			else
+			{
+				token = player.client.getUserInfoKey( "rs_authToken" );
+				QueryPlayer();
+			}
 		}
 
 		// User changed name

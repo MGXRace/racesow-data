@@ -2,6 +2,35 @@ const uint AUTH_STATUS_NONE = 0;
 const uint AUTH_STATUS_PENDING = 1;
 const uint AUTH_STATUS_FAILED = 2;
 const uint AUTH_STATUS_SUCCESS = 3;
+const uint AUTH_STATUS_REGISTER = 4;
+
+/**
+ * Callback for register auth
+ */
+void RS_AuthRegister_Done( int status, Client @client, Json @data )
+{
+	RS_Player @player = RS_getPlayer( @client );
+	if( @player is null )
+		return;
+
+	if( status == 200 )
+	{
+		// Success, try to login
+		player.auth.parsePlayer( @data );
+	}
+	else
+	{
+		// Failure, reset and notify the player
+		player.auth.resetPlayer();
+		player.auth.playerStatus = AUTH_STATUS_FAILED;
+		sendErrorMessage( @player, "Failed to register as " + player.auth.user );
+		if( @data !is null )
+		{
+			Json @node = data.getItem("error");
+			sendErrorMessage( @player, node.getString() );
+		}
+	}
+}
 
 /**
  * Callback for player auth

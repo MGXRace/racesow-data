@@ -28,19 +28,19 @@ class RS_Race
      * Speed when starting the race
      * @var uint
      */
-    uint startSpeed;
+    int startSpeed;
 
     /**
      * Speed when finishing the race
      * @var uint
      */
-    uint endSpeed;
+    int endSpeed;
 
     /**
      * Checkpoints of the race
      * @var uint
      */
-    uint[] checkpoints;
+    int[] checkpoints;
 
     /**
      * Report message for the race

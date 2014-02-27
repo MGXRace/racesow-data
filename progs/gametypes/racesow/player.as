@@ -1,6 +1,6 @@
-const int RS_STATE_PRERACE = 1;
-const int RS_STATE_RACING = 2;
-const int RS_STATE_PRACTICE = 4;
+const int RS_STATE_PRERACE = 0;
+const int RS_STATE_RACING = 1;
+const int RS_STATE_PRACTICE = 2;
 
 /**
  * RS_getPlayer
@@ -435,14 +435,19 @@ class RS_Player
             highestSpeed = hspeed;
 
         // Update HUD variables
+        client.setHUDStat( STAT_TIME_BEST, bestTime() / 100 );
+        client.setHUDStat( STAT_RACE_STATE, getState() );
         if( @race !is null )
         {
             client.setHUDStat( STAT_TIME_SELF, race.getTime() / 100 );
             client.setHUDStat( STAT_START_SPEED, race.startSpeed );
+            client.setHUDStat( STAT_PREJUMP_STATE, race.prejumped ? 1 : 0 );
         }
+        else
+            client.setHUDStat( STAT_PREJUMP_STATE, RS_QueryPjState( client.get_playerNum() ) ? 1 : 0 );
+
         if( @serverRecord !is null )
             client.setHUDStat( STAT_TIME_RECORD, serverRecord.getTime() / 100 );
-        client.setHUDStat( STAT_TIME_BEST, bestTime() / 100 );
     }
 
     /**

@@ -98,13 +98,7 @@ class RS_Race
         if( prejumped && !player.practicing )
             sendAward( player, S_COLOR_RED + "Prejumped" );
 
-        // Calculate player height
-        int height = player.getHeight();
-
-        // Initialize report string
-        report = S_COLOR_ORANGE + "Start speed: " + S_COLOR_WHITE + player.getSpeed()
-               + ( height > 0 ? S_COLOR_ORANGE + " Height: " + S_COLOR_WHITE + height : "" )
-               + "\n";
+        report = "";
     }
 
     /**

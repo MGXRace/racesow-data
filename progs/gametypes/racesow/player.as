@@ -319,12 +319,10 @@ class RS_Player
      */
     void stopRace()
     {
-        if( @race is null )
+        if( @race is null || race.endTime != 0 )
             return;
 
         race.stopRace();
-        RS_Race @lastRace = @race;
-        @race = null;
 
         if( practicing )
         {
@@ -332,10 +330,10 @@ class RS_Player
             return;
         }
 
-        if( lastRace.prejumped )
+        if( race.prejumped )
         {
             specCallback @func = @sendCenterMessage;
-            execSpectators( @func, @this, "Prejump Time: " + TimeToString( lastRace.getTime() ) );
+            execSpectators( @func, @this, "Prejump Time: " + TimeToString( race.getTime() ) );
             sendMessage( @this, "Prejumped records are not recorded.");
             return;
         }
@@ -343,20 +341,20 @@ class RS_Player
         // Not practicing or prejumped, its a real race
 
         uint refBest = @map.record is null ? 0 : map.record.getTime();
-        uint newTime = lastRace.getTime();
-        raceReport( @lastRace );
+        uint newTime = race.getTime();
+        raceReport( @race );
         respawnTime = realTime + 3000;
         races += 1;
         map.races += 1;
 
         // Report the race
         if( auth.id != 0 and map.auth.id != 0 )
-            RS_ReportRace( client, auth.id, map.auth.id, lastRace.getTime(), @lastRace.checkpoints );
+            RS_ReportRace( client, auth.id, map.auth.id, race.getTime(), @race.checkpoints );
 
         if( @map.record is null || map.record.getTime() > newTime )
         {
             // new server record
-            @map.record = @lastRace;
+            @map.record = @race;
 
             // Send record award to player and spectators
             specCallback @func = @sendAward;
@@ -371,7 +369,7 @@ class RS_Player
         if( @record is null || record.getTime() > newTime )
         {
             // First record or New record
-            @record = @lastRace;
+            @record = @race;
             dstop = true;
 
             // Send record award to player and spectators

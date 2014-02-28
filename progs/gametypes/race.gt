@@ -20,6 +20,7 @@ racesow/entities/target_teleporter.as;
 racesow/entities/trigger_push_velocity.as;
 racesow/entities/replacementitem.as;
 racesow/entities/shooters.as;
+racesow/entities/target_init.as;
 
 racesow/commands/base.as;
 racesow/commands/register.as;

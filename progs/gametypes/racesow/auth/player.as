@@ -235,7 +235,7 @@ class RS_PlayerAuth
 		for( int i = 0; i < maxClients; i++ )
 		{
 			@other = players[i];
-			if( @other is null || @other is @player )
+			if( @other is null || @other is @player || other.auth.user != user )
 				continue;
 
 			sendMessage( @other, "You have been logged out\n" );

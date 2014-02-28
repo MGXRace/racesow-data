@@ -473,7 +473,7 @@ class RS_Player
 
         // update highest speed
         uint hspeed = getSpeed();
-        if( hspeed > highestSpeed )
+        if( getState() != RS_STATE_PRACTICE && hspeed > highestSpeed )
             highestSpeed = hspeed;
 
         // Update HUD variables

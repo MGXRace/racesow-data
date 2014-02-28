@@ -39,7 +39,7 @@ class RS_CMD_WeaponDefs : RS_Command
 		"850",	// "g_gravity",
         "1.18", // "g_self_knockback",
         "450",  // "rs_dash_speed",
-        "0",    // "rs_splashfrac",
+        "1",    // "rs_splashfrac",
 		"1",	// "rs_grenade_minKnockback",
 		"120",	// "rs_grenade_maxKnockback",
 		"170",	// "rs_grenade_splash",
@@ -52,19 +52,19 @@ class RS_CMD_WeaponDefs : RS_Command
 		"60",	// "rs_gunblade_maxKnockback",
 		"80",	// "rs_gunblade_splash",
 		"1",	// "rs_plasma_minKnockback",
-		"23",	// "rs_plasma_maxKnockback",
+		"25",	// "rs_plasma_maxKnockback",
 		"45",	// "rs_plasma_splash",
 		"1700",	// "rs_plasma_speed",
-		"32",	// "rs_plasma_prestep",
+		"16",	// "rs_plasma_prestep",
 		"1",	// "rs_plasma_hack",
 		"1",	// "rs_rocket_minKnockback",
-		"100",	// "rs_rocket_maxKnockback",
-		"120",	// "rs_rocket_splash",
+		"90",	// "rs_rocket_maxKnockback",
+		"180",	// "rs_rocket_splash",
 		"950",	// "rs_rocket_speed",
 		"10",	// "rs_rocket_prestep",
 		"0",	// "rs_rocket_antilag"
 	};
-	int numCvars = 24;
+	int numCvars = 27;
 
 
 	RS_CMD_WeaponDefs()
@@ -101,8 +101,7 @@ class RS_CMD_WeaponDefs : RS_Command
         }
 
         // Set a cvar if allowed
-        else if( args.getToken( 0 ) == "set" &&	argc == 3 && 
-        	args.getToken( 2 ).isNumeric() )
+        else if( args.getToken( 0 ) == "set" &&	argc == 3 )
         {
         	int i = cvarIndex( args.getToken( 1 ) );
         	if( i == -1 )

@@ -38,11 +38,11 @@ class RS_CMD_MapList : RS_Command
 
         if( argc <= 1 )
         {
-            RS_QueryMaps( @player.client, "", "", args.getToken( 1 ).toInt() );
+            RS_QueryMaps( @player.client, "", "", args.getToken( 0 ).toInt() );
         }
         else if( argc == 2 )
         {
-            RS_QueryMaps( @player.client, args.getToken( 1 ), "", args.getToken( 2 ).toInt() );
+            RS_QueryMaps( @player.client, args.getToken( 0 ), "", args.getToken( 1 ).toInt() );
         }
         else
         {
@@ -50,7 +50,7 @@ class RS_CMD_MapList : RS_Command
             for( int i = 1; i < argc - 1; i++)
                 tags += args.getToken( i ) + " ";
 
-            RS_QueryMaps( @player.client, args.getToken( 1 ), tags, args.getToken( argc - 1 ).toInt() );
+            RS_QueryMaps( @player.client, args.getToken( 0 ), tags, args.getToken( argc - 1 ).toInt() );
         }
 
         CMD_ML_TIMES[player.client.get_playerNum()] = realTime + CMD_ML_FLOODTIME;
@@ -69,7 +69,14 @@ void RS_QueryMaps_Done( int status, Client @client, Json @data )
 
     if( status == 200 )
     {
-        sendMessage( player, "");
+        Json @maps = data.getItem( "maps" );
+        int start = data.getItem( "start" ).valueint;
+        int count = data.getItem( "count" ).valueint;
+        for( int i = 0; i < count; i++ )
+        {
+            sendMessage( player, S_COLOR_ORANGE + "# " + (start + i + 1) + S_COLOR_WHITE
+                + ": " + maps.getItem( i ).getItem( "name" ).getString() + "\n" );
+        }
     }
     else if( @data !is null )
     {

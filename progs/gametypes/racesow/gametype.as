@@ -84,6 +84,7 @@ class RS_Gametype
         RS_CMD_Help cmd_help;
         RS_CMD_Position cmd_position;
         RS_CMD_PracticeMode cmd_practicemode;
+        RS_CMD_MapList cmd_maplist;
         RS_CMD_Machinegun cmd_machinegun;
         RS_CMD_NoClip cmd_noclip;
         RS_CMD_Privsay cmd_privsay;

@@ -63,7 +63,9 @@ class RS_Command
      */
     void register()
     {
-    	RS_CommandByName.set( name, @this );
+        String cname = ( name.substr( 0, 2 ) == '__' ) ? name.substr( 2 ) : name;
+
+    	RS_CommandByName.set( cname, @this );
     	@RS_CommandByIndex[RS_CommandCount++] = @this;
     }
 
@@ -103,7 +105,8 @@ class RS_Command
      */
     String getDescription()
     {
-        return S_COLOR_ORANGE + this.name + ": " + S_COLOR_WHITE + this.description + "\n";
+        String cname = ( name.substr( 0, 2 ) == '__' ) ? name.substr( 2 ) : name;
+        return S_COLOR_ORANGE + cname + ": " + S_COLOR_WHITE + this.description + "\n";
     }
 
     /**

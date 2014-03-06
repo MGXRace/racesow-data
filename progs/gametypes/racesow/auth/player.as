@@ -19,6 +19,12 @@ class RS_PlayerAuth
 	uint id;
 
 	/**
+	 * Player's username
+	 * @var String
+	 */
+	String user;
+
+	/**
 	 * Status of the player auth query
 	 * @var uint
 	 */
@@ -29,18 +35,6 @@ class RS_PlayerAuth
 	 * @var bool
 	 */
 	bool admin;
-
-	/**
-	 * Users authentication username
-	 * @var String
-	 */
-	String user;
-
-	/**
-	 * Users authentication token
-	 * @var String
-	 */
-	String token;
 
 	/**
 	 * Users authentication nickname
@@ -59,12 +53,6 @@ class RS_PlayerAuth
 	 * @var bool
 	 */
 	bool nickProtected;
-
-	/**
-	 * Unix timestamp used to generate tokens
-	 * @var uint
-	 */
-	uint uTime;
 
 	/**
 	 * realTime for next think
@@ -91,10 +79,10 @@ class RS_PlayerAuth
 	RS_PlayerAuth( RS_Player @player )
 	{
 		@this.player = @player;
-		user = player.client.getUserInfoKey( "rs_authUser" );
-		token = player.client.getUserInfoKey( "rs_authToken" );
-		GenerateToken();
 		QueryNick();
+
+		// Ask the client to auto-login
+		player.client.execGameCommand( "slogin" );
 	}
 
 	/**
@@ -131,23 +119,6 @@ class RS_PlayerAuth
 	 */
 	void UserInfoChanged( String oldnick )
 	{
-		if( user != player.client.getUserInfoKey( "rs_authUser" ) )
-		{
-			resetPlayer();
-			user = player.client.getUserInfoKey( "rs_authUser" );
-			GenerateToken();
-			return;
-		}
-
-		if( token != player.client.getUserInfoKey( "rs_authToken" ) )
-		{
-			token = player.client.getUserInfoKey( "rs_authToken" );
-			if( playerStatus == AUTH_STATUS_REGISTER )
-				RS_AuthRegister( player.client, user, token, player.client.get_name() );
-			else
-				QueryPlayer();
-		}
-
 		// User changed name
 		String simpleNick = oldnick.removeColorTokens().tolower();
 		if( simpleNick != player.simpleNick() )
@@ -158,29 +129,25 @@ class RS_PlayerAuth
 	}
 
 	/**
-	 * Force the user to regenerate a new auth token
+	 * Try to register the player
 	 * @return void
 	 */
-	void GenerateToken()
+	void registerPlayer( String user, String token, String email )
 	{
-		uTime = RS_GetTime();
-		player.client.execGameCommand( "utoken \"" + uTime + "\"" );
+		resetPlayer();
+		this.user = user;
+		playerStatus = AUTH_STATUS_PENDING;
+		RS_AuthRegister( @player.client, user, token, email, player.client.get_name() );
 	}
 
 	/**
-	 * Make the 
+	 * Make the login query
 	 * @return void
 	 */
-	void QueryPlayer()
+	void QueryPlayer( String user, String token, int uTime )
 	{
-		if( user.empty() || token.empty() )
-		{
-			id = 0;
-			playerStatus = AUTH_STATUS_FAILED;
-			sendErrorMessage( @player, "You are not authenticated. Login with 'rs_login <user> <pass>'" );
-			return;
-		}
-		
+		resetPlayer();
+		this.user = user;
 		playerStatus = AUTH_STATUS_PENDING;
 		RS_AuthPlayer( @player.client, user, token, uTime, map.auth.id );
 	}
@@ -235,7 +202,7 @@ class RS_PlayerAuth
 		for( int i = 0; i < maxClients; i++ )
 		{
 			@other = players[i];
-			if( @other is null || @other is @player || other.auth.user != user )
+			if( @other is null || @other is @player || other.auth.id != id )
 				continue;
 
 			sendMessage( @other, "You have been logged out\n" );
@@ -244,7 +211,9 @@ class RS_PlayerAuth
 		}
 
 		playerStatus = AUTH_STATUS_SUCCESS;
-		sendMessage( @player, "Authenticated as " + user + (admin ? " with admin" : "" ) + "\n" );
+		sendMessage( @player, "Authenticated as: " + id + " " + user + "\n" );
+		if( admin )
+			sendMessage( @player, "Authenticated with admin powers.\n" );
 	}
 
 	/**
@@ -255,6 +224,7 @@ class RS_PlayerAuth
 	{
 		id = 0;
 		playerStatus = AUTH_STATUS_NONE;
+		user = "";
 		nick = "";
 
 		// Set the nick protection again if necessary

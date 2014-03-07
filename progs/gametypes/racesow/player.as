@@ -306,7 +306,7 @@ class RS_Player
      */
     void startRace()
     {
-        if( @race !is null )
+        if( @race !is null && !practicing )
             return;
 
         @race = @RS_Race( @this );

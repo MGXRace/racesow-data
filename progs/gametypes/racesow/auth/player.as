@@ -194,6 +194,8 @@ class RS_PlayerAuth
 		{
 			RS_Race @record = @RS_Race( node );
 			@player.record = @record;
+			if( @map.serverRecord is null || map.serverRecord.getTime() > record.getTime() )
+				@map.serverRecord = @record;
 			points = node.getItem( "points" ).valueint;
 		}
 

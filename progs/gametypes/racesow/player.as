@@ -340,7 +340,7 @@ class RS_Player
 
         // Not practicing or prejumped, its a real race
 
-        uint refBest = @map.record is null ? 0 : map.record.getTime();
+        uint refBest = @map.serverRecord is null ? 0 : map.serverRecord.getTime();
         uint newTime = race.getTime();
         raceReport( @race );
         respawnTime = realTime + 3000;
@@ -351,10 +351,23 @@ class RS_Player
         if( auth.id != 0 and map.auth.id != 0 )
             RS_ReportRace( client, auth.id, map.auth.id, race.getTime(), @race.checkpoints );
 
-        if( @map.record is null || map.record.getTime() > newTime )
+        if( @map.worldRecord is null || map.worldRecord.getTime() > newTime )
         {
-            // new server record
-            @map.record = @race;
+            @map.worldRecord = @race;
+
+            // Send record award to player and spectators
+            specCallback @func = @sendAward;
+            execSpectators( @func, @this, S_COLOR_GREEN + "New World record!" );
+
+            // Print record message to chat
+            G_PrintMsg(null, client.name + " "
+                             + S_COLOR_YELLOW + "made a new world record: "
+                             + TimeToString( newTime ) + "\n");
+        }
+
+        if( @map.serverRecord is null || map.serverRecord.getTime() > newTime )
+        {
+            @map.serverRecord = @race;
 
             // Send record award to player and spectators
             specCallback @func = @sendAward;
@@ -406,7 +419,7 @@ class RS_Player
 
         uint newTime = race.getTime();
         uint personalBest = @record is null ? 0 : record.getTime();
-        uint refBest = @map.record is null ? 0 : map.record.getTime();
+        uint refBest = @map.serverRecord is null ? 0 : map.serverRecord.getTime();
 
         sendMessage( @this, race.report );
 
@@ -432,7 +445,7 @@ class RS_Player
             return false;
 
         // Make the checkpoint message
-        RS_Race @refRace = @map.record;
+        RS_Race @refRace = @map.serverRecord;
         uint newTime = race.checkpoints[cpNum];
         uint refBest = @refRace is null ? 0 : refRace.checkpoints[cpNum];
         uint personalBest = @record is null ? 0 : record.checkpoints[cpNum];
@@ -475,19 +488,22 @@ class RS_Player
             highestSpeed = hspeed;
 
         // Update HUD variables
-        client.setHUDStat( STAT_TIME_BEST, bestTime() / 100 );
+        client.setHUDStat( STAT_TIME_BEST, bestTime() / 10 );
         client.setHUDStat( STAT_RACE_STATE, getState() );
         if( @race !is null )
         {
-            client.setHUDStat( STAT_TIME_SELF, race.getTime() / 100 );
+            client.setHUDStat( STAT_TIME_SELF, race.getTime() / 10 );
             client.setHUDStat( STAT_START_SPEED, race.startSpeed );
             client.setHUDStat( STAT_PREJUMP_STATE, race.prejumped ? 1 : 0 );
         }
         else
             client.setHUDStat( STAT_PREJUMP_STATE, RS_QueryPjState( client.get_playerNum() ) ? 1 : 0 );
 
-        if( @map.record !is null )
-            client.setHUDStat( STAT_TIME_RECORD, map.record.getTime() / 100 );
+        if( @map.serverRecord !is null )
+            client.setHUDStat( STAT_TIME_RECORD, map.serverRecord.getTime() / 10 );
+
+        if( @map.worldRecord !is null )
+            client.setHUDStat( STAT_TIME_ALPHA, map.worldRecord.getTime() / 10 );
     }
 
     /**

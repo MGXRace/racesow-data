@@ -10,7 +10,13 @@ class RS_Map
      * World record race
      * @var RS_Race
      */
-    RS_Race @record;
+    RS_Race @worldRecord;
+
+    /**
+     * Server record race
+     * @var RS_Race
+     */
+    RS_Race @serverRecord;
 
     /**
      * Auth data for the map

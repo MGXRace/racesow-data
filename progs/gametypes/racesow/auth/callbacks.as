@@ -91,7 +91,7 @@ void RS_AuthMap_Done( int status, Json @data )
 
 	@node = data.getItem("record");
 	if( @node !is null && node.type != cJSON_NULL )
-		@map.record = @RS_Race( node );
+		@map.worldRecord = @RS_Race( node );
 
 	map.auth.status = AUTH_STATUS_SUCCESS;
 }

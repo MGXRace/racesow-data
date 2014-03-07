@@ -76,6 +76,70 @@ String TimeToString( uint time )
 }
 
 /**
+ * RS_getPlayer
+ * Get the RS_Player associated with a given entity
+ *
+ * @param Entity ent The player entity
+ * @return RS_Player The player associated with the entity or null
+ */
+RS_Player@ RS_getPlayer( Entity @ent )
+{
+    if( @ent is null || ent.get_playerNum() < 0 )
+        return null;
+
+    return @players[ent.get_playerNum()];
+}
+
+/**
+ * RS_getPlayer
+ * Get the RS_Player associated with a given client
+ *
+ * @param Client client The player client
+ * @return RS_Player The player associated with the client or null
+ */
+RS_Player@ RS_getPlayer( Client @client )
+{
+    if( @client is null || client.get_playerNum() < 0 )
+        return null;
+
+    return @players[client.get_playerNum()];
+}
+
+/**
+ * RS_getPlayer
+ * Get the RS_Player associated with a given client number
+ *
+ * @param int clientNum The number of the client
+ * @return RS_Player The player associated with the client or null
+ */
+RS_Player@ RS_getPlayer( int clientNum )
+{
+    if( clientNum < 0 || clientNum >= maxClients )
+        return null;
+
+    return @players[clientNum];
+}
+
+/**
+ * RS_getPlayer
+ * Get the RS_Player associated with a name
+ *
+ * @param String name The simplified name of the player (case insensitive)
+ * @return RS_Player The player associated with the client or null
+ */
+RS_Player@ RS_getPlayer( String name )
+{
+    for( int i = 0; i < maxClients; i++ )
+    {
+        if( @players[i] !is null &&
+            players[i].client.name.removeColorTokens().tolower() == name.tolower() )
+            return @players[i];
+    }
+
+    return null;
+}
+
+/**
  * Function signature to use for execSpectators
  * @var funcdef
  */

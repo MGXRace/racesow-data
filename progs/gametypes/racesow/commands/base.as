@@ -63,9 +63,7 @@ class RS_Command
      */
     void register()
     {
-        String cname = ( name.substr( 0, 2 ) == '__' ) ? name.substr( 2 ) : name;
-
-    	RS_CommandByName.set( cname, @this );
+    	RS_CommandByName.set( name, @this );
     	@RS_CommandByIndex[RS_CommandCount++] = @this;
     }
 

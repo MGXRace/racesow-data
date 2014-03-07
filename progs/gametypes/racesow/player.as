@@ -401,7 +401,7 @@ class RS_Player
      */
     void raceReport( RS_Race @race )
     {
-        if( @race is null )
+        if( @race is null || client.getUserInfoKey( "rs_raceReport" ) != "1" )
             return;
 
         uint newTime = race.getTime();

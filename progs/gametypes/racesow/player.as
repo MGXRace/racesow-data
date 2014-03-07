@@ -348,10 +348,10 @@ class RS_Player
         map.races += 1;
 
         // Report the race
-        if( auth.id != 0 and map.auth.id != 0 )
+        if( auth.id != 0 && map.auth.id != 0 )
             RS_ReportRace( client, auth.id, map.auth.id, race.getTime(), @race.checkpoints );
 
-        if( @map.worldRecord is null || map.worldRecord.getTime() > newTime )
+        if( auth.id != 0 && ( @map.worldRecord is null || map.worldRecord.getTime() > newTime ) )
         {
             @map.worldRecord = @race;
 

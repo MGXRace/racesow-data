@@ -275,8 +275,8 @@ class RS_Player
         }
 
         // Not practicing or prejumped, its a real race
-
-        uint refBest = @map.serverRecord is null ? 0 : map.serverRecord.getTime();
+        RS_Race @refRace = @getRefRace();
+        uint refBest = @refRace is null ? 0 : refRace.getTime();
         uint newTime = race.getTime();
         raceReport( @race );
         respawnTime = realTime + 3000;
@@ -353,9 +353,10 @@ class RS_Player
         if( @race is null || client.getUserInfoKey( "rs_raceReport" ) != "1" )
             return;
 
+        RS_Race @refRace = @getRefRace();
         uint newTime = race.getTime();
         uint personalBest = @record is null ? 0 : record.getTime();
-        uint refBest = @map.serverRecord is null ? 0 : map.serverRecord.getTime();
+        uint refBest = @refRace is null ? 0 : refRace.getTime();
 
         sendMessage( @this, race.report );
 
@@ -381,7 +382,7 @@ class RS_Player
             return false;
 
         // Make the checkpoint message
-        RS_Race @refRace = @map.serverRecord;
+        RS_Race @refRace = getRefRace();
         uint newTime = race.checkpoints[cpNum];
         uint refBest = @refRace is null ? 0 : refRace.checkpoints[cpNum];
         uint personalBest = @record is null ? 0 : record.checkpoints[cpNum];
@@ -453,6 +454,38 @@ class RS_Player
             return record.getTime();
 
         return 0;
+    }
+
+    /**
+     * getRefRace
+     * Return the player's reference race
+     * @return @RS_Race
+     */
+    RS_Race@ getRefRace()
+    {
+        RS_Race @refRace;
+        RS_Player @player;
+        String target = client.getUserInfoKey( "rs_diffref" );
+        sendMessage( @this, "Diffref target: " + target + "\n" );
+
+        if( target == "world" )
+            return @map.worldRecord;
+
+        if( target == "server" )
+            return @map.serverRecord;
+
+        if( target == "personal" )
+            return @record;
+
+        if( target.isNumerical() && target.toInt() <= maxClients )
+            @player = @RS_getPlayer( target.toInt() );
+        else
+            @player = @RS_getPlayer( target );
+
+        if( @player !is null )
+            return @player.record;
+
+        return null;
     }
 
     /**

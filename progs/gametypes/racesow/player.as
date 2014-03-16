@@ -466,7 +466,6 @@ class RS_Player
         RS_Race @refRace;
         RS_Player @player;
         String target = client.getUserInfoKey( "rs_diffref" );
-        sendMessage( @this, "Diffref target: " + target + "\n" );
 
         if( target == "world" )
             return @map.worldRecord;

@@ -93,6 +93,7 @@ class RS_Position
 			weapon = player.noclipWeapon;
 		else
 			weapon = player.client.weapon;
+		weapon = weapon == 0 ? 1 : weapon;
 
 		saved = true;
 		return true;

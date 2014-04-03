@@ -1,0 +1,15 @@
+//speed on jump
+
+setFontFamily "Virtue"
+setFontSize 12
+setColor 1 1 1 1
+
+setAlign #LEFT, #BOTTOM
+setScale #DEFAULTSCALE
+setCursor 0, 380
+setScale #NOSCALE
+moveCursor 10, 0
+drawString "j-speed:"
+moveCursor 76, 0
+drawStringNum %JUMPSPEED
+

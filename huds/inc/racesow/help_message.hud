@@ -1,0 +1,14 @@
+// match message
+// old - con_fontSystemSmall
+setFontFamily "Droid Sans"
+setFontSize 12
+setColorAlpha 0.5
+setScale #DEFAULTSCALE
+setSize #WIDTH, 32
+setAlign #CENTER #TOP
+setCursor #WIDTH / 2, #HEIGHT * 0.22
+drawHelpString
+// old - con_fontSystemMedium
+setFontFamily "Droid Sans"
+setFontSize 16
+setColorAlpha 1

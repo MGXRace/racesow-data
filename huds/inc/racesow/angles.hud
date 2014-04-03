@@ -1,0 +1,92 @@
+//mouse angles
+setFontFamily "Virtue"
+setFontSize 13
+
+setScale #DEFAULTSCALE
+setCursor 400, 300
+setScale #NOSCALE
+moveCursor 0, 50
+setColor 1, 1, 1, 1
+
+if 1 & %SHOW_SPEED
+if 0 == 2 & %SHOW_SPEED
+	//vertical bar
+	moveCursor -120, 0
+	setSize 2, 90
+	setAlign #LEFT, #MIDDLE
+	drawPicByName gfx/ui/white
+
+	//move Cursor with mouse position
+	moveCursor 0, 0.005 * %MOUSE_Y
+
+	//horizontal bar
+	setSize 30, 2
+	setAlign #RIGHT, #MIDDLE
+	drawPicByName gfx/ui/white
+
+
+
+
+	//angle number
+	setColor 0, 0, 0, 1
+	moveCursor -8, -1
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+	moveCursor 2, 0
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+	moveCursor 0, 2
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+	moveCursor -2, 0
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+	setColor 1, 1, 1, 1
+	moveCursor 1, -1
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+
+
+
+
+
+
+
+	//description
+	if 0 == 4 & %SHOW_SPEED
+		moveCursor 7, 0
+		// old - "bitstream_7"
+		setFontFamily "Droid Sans"
+		setFontSize 10
+		setAlign #RIGHT, #BOTTOM
+		moveCursor 0, -3
+		drawString "angle"
+		moveCursor 0, 3
+	endif
+endif
+endif
+
+//old angle numbers
+if 2 & %SHOW_SPEED
+if 0 == 1 & %SHOW_SPEED
+	setAlign #CENTER, #MIDDLE
+	
+	moveCursor -80, 0
+	drawStringNum 0.01 * %DIFF_ANGLE
+	
+	moveCursor 160, 0
+	drawStringNum 0.01 * %MOUSE_Y
+endif
+endif
+
+

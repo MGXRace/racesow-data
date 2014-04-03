@@ -140,6 +140,26 @@ RS_Player@ RS_getPlayer( String name )
 }
 
 /**
+ * RS_getPlayerFromArgs
+ * Get the RS_Player from an agument string. The string may be a player number
+ * or a player name, test for both in that order.
+ *
+ * @param String args The argstring identifying the player
+ * @return  RS_Player The player associated with the target or null
+ */
+RS_Player@ RS_getPlayerFromArgs( String args )
+{
+    RS_Player @target;
+
+    if( args.isNumerical() && args.toInt() <= maxClients )
+        @target = RS_getPlayer( args.toInt() );
+    else
+        @target = RS_getPlayer( args );
+    
+    return @target;
+}
+
+/**
  * Function signature to use for execSpectators
  * @var funcdef
  */

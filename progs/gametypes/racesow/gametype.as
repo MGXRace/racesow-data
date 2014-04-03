@@ -44,7 +44,7 @@ class RS_Gametype
 
         gametype.spawnableItemsMask = ( IT_WEAPON | IT_AMMO | IT_ARMOR | IT_POWERUP | IT_HEALTH );
         if ( gametype.isInstagib )
-          gametype.spawnableItemsMask &= ~uint(G_INSTAGIB_NEGATE_ITEMMASK);
+            gametype.spawnableItemsMask &= ~uint(G_INSTAGIB_NEGATE_ITEMMASK);
 
         gametype.respawnableItemsMask = gametype.spawnableItemsMask;
         gametype.dropableItemsMask = gametype.spawnableItemsMask;
@@ -72,7 +72,7 @@ class RS_Gametype
 
         // set spawnsystem type
         for ( int team = TEAM_PLAYERS; team < GS_MAX_TEAMS; team++ )
-          gametype.setTeamSpawnsystem( team, SPAWNSYSTEM_INSTANT, 0, 0, false );
+            gametype.setTeamSpawnsystem( team, SPAWNSYSTEM_INSTANT, 0, 0, false );
 
         // Initialize Commands common to all race gametypes
         // Until angelscript supports static class members/methods or better

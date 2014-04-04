@@ -27,18 +27,16 @@ if %SPEED_VERTICAL > 0
 	endif
 
 	// draw vertical speed number
-	if %SPEED_VERTICAL > 370
-		moveCursor 18, 0
-		setScale #NOSCALE
-		moveCursor 2, 2
-		setColor 0, 0, 0, 1
-		setAlign #LEFT, #BOTTOM
-		drawStringNum %SPEED_VERTICAL
-		moveCursor -2, -2
-		setColor 0, 1, 0, 1
-		setAlign #LEFT, #BOTTOM
-		drawStringNum %SPEED_VERTICAL
-	endif
+	moveCursor 18, 0
+	setScale #NOSCALE
+	moveCursor 2, 2
+	setColor 0, 0, 0, 1
+	setAlign #LEFT, #BOTTOM
+	drawStringNum %SPEED_VERTICAL
+	moveCursor -2, -2
+	setColor 0, 1, 0, 1
+	setAlign #LEFT, #BOTTOM
+	drawStringNum %SPEED_VERTICAL
 endif
 
 

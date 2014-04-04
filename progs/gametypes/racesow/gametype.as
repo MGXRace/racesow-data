@@ -326,12 +326,38 @@ class RS_Gametype
         if( @player is null )
             return false;
 
-        if( !RS_CommandByName.get( cmdString, @command ) )
-            return false;
+        if( RS_CommandByName.get( cmdString, @command ) )
+        {
+            if( !command.validate( @player, args, argc ) )
+                return false;
 
-        if( !command.validate( @player, args, argc ) )
-            return false;
+            return command.execute( @player, args, argc );
+        }
 
-        return command.execute( @player, args, argc );
+        // Make admins immune to callvotes
+        else if( cmdString == "callvotecheckpermission" )
+        {
+            String vote = args.getToken( 0 );
+            if( vote == "mute" || vote == "vmute" ||
+                vote == "kick" || vote == "kickban" || vote == "remove" ||
+                vote == "joinlock" || vote == "joinunlock" )
+            {
+                RS_Player @victim = RS_getPlayerFromArgs( args.getToken( 1 ) );
+                if( @victim is null )
+                    return true;
+
+                if( victim.auth.admin )
+                {
+                    G_PrintMsg( null, S_COLOR_WHITE + client.get_name()
+                                + S_COLOR_RED + " tried to "
+                                + args.getToken( 0 ) + " an admin.\n" );
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

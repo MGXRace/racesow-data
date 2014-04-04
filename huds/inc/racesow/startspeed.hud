@@ -8,7 +8,7 @@ setFontSize 12
 
 
 if %TIME_SELF != #NOTSET
-	if %TIME_SELF < 20
+	if %TIME_SELF < 200
 		setAlign #RIGHT, #CENTER
 		drawstring "Start speed: "
 		setAlign #LEFT, #CENTER

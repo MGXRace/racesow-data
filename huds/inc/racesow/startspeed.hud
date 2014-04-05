@@ -1,17 +1,16 @@
 setScale #DEFAULTSCALE
-setCursor 400, 300
+setCursor 400, #HEIGHT - 180
 setScale #NOSCALE
-moveCursor 0, 150
-setColor 1, 1, 1, 1
+setColor 1, 1, 1, 0.2
 setFontFamily "Virtue"
-setFontSize 12
 
 if %TIME_SELF != #NOTSET
 	if %TIME_SELF < 200
 		if %START_SPEED > 0
-			setAlign #RIGHT, #CENTER
-			drawstring "Start speed: "
-			setAlign #LEFT, #CENTER
+			setFontSize 10
+			setAlign #CENTER, #BOTTOM
+			drawstring "Start speed:"
+			setAlign #CENTER, #TOP
 			setFontSize 14
 			setColor 0, 0, 0, 1
 			moveCursor -1, -1

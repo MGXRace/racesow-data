@@ -7,28 +7,32 @@ if %HEALTH != #NOTSET
 			setScale #SCALEBYHEIGHT
 			setSize 32, 32
 	
-			setCursor 110, #HEIGHT - 10
+			setCursor 10, #HEIGHT - 10
 	
 			//draw health icon
 			setAlign #LEFT, #BOTTOM
 			if %HEALTH > 100
 				drawPicByItemIndex #ITEM_MEGA_HEALTH
 			endif
+
 			if %HEALTH <= 100
-			if %HEALTH >= 50
-				drawPicByItemIndex #ITEM_50_HEALTH
+				if %HEALTH >= 50
+					drawPicByItemIndex #ITEM_50_HEALTH
+				endif
 			endif
-			endif
+
 			if %HEALTH < 50
 				drawPicByItemIndex #ITEM_25_HEALTH
 			endif
 		
 			//draw health number
-			moveCursor -4, 0
-			setAlign #RIGHT, #BOTTOM
+			moveCursor 32, 0
+			setAlign #LEFT, #BOTTOM
+
 			if %HEALTH > 100
 				setColor 1, 0, 1, 1
 			endif
+			
 			drawNum %HEALTH
 		endif
 	endif

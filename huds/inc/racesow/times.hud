@@ -16,17 +16,11 @@ if 0 == 4 & %SHOW_TIMER
 		setColor 1, 1, 1, 1
 		setAlign #RIGHT, #BOTTOM
 		moveCursor 0, -15
-		if %TIME_BEST != #NOTSET
 			drawString "Personal Best: "
-		endif
 		moveCursor 0, 15
-		if %TIME_RECORD != #NOTSET
 			drawString "Server Record: "
-		endif
 		moveCursor 0, 15
-		if %TIME_ALPHA != #NOTSET
 			drawString "MGX Record: "
-		endif
 		moveCursor 0, -15
 	endif
 
@@ -34,16 +28,25 @@ if 0 == 4 & %SHOW_TIMER
 	setColor 1, 1, 1, 1
 	setAlign #LEFT, #BOTTOM
 	moveCursor 0, -15
-	if %TIME_BEST != #NOTSET
+	if %TIME_BEST > 0
 		drawTimer %TIME_BEST
+	endif
+	if %TIME_BEST <= 0
+		drawString "Not set"
 	endif
 	moveCursor 0, 15
 	if %TIME_RECORD != #NOTSET
 		drawTimer %TIME_RECORD
 	endif
+	if %TIME_RECORD == #NOTSET
+		drawString "Not set"
+	endif
 	moveCursor 0, 15
-	if %TIME_SELF != #NOTSET
+	if %TIME_ALPHA != #NOTSET
 		drawTimer %TIME_ALPHA
+	endif
+	if %TIME_ALPHA == #NOTSET
+		drawString "Not set"
 	endif
 endif
 
@@ -57,66 +60,76 @@ if 0 == 2 & %SHOW_TIMER
 	setScale #DEFAULTSCALE
 	setCursor 400, 0
 	setScale #NOSCALE
-	moveCursor -37, 22
+	moveCursor 0, 22
 
-	setAlign #LEFT, #TOP
+	setAlign #CENTER, #TOP
 
-	if %TIME_SELF <= %TIME_BEST
-		setcolor 0, 0, 0, 1
-		drawTimer %TIME_SELF
-		moveCursor 1, 2
-		setcolor 0, 1, 0, 1
-		drawTimer %TIME_SELF
-		moveCursor -1, -2
-	endif
 
-	if %TIME_SELF > %TIME_BEST
-		setcolor 0, 0, 0, 1
-		drawTimer %TIME_SELF - %TIME_BEST
-		moveCursor 1, 2
-		setcolor 1, 0, 0, 1
-		drawTimer %TIME_SELF - %TIME_BEST
 
-		moveCursor -14, -2
-		setAlign #LEFT, #TOP
-		setcolor 0, 0, 0, 1
-		drawString "- " //space prevents warsow from using "-" as operator
-		moveCursor 1, 2
-		setcolor 1, 0, 0, 1
-		drawString "- " //space prevents warsow from using "-" as operator
-		moveCursor 12, -2
+	if %RACE_STATE >= 1
+		if %TIME_BEST == 0
+			setcolor 0, 0, 0, 1
+			drawTimer %TIME_SELF
+			moveCursor -2, -2
+			setcolor 0, 1, 0, 1
+			drawTimer %TIME_SELF
+			moveCursor 2, 2
+		endif
+		if %TIME_BEST > 0
+			if %TIME_SELF <= %TIME_BEST
+				setcolor 0, 0, 0, 1
+				drawTimer %TIME_SELF
+				moveCursor -2, -2
+				setcolor 0, 1, 0, 1
+				drawTimer %TIME_SELF
+				moveCursor 2, 2
+			endif
+			if %TIME_SELF > %TIME_BEST
+				setcolor 0, 0, 0, 1
+				drawTimer %TIME_SELF - %TIME_BEST
+				moveCursor -2, -2
+				setcolor 1, 0, 0, 1
+				drawTimer %TIME_SELF - %TIME_BEST
+
+				moveCursor -50, 2
+				setAlign #LEFT, #TOP
+				setcolor 0, 0, 0, 1
+				drawString "+ " //space prevents warsow from using "-" as operator
+				moveCursor -2, -2
+				setcolor 1, 0, 0, 1
+				drawString "+ " //space prevents warsow from using "-" as operator
+				moveCursor 14, 2
+			endif
+		endif
 	endif
 endif
 
 if 0 == 8 & %SHOW_TIMER
 	// 10 seconds countdown
 	if %TIME_SELF < %TIME_BEST
-	if 100 > %TIME_BEST - %TIME_SELF
-		setFontFamily "Virtue"
-		setFontSize 16
-		setScale #DEFAULTSCALE
-		setCursor 400, 120
-		setScale #NOSCALE
-		moveCursor -37, 0
-		setAlign #LEFT, #TOP
-		setScale #DEFAULTSCALE
-		moveCursor 0, 100 - %TIME_BEST - %TIME_SELF
-		if 50 > %TIME_BEST - %TIME_SELF
+	if 1000 > %TIME_BEST - %TIME_SELF
+	setFontFamily "Virtue"
+	setFontSize 16
+	setScale #DEFAULTSCALE
+	setCursor 400, 0
+	setScale #NOSCALE
+	moveCursor 0, 185
+	setAlign #CENTER, #TOP
+		moveCursor 0, -0.15 * %TIME_BEST - %TIME_SELF
+		if 500 > %TIME_BEST - %TIME_SELF
+			setFontFamily "Virtue"
+			setFontSize 19
+			setScale #NOSCALE
+		endif
+		if 200 > %TIME_BEST - %TIME_SELF
 			setFontFamily "Virtue"
 			setFontSize 22
 			setScale #NOSCALE
-			moveCursor -10, 0
-		endif
-		if 20 > %TIME_BEST - %TIME_SELF
-			setFontFamily "Virtue"
-			setFontSize 20
-			setScale #NOSCALE
-			moveCursor -12, 0
 		endif
 		setcolor 0, 0, 0, 1
 		drawTimer %TIME_BEST - %TIME_SELF
 		setScale #NOSCALE
-		moveCursor 1, 2
+		moveCursor -2, -2
 		setcolor 0, 1, 0, 1
 		drawTimer %TIME_BEST - %TIME_SELF
 	endif

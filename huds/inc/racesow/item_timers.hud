@@ -1,5 +1,5 @@
 //draws map items and their timers on the left side of the screen
-
+if %RACE == 0
 if %SHOW_ITEM_TIMERS
 setAlign #LEFT, #MIDDLE
 setScale #SCALEBYHEIGHT
@@ -238,6 +238,8 @@ if %ITEM_TIMER7
 		drawNum %ITEM_TIMER7_COUNT
 	endif
 	moveCursor -26, 1
+endif
+
 endif
 
 endif

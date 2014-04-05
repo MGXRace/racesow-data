@@ -7,26 +7,12 @@
 // - cryzis2 (health/armor/ammo)
 // - warsow hud (basewsw)
 
-//settings for cg_showspeed:
-//0 - disable speed/angle view
-//1 - new speed/angle view
-//2 - old speed/angle view
-//3 - new speed/angle view without angle
-//
-//bitmask for cg_showspeed:
-//4 - disable speed/angle description
-//8 - disable dotstrafer
-//16 - disable accelmeter
-//64 - enable plasmahelper
 
 //bitmask for cg_showtimer:
 //1 - enable Match Time
 //2 - disable Race Time
 //4 - disable Records
 //8 - disable 10 seconds countdown
-
-setFontFamily "Droid Sans"
-setFontSize 12
 
 include racesow/zoom
 include racesow/team_info
@@ -51,20 +37,18 @@ include racesow/weaponlist
 include racesow/crosshair
 include racesow/keystate
 include racesow/awards
-include racesow/minimap
 include racesow/download
-
+include racesow/oldstylemeters
 include racesow/angles
-//include racesow/jumpspeed
+
 include racesow/checkpoints
 include racesow/acceleration
 include racesow/dotstrafer
 
 include racesow/chat
 
-include racesow/plasmahelper
-
 include racesow/damage_indicator_screen
+include racesow/racestates
 include racesow/startspeed
 
 // alternatively can use
@@ -72,5 +56,3 @@ include racesow/startspeed
 
 //workaround for changing to older huds
 setScale #DEFAULTSCALE
-
-

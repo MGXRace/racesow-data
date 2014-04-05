@@ -1,17 +1,20 @@
 //
-if %INSTAGIB == 0
-if %WEAPON_ITEM
-	setAlign #CENTER #MIDDLE
-	setScale #DEFAULTSCALE
-	setCursor 519.5, 572
-	drawWeaponIcons 45, 0, 40 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 40 // keep this calculation!
+if %RACE == 1
+	if %INSTAGIB == 0
+		if %WEAPON_ITEM
+			setAlign #CENTER #MIDDLE
+			setScale #DEFAULTSCALE
+			setCursor 430, 572
+			drawWeaponIcons 45, 0, 40 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 40 // keep this calculation!
 
-	moveCursor 0, 2
-	setAlign #CENTER #BOTTOM
-	drawWeaponStrongAmmo 45, 0, 18
-
-	setAlign #CENTER #TOP
-	drawWeaponWeakAmmo 45, 0, 14
+			//Ammo not used for race, might want to add this for other gamestypes though
+			//
+			//moveCursor 0, 2
+			//setAlign #CENTER #BOTTOM
+			//drawWeaponStrongAmmo 45, 0, 18
+			//
+			//setAlign #CENTER #TOP
+			//drawWeaponWeakAmmo 45, 0, 14
+		endif
+	endif
 endif
-endif
-

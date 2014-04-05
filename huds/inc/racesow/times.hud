@@ -1,9 +1,9 @@
 //
 if 0 == 4 & %SHOW_TIMER
 	//draw Strings:
-	//	Race Time
-	//	Own Best
-	//	Server Best
+	//	Personal Best
+	//	Server Record
+	//	MGX Record
 
 	setFontFamily "Virtue"
 	setFontSize 12
@@ -13,39 +13,39 @@ if 0 == 4 & %SHOW_TIMER
 	moveCursor -70, 0
 	
 	if %RACE
-		setColor 0.8 0.8 0.8 1
+		setColor 1, 1, 1, 1
 		setAlign #RIGHT, #BOTTOM
-		if %TIME_RECORD != #NOTSET
-			drawString "Srv Best: "
-		endif
 		moveCursor 0, -15
 		if %TIME_BEST != #NOTSET
-			drawString "Own Best: "
+			drawString "Personal Best: "
+		endif
+		moveCursor 0, 15
+		if %TIME_RECORD != #NOTSET
+			drawString "Server Record: "
+		endif
+		moveCursor 0, 15
+		if %TIME_ALPHA != #NOTSET
+			drawString "MGX Record: "
 		endif
 		moveCursor 0, -15
-		if %TIME_SELF != #NOTSET
-			drawString "Time: "
-		endif
-		moveCursor 0, 30
 	endif
 
 	//draw Times
-	setColor 1 1 1 1
+	setColor 1, 1, 1, 1
 	setAlign #LEFT, #BOTTOM
-	if %TIME_RECORD != #NOTSET
-		drawTimer %TIME_RECORD
-	endif
 	moveCursor 0, -15
 	if %TIME_BEST != #NOTSET
 		drawTimer %TIME_BEST
 	endif
-	moveCursor 0, -15
+	moveCursor 0, 15
+	if %TIME_RECORD != #NOTSET
+		drawTimer %TIME_RECORD
+	endif
+	moveCursor 0, 15
 	if %TIME_SELF != #NOTSET
-		drawTimer %TIME_SELF
+		drawTimer %TIME_ALPHA
 	endif
 endif
-	
-// TODO: add a world best here, using TIME_ALPHA
 
 
 if 0 == 2 & %SHOW_TIMER

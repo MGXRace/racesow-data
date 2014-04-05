@@ -43,14 +43,7 @@ class RS_CMD_Privsay : RS_Command
 
     bool execute( RS_Player @player, String &args, int argc )
     {
-        RS_Player @target = null;
-
-        // Find the target player
-        if( args.getToken( 0 ).isNumerical() && args.getToken( 0 ).toInt() <= maxClients )
-            @target = RS_getPlayer( args.getToken( 0 ).toInt() );
-
-        else
-            @target = RS_getPlayer( args.getToken( 0 ) );
+        RS_Player @target = @RS_getPlayerFromArgs( args.getToken( 0 ) );
 
         if( @target is null || !target.client.getEnt().inuse )
         {

@@ -61,6 +61,7 @@ class RS_CMD_PracticeMode : RS_Command
                 player.respawn();
             player.state = RS_STATE_PRACTICE;
             player.startRace();
+            player.race.prejumped = false;
         }
 
 		return true;

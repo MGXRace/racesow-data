@@ -180,7 +180,10 @@ class RS_Player
             positionPrerace.load();
 
         if( state == RS_STATE_PRACTICE )
+        {
             startRace();
+            race.prejumped = false;
+        }
         else
         {
             state = RS_STATE_PRERACE;

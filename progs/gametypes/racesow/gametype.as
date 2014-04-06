@@ -288,7 +288,8 @@ class RS_Gametype
                 if( other.client.chaseActive && other.client.chaseTarget != 0 )
                 {
                     @player = players[other.client.chaseTarget - 1];
-                    player.challengerList += other.client.get_playerNum() + " " + other.client.ping + " ";
+                    if( @player !is null )
+                        player.challengerList += other.client.get_playerNum() + " " + other.client.ping + " ";
                 }
             }
 

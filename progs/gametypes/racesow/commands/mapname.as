@@ -15,7 +15,7 @@ class RS_CMD_MapName : RS_Command
 
     bool execute(RS_Player @player, String &args, int argc)
     {
-    	sendMessage( @player, mapname.string );
+    	sendMessage( @player, mapname.string + "\n" );
     	return true;
     }
 }

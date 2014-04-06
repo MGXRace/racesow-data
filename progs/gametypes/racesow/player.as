@@ -513,7 +513,7 @@ class RS_Player
     {
         Vec3 globalSpeed = client.getEnt().velocity;
         Vec3 horizontalSpeed = Vec3( globalSpeed.x, globalSpeed.y, 0 );
-        return uint( horizontalSpeed.length() );
+        return uint( horizontalSpeed.length() + 0.5 );
     }
 
     /**

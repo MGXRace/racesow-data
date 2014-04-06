@@ -172,7 +172,7 @@ class RS_Player
         if( client.team != TEAM_PLAYERS )
             client.team = TEAM_PLAYERS;
 
-        if( player.state != RS_STATE_PRACTICE || !player.inNoClip )
+        if( state != RS_STATE_PRACTICE || !inNoClip )
             client.respawn( false );
 
         if( state == RS_STATE_PRACTICE && position.saved )

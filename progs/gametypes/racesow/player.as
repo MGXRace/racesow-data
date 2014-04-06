@@ -410,6 +410,11 @@ class RS_Player
         // auth check
         auth.Think();
 
+        // check maxHealth rule
+        Entity @ent = client.getEnt();
+        if ( ent.health > ent.maxHealth )
+            ent.health -= ( frameTime * 0.001f );
+
         // update playtime
         // TODO: afk check incase we dont autoremove afks
         if( client.team == TEAM_PLAYERS )

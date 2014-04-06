@@ -54,7 +54,6 @@ class RS_CMD_PracticeMode : RS_Command
             // Set state to racing and let respawn() correct it
             player.state = RS_STATE_RACING;
             player.respawn();
-            sendAward( @player, S_COLOR_GREEN + "Leaving practice mode" );
         }
         else
         {
@@ -62,7 +61,6 @@ class RS_CMD_PracticeMode : RS_Command
                 player.respawn();
             player.state = RS_STATE_PRACTICE;
             player.startRace();
-            sendAward( @player, S_COLOR_GREEN + "You have entered practice mode" );
         }
 
 		return true;

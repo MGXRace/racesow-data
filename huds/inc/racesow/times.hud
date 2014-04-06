@@ -1,9 +1,9 @@
 //
-if 0 == 4 & %SHOW_TIMER
+if %SHOW_TIMER >= 1
 	//draw Strings:
-	//	Personal Best
-	//	Server Record
-	//	MGX Record
+	//Personal Best
+	//Server Record
+	//MGX Record
 
 	setFontFamily "Virtue"
 	setFontSize 12
@@ -27,21 +27,27 @@ if 0 == 4 & %SHOW_TIMER
 	//draw Times
 	setColor 1, 1, 1, 1
 	setAlign #LEFT, #BOTTOM
+
 	moveCursor 0, -15
-	if %TIME_BEST > 0
+
+	if %TIME_BEST != #NOTSET
 		drawTimer %TIME_BEST
 	endif
-	if %TIME_BEST <= 0
+	if %TIME_BEST == #NOTSET
 		drawString "Not set"
 	endif
+
 	moveCursor 0, 15
+
 	if %TIME_RECORD != #NOTSET
 		drawTimer %TIME_RECORD
 	endif
 	if %TIME_RECORD == #NOTSET
 		drawString "Not set"
 	endif
+
 	moveCursor 0, 15
+
 	if %TIME_ALPHA != #NOTSET
 		drawTimer %TIME_ALPHA
 	endif
@@ -51,7 +57,7 @@ if 0 == 4 & %SHOW_TIMER
 endif
 
 
-if 0 == 2 & %SHOW_TIMER
+if %SHOW_TIMER >= 1
 	//crazy big timer
 
 	setFontFamily "Virtue"
@@ -66,7 +72,7 @@ if 0 == 2 & %SHOW_TIMER
 
 
 
-	if %RACE_STATE >= 1
+	if %RACE_STATE != 1
 		if %TIME_BEST == 0
 			setcolor 0, 0, 0, 1
 			drawTimer %TIME_SELF
@@ -104,7 +110,7 @@ if 0 == 2 & %SHOW_TIMER
 	endif
 endif
 
-if 0 == 8 & %SHOW_TIMER
+if 1 == 1 & %SHOW_TIMER
 	// 10 seconds countdown
 	if %TIME_SELF < %TIME_BEST
 	if 1000 > %TIME_BEST - %TIME_SELF
@@ -134,61 +140,4 @@ if 0 == 8 & %SHOW_TIMER
 		drawTimer %TIME_BEST - %TIME_SELF
 	endif
 	endif
-endif
-
-//from default times.hud:
-if %TIME_ALPHA != #NOTSET
-	setFontFamily "Virtue"
-	setFontSize 16
-	setColor 0 0 0 1
-	setAlign #RIGHT, #BOTTOM
-	setScale #DEFAULTSCALE
-	setCursor 786, 392
-	drawString "Alpha Time:"
-
-	setColor 0.8 0.8 0.8 1
-	setAlign #RIGHT, #BOTTOM
-	setCursor 784, 390
-	drawString "Alpha Time:"
-
-	// current time (+shadow)
-	setFontFamily "Virtue"
-	setFontSize 16
-	setColor 0 0 0 1
-	setAlign #RIGHT, #BOTTOM
-	setCursor 786, 408
-	drawTimer %TIME_ALPHA
-
-	setColor 1 1 1 1
-	setAlign #RIGHT, #BOTTOM
-	setCursor 784, 406
-	drawTimer %TIME_ALPHA
-endif
-
-if %TIME_BETA != #NOTSET
-	setFontFamily "Virtue"
-	setFontSize 16
-	setColor 0 0 0 1
-	setAlign #RIGHT, #BOTTOM
-	setScale #DEFAULTSCALE
-	setCursor 786, 444
-	drawString "Beta Time:"
-
-	setColor 0.8 0.8 0.8 1
-	setAlign #RIGHT, #BOTTOM
-	setCursor 784, 442
-	drawString "Beta Time:"
-
-	// current time (+shadow)
-	setFontFamily "Virtue"
-	setFontSize 16
-	setColor 0 0 0 1
-	setAlign #RIGHT, #BOTTOM
-	setCursor 786, 460
-	drawTimer %TIME_ALPHA
-
-	setColor 1 1 1 1
-	setAlign #RIGHT, #BOTTOM
-	setCursor 784, 468
-	drawTimer %TIME_ALPHA
 endif

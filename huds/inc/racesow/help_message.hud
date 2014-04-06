@@ -1,5 +1,5 @@
 // match message
-if %RACE_STATE == 0
+if %RACE_STATE == 1
 	setFontFamily "Droid Sans"
 	setFontSize 14
 	setColorAlpha 0.5

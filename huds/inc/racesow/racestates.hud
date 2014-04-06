@@ -1,6 +1,6 @@
 //Static prejump text while racing
 if %PREJUMP_STATE == 1
-	if %RACE_STATE == 1
+	if %RACE_STATE == 2
 		if %TIME_SELF > -1000
 			setScale #DEFAULTSCALE
 			setCursor 400, 300
@@ -27,7 +27,7 @@ endif
 
 //Prejump notification while in practicemode
 if %PREJUMP_STATE == 1
-	if %RACE_STATE == 2
+	if %RACE_STATE == 0
 		if %TIME_SELF < 100
 			setScale #DEFAULTSCALE
 			setCursor 400, 300
@@ -53,7 +53,7 @@ if %PREJUMP_STATE == 1
 endif
 
 //Static 
-if %RACE_STATE == 2
+if %RACE_STATE == 0
 	setScale #DEFAULTSCALE
 	setCursor 400, 300
 	setScale #NOSCALE

@@ -7,7 +7,7 @@
  */
 class RS_GT_Race : RS_Gametype
 {
-    Cvar rs_dash_speed( "rs_dash_speed", "450", CVAR_ARCHIVE );
+    Cvar rs_dash_speed( "rs_dash_speed", "451", CVAR_ARCHIVE );
 
     /**
      * Constructor Method

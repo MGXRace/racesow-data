@@ -38,7 +38,7 @@ class RS_CMD_WeaponDefs : RS_Command
 	String[] defaults = {
 		"850",	// "g_gravity",
         "1.18", // "g_self_knockback",
-        "450",  // "rs_dash_speed",
+        "451",  // "rs_dash_speed",
         "1.3",    // "rs_splashfrac",
 		"1",	// "rs_grenade_minKnockback",
 		"100",	// "rs_grenade_maxKnockback",

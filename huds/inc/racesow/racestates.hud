@@ -1,0 +1,76 @@
+//Static prejump text while racing
+if %PREJUMP_STATE == 1
+	if %RACE_STATE == 1
+		if %TIME_SELF > -1000
+			setScale #DEFAULTSCALE
+			setCursor 400, 300
+			setScale #NOSCALE
+			setColor 1, 1, 1, 1
+			setFontFamily "Virtue"
+			setFontSize 20
+			setAlign #MIDDLE, #CENTER
+			moveCursor -1, -79
+			setColor 0, 0, 0, 0.05
+			drawstring "PREJUMPED"
+			moveCursor 2, 0
+			drawstring "PREJUMPED"
+			moveCursor 0, -2
+			drawstring "PREJUMPED"
+			moveCursor -2, 0
+			drawstring "PREJUMPED"
+			moveCursor 1, 1
+			setColor 255, 0, 0, 0.5
+			drawstring "PREJUMPED"
+		endif
+	endif
+endif
+
+//Prejump notification while in practicemode
+if %PREJUMP_STATE == 1
+	if %RACE_STATE == 2
+		if %TIME_SELF < 100
+			setScale #DEFAULTSCALE
+			setCursor 400, 300
+			setScale #NOSCALE
+			setColor 1, 1, 1, 1
+			setFontFamily "Virtue"
+			setFontSize 20
+			setAlign #MIDDLE, #CENTER
+			moveCursor -1, -79
+			setColor 0, 0, 0, 0.05
+			drawstring "PREJUMPED"
+			moveCursor 2, 0
+			drawstring "PREJUMPED"
+			moveCursor 0, -2
+			drawstring "PREJUMPED"
+			moveCursor -2, 0
+			drawstring "PREJUMPED"
+			moveCursor 1, 1
+			setColor 255, 0, 0, 0.5
+			drawstring "PREJUMPED"
+		endif
+	endif
+endif
+
+//Static 
+if %RACE_STATE == 2
+	setScale #DEFAULTSCALE
+	setCursor 400, 300
+	setScale #NOSCALE
+	setColor 1, 1, 1, 1
+	setFontFamily "Virtue"
+	setFontSize 20
+	setAlign #MIDDLE, #CENTER
+	moveCursor -1, -209
+	setColor 0, 0, 0, 0.25
+	drawstring "Practicing"
+	moveCursor 2, 0
+	drawstring "Practicing"
+	moveCursor 0, -2
+	drawstring "Practicing"
+	moveCursor -2, 0
+	drawstring "Practicing"
+	moveCursor 1, 1
+	setColor 0, 125, 125, 0.4
+	drawstring "Practicing"
+endif

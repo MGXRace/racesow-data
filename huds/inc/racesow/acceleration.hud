@@ -1,5 +1,5 @@
 //accelmeter bar
-if 0 == 16 & %SHOW_SPEED
+if 1 & %SHOW_ACCEL
 	setFontFamily "Virtue"
 	setFontSize 12
 	

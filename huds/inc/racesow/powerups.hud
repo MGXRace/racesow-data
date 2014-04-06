@@ -4,23 +4,26 @@ setCursor #WIDTH / 2, 524
 setScale #SCALEBYHEIGHT
 setSize 30, 30
 setColor 1, 1, 1, 1
-if %POWERUP_QUAD_TIME != 0
-	setAlign #RIGHT, #MIDDLE
-	moveCursor -4, 0
-	drawPicByItemIndex #ITEM_QUAD_DAMAGE
 
-	setAlign #LEFT, #MIDDLE
-	moveCursor 8, 0
-	drawNum %POWERUP_QUAD_TIME
-	moveCursor -4, -34
-endif
+if %RACE == 0
+	if %POWERUP_QUAD_TIME != 0
+		setAlign #RIGHT, #MIDDLE
+		moveCursor -4, 0
+		drawPicByItemIndex #ITEM_QUAD_DAMAGE
 
-if %POWERUP_WARSHELL_TIME != 0
-	setAlign #RIGHT, #MIDDLE
-	moveCursor -4, 0
-	drawPicByItemIndex #ITEM_WARSHELL
+		setAlign #LEFT, #MIDDLE
+		moveCursor 8, 0
+		drawNum %POWERUP_QUAD_TIME
+		moveCursor -4, -34
+	endif
 
-	setAlign #LEFT, #MIDDLE
-	moveCursor 8, 0
-	drawNum %POWERUP_WARSHELL_TIME
+	if %POWERUP_WARSHELL_TIME != 0
+		setAlign #RIGHT, #MIDDLE
+		moveCursor -4, 0
+		drawPicByItemIndex #ITEM_WARSHELL
+
+		setAlign #LEFT, #MIDDLE
+		moveCursor 8, 0
+		drawNum %POWERUP_WARSHELL_TIME
+	endif
 endif

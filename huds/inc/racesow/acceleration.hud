@@ -12,28 +12,11 @@ if 1 & %SHOW_ACCEL
 
 	setSize 206, 16
 	setcolor 1, 1, 1, 0.1
-	setAlign #LEFT, #MIDDLE
+	setAlign #TOP, #MIDDLE
 	drawPicByName gfx/ui/white
 	
 	moveCursor 3, 0
 	setSize 200, 10
 	setColor 0, 1, 0, 0.3
 	drawBar %ACCELERATION, %MAX_ACCEL
-
-//alternative way, draws a black line where acceleration is maximum
-//drawBar %ACCELERATION, 200000
-//setScale #SCALEBYHEIGHT
-//moveCursor %MAX_ACCEL / 1000, 0
-//setcolor 0, 0, 0, 1
-//setScale #SCALEBYHEIGHT
-//setSize 2, 10
-//drawPicByName gfx/ui/white
-
-
-//setScale #DEFAULTSCALE
-//moveCursor -2, 0
-//setAlign #RIGHT, #MIDDLE
-//setColor 1, 1, 1, 1
-//drawStringNum %ACCELERATION
-
 endif

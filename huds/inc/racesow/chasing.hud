@@ -1,10 +1,14 @@
 //
 if %CHASING != #NOTSET
-	setFontFamily "Virtue"
-	setFontSize 12
-	setColor 1.0 1.0 1.0 0.8
+	setFontFamily "Kimberley"
+	setFontSize 16
+	setColor 1.0 1.0 1.0 0.2
 	setScale #DEFAULTSCALE
-	setCursor 400 48
+	setCursor 400 100
+	setAlign #CENTER, #BOTTOM
+	drawString Chasing:
+	setFontSize 20
+	setColor 1.0 1.0 1.0 1
 	setAlign #CENTER, #TOP
 	drawPlayerName %CHASING
 endif 

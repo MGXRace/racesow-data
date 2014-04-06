@@ -10,7 +10,7 @@ class RS_CMD_NoClip : RS_Command
 
     bool validate( RS_Player @player, String &args, int argc )
     {
-        if( @player.client.getEnt() is null || player.client.getEnt().team != TEAM_PLAYERS || !player.practicing )
+        if( @player.client.getEnt() is null || player.client.getEnt().team != TEAM_PLAYERS || player.state != RS_STATE_PRACTICE )
         {
             sendErrorMessage( @player, "Noclip is not available in your current state");
             return false;

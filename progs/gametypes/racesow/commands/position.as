@@ -38,9 +38,9 @@ class RS_CMD_Position : RS_Command
             return success;
         }
 
-		if( args.getToken( 0 ) == "prerace" )
+		else if( args.getToken( 0 ) == "prerace" )
 		{
-			if( player.getState() != RS_STATE_PRERACE ||
+			if( player.state != RS_STATE_PRERACE ||
 				@player.client is null ||
 				player.client.team != TEAM_PLAYERS )
 			{

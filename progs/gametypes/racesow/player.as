@@ -1,6 +1,6 @@
-const int RS_STATE_PRERACE = 0;
-const int RS_STATE_RACING = 1;
-const int RS_STATE_PRACTICE = 2;
+const uint RS_STATE_PRACTICE = 0;
+const uint RS_STATE_PRERACE = 1;
+const uint RS_STATE_RACING = 2;
 
 /**
  * Racesow Player Model
@@ -15,6 +15,12 @@ class RS_Player
      * @var Client
      */
     Client @client;
+
+    /**
+     * Player's current racing state
+     * @var state
+     */
+    uint state;
 
     /**
      * The clients auth credentials
@@ -57,12 +63,6 @@ class RS_Player
      * @var String
      */
     String challengerList;
-
-    /**
-     * True if player is in practicemode
-     * @var bool
-     */
-    bool practicing;
 
     /**
      * Time the player should respawn at
@@ -177,15 +177,18 @@ class RS_Player
         if( !inNoClip || ( !position.saved && !positionPrerace.saved ) )
             client.respawn( false );
 
-        if( practicing && position.saved )
+        if( state == RS_STATE_PRACTICE && position.saved )
             position.load();
         else if( positionPrerace.saved )
             positionPrerace.load();
 
-        if( practicing )
+        if( state == RS_STATE_PRACTICE )
             startRace();
         else
+        {
+            state = RS_STATE_PRERACE;
             client.execGameCommand( "dstart" );
+        }
     }
 
     /**
@@ -242,8 +245,11 @@ class RS_Player
      */
     void startRace()
     {
-        if( @race !is null && !practicing )
+        if( @race !is null && state != RS_STATE_PRACTICE )
             return;
+
+        if( state != RS_STATE_PRACTICE )
+            state = RS_STATE_RACING;
 
         @race = @RS_Race( @this );
     }
@@ -260,7 +266,7 @@ class RS_Player
 
         race.stopRace();
 
-        if( practicing )
+        if( state == RS_STATE_PRACTICE )
         {
             sendAward( @this, S_COLOR_CYAN + "You completed the map in practicemode, no time was set");
             return;
@@ -426,12 +432,12 @@ class RS_Player
 
         // update highest speed
         uint hspeed = getSpeed();
-        if( getState() != RS_STATE_PRACTICE && hspeed > highestSpeed )
+        if( state != RS_STATE_PRACTICE && hspeed > highestSpeed )
             highestSpeed = hspeed;
 
         // Update HUD variables
         client.setHUDStat( STAT_TIME_BEST, bestTime() / 10 );
-        client.setHUDStat( STAT_RACE_STATE, getState() );
+        client.setHUDStat( STAT_RACE_STATE, state );
         if( @race !is null )
         {
             client.setHUDStat( STAT_TIME_SELF, race.getTime() / 10 );
@@ -518,19 +524,6 @@ class RS_Player
         Trace tr;
         return tr.doTrace( ent.origin, mins, maxs, down, ent.entNum, MASK_PLAYERSOLID ) ?
                      int( ent.origin.z - tr.get_endPos().z ) : -1;
-    }
-
-    /**
-     * getState
-     * The current racing state of the player
-     * @return int
-     */
-    int getState()
-    {
-        if( practicing )
-            return RS_STATE_PRACTICE;
-
-        return @race is null ? RS_STATE_PRERACE : RS_STATE_RACING;
     }
 
     /**

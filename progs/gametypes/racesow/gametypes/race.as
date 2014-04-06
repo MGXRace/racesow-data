@@ -106,7 +106,7 @@ class RS_GT_Race : RS_Gametype
             int playerID = ( ent.isGhosting() && ( match.getState() == MATCH_STATE_PLAYTIME ) ) ? -( ent.get_playerNum() + 1 ) : ent.get_playerNum();
 
             String playerState;
-            switch( player.getState() )
+            switch( player.state )
             {
             case RS_STATE_PRACTICE:
                 playerState = "^5practicing";

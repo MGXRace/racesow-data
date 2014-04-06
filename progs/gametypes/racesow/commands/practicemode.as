@@ -29,14 +29,14 @@ class RS_CMD_PracticeMode : RS_Command
         if( argc == 1 )
         {
             state = args.getToken( 0 ).toInt();
-            if( state == 1 && player.getState() == RS_STATE_PRACTICE )
+            if( state == 1 && player.state == RS_STATE_PRACTICE )
                     return true;
-            else if( state == 0 && player.getState() != RS_STATE_PRACTICE )
+            else if( state == 0 && player.state != RS_STATE_PRACTICE )
                     return true;
         }
         else
         {
-            if( player.getState() == RS_STATE_PRACTICE )
+            if( player.state == RS_STATE_PRACTICE )
                 state = 0;
             else
                 state = 1;
@@ -45,10 +45,11 @@ class RS_CMD_PracticeMode : RS_Command
         // Change the player's state
     	if( state == 0 )
         {
-            player.practicing = false;
             if( player.inNoClip )
                 // put the player in a location that is safe to un-noclip
                 player.client.respawn( false );
+            // Set state to racing and let respawn() correct it
+            player.state = RS_STATE_RACING;
             player.respawn();
             sendAward( @player, S_COLOR_GREEN + "Leaving practice mode" );
         }
@@ -56,9 +57,9 @@ class RS_CMD_PracticeMode : RS_Command
         {
             if( player.client.team != TEAM_PLAYERS )
                 player.respawn();
-            sendAward( @player, S_COLOR_GREEN + "You have entered practice mode" );
-            player.practicing = true;
+            player.state = RS_STATE_PRACTICE;
             player.startRace();
+            sendAward( @player, S_COLOR_GREEN + "You have entered practice mode" );
         }
 
 		return true;

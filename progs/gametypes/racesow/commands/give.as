@@ -15,7 +15,7 @@ class RS_CMD_Give : RS_Command
 
 	bool validate(RS_Player @player, String &args, int argc)
 	{
-		if( player.getState() != RS_STATE_PRACTICE )
+		if( player.state != RS_STATE_PRACTICE )
 		{
 			sendErrorMessage( @player, "give is only available in practicemode" );
 			return false;

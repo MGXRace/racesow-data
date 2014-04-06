@@ -275,7 +275,7 @@ class RS_Player
 
         if( race.prejumped )
         {
-            specCallback @func = @sendCenterMessage;
+            specCallback @func = @sendAward;
             execSpectators( @func, @this, "Prejump Time: " + TimeToString( race.getTime() ) );
             sendMessage( @this, "Prejumped records are not recorded.");
             respawnTime = realTime + 3000;
@@ -334,7 +334,7 @@ class RS_Player
             execSpectators( @func, @this, "Personal record!" );
         }
 
-        specCallback @func = @sendCenterMessage;
+        specCallback @func = @sendAward;
         String message = "Time: " + TimeToString( newTime ) + ( refBest == 0 ? "" : ( "\n" + diffString( refBest, newTime ) ) );
         execSpectators( @func, @this, message );
     }
@@ -404,7 +404,7 @@ class RS_Player
         else if( newTime < personalBest || personalBest == 0 )
             execSpectators( @func, @this, S_COLOR_YELLOW + "#" + ( cpNum + 1 ) + " checkpoint personal record!" );
 
-        @func = @sendCenterMessage;
+        @func = @sendAward;
         String message = "Current: " + TimeToString( newTime ) + ( refBest == 0 ? "" : ( "\n" + diffString( refBest, newTime ) ) );
         execSpectators( @func, @this, message );
         return true;

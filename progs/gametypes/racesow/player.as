@@ -278,6 +278,7 @@ class RS_Player
             specCallback @func = @sendCenterMessage;
             execSpectators( @func, @this, "Prejump Time: " + TimeToString( race.getTime() ) );
             sendMessage( @this, "Prejumped records are not recorded.");
+            respawnTime = realTime + 3000;
             return;
         }
 

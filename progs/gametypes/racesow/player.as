@@ -124,6 +124,7 @@ class RS_Player
         auth = RS_PlayerAuth( @this );
         noclipWeapon = WEAP_NONE;
         dstop = false;
+        state = RS_STATE_PRERACE;
         privsayTimes.resize( PRIVSAY_FLOODCOUNT );
     }
 

@@ -1,31 +1,68 @@
 //
-setAlign #CENTER, #BOTTOM
-setScale #SCALEBYHEIGHT
-setSize 32, 32
+if %SHOW_PRESSED_KEYS == 2
+	if %CHASING != #NOTSET
+		setAlign #CENTER, #BOTTOM
+		setScale #SCALEBYHEIGHT
+		setSize 32, 32
 
-setScale #DEFAULTSCALE
-setCursor #WIDTH, 255
-setScale #SCALEBYHEIGHT
-moveCursor -74, -34
-drawKeyState jump
+		setScale #DEFAULTSCALE
+		setCursor #WIDTH, 255
+		setScale #SCALEBYHEIGHT
+		moveCursor -74, -34
+		drawKeyState jump
 
-moveCursor -32, 34
-drawKeyState fire
+		moveCursor -32, 34
+		drawKeyState fire
 
-moveCursor 32, 0
-drawKeyState forward
+		moveCursor 32, 0
+		drawKeyState forward
 
-moveCursor 32, 0
-drawKeyState special
+		moveCursor 32, 0
+		drawKeyState special
 
-moveCursor -64, 34
-drawKeyState left
+		moveCursor -64, 34
+		drawKeyState left
 
-moveCursor 32, 0
-drawKeyState backward
+		moveCursor 32, 0
+		drawKeyState backward
 
-moveCursor 32, 0
-drawKeyState right
+		moveCursor 32, 0
+		drawKeyState right
 
-moveCursor -32, 34
-drawKeyState crouch
+		moveCursor -32, 34
+		drawKeyState crouch
+	endif
+endif
+
+if %SHOW_PRESSED_KEYS == 1
+	setAlign #CENTER, #BOTTOM
+	setScale #SCALEBYHEIGHT
+	setSize 32, 32
+
+	setScale #DEFAULTSCALE
+	setCursor #WIDTH, 255
+	setScale #SCALEBYHEIGHT
+	moveCursor -74, -34
+	drawKeyState jump
+
+	moveCursor -32, 34
+	drawKeyState fire
+
+	moveCursor 32, 0
+	drawKeyState forward
+
+	moveCursor 32, 0
+	drawKeyState special
+
+	moveCursor -64, 34
+	drawKeyState left
+
+	moveCursor 32, 0
+	drawKeyState backward
+
+	moveCursor 32, 0
+	drawKeyState right
+
+	moveCursor -32, 34
+	drawKeyState crouch
+endif

@@ -46,8 +46,11 @@ class RS_CMD_PracticeMode : RS_Command
     	if( state == 0 )
         {
             if( player.inNoClip )
+            {
                 // put the player in a location that is safe to un-noclip
                 player.client.respawn( false );
+                player.noclip();
+            }
             // Set state to racing and let respawn() correct it
             player.state = RS_STATE_RACING;
             player.respawn();

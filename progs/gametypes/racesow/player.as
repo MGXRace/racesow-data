@@ -439,8 +439,11 @@ class RS_Player
             highestSpeed = hspeed;
 
         // Update HUD variables
-        client.setHUDStat( STAT_TIME_BEST, bestTime() / 10 );
         client.setHUDStat( STAT_RACE_STATE, state );
+
+        if( @record !is null )
+            client.setHUDStat( STAT_TIME_BEST, bestTime() / 10 );
+
         if( @race !is null )
         {
             client.setHUDStat( STAT_TIME_SELF, race.getTime() / 10 );

@@ -95,9 +95,6 @@ class RS_Race
         startSpeed = player.getSpeed();
         prejumped = RS_QueryPjState( player.client.get_playerNum() );
 
-        if( prejumped && !player.practicing )
-            sendAward( player, S_COLOR_RED + "Prejumped" );
-
         report = S_COLOR_ORANGE + "Start speed: " + S_COLOR_WHITE + player.getSpeed() + "\n";
     }
 

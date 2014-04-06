@@ -169,13 +169,8 @@ class RS_Player
             G_RemoveProjectiles( client.getEnt() );
 
         if( client.team != TEAM_PLAYERS )
-        {
             client.team = TEAM_PLAYERS;
-            client.respawn( false );
-        }
-
-        if( !inNoClip || ( !position.saved && !positionPrerace.saved ) )
-            client.respawn( false );
+        client.respawn( false );
 
         if( state == RS_STATE_PRACTICE && position.saved )
             position.load();

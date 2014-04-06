@@ -7,12 +7,12 @@ endif
 if %VIDHEIGHT < 768
     if %VIDHEIGHT >= 600
 	// old - bitstream_9
-	setFontFamily "Droid Sans"
+	setFontFamily "Kimberley"
 	setFontSize 9
     endif
     if %VIDHEIGHT < 600
 	// old - bitstream_7
-	setFontFamily "Droid Sans"
+	setFontFamily "Kimberley"
 	setFontSize 7
     endif
 endif

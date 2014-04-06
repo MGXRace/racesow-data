@@ -7,8 +7,8 @@ if %SHOW_TIMER >= 1
 	setCursor 400, 0
 	setScale #NOSCALE
 	moveCursor 2, 2
-	setFontFamily "Hemi Head"
-	setFontSize 22
+	setFontFamily "Virtue"
+	setFontSize 16
 	setAlign #CENTER, #TOP
 	setColor 0, 0, 0, 1
 	drawClock

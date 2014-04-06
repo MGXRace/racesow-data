@@ -346,7 +346,7 @@ class RS_Player
     void cancelRace()
     {
         // If race was finished, stopRace should have reported it
-        if( race.endTime != 0 )
+        if( @race !is null && race.endTime != 0 )
             raceReport( @race );
         @race = null;
     }

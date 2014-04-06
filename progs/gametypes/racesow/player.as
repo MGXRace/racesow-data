@@ -172,7 +172,7 @@ class RS_Player
         if( client.team != TEAM_PLAYERS )
             client.team = TEAM_PLAYERS;
 
-        if( player.state != RS_STATE_PRACTICE || !player.inNoClip )
+        if( state != RS_STATE_PRACTICE || !inNoClip )
             client.respawn( false );
 
         if( state == RS_STATE_PRACTICE && position.saved )
@@ -346,7 +346,7 @@ class RS_Player
     void cancelRace()
     {
         // If race was finished, stopRace should have reported it
-        if( race.endTime != 0 )
+        if( @race !is null && race.endTime != 0 )
             raceReport( @race );
         @race = null;
     }
@@ -513,7 +513,7 @@ class RS_Player
     {
         Vec3 globalSpeed = client.getEnt().velocity;
         Vec3 horizontalSpeed = Vec3( globalSpeed.x, globalSpeed.y, 0 );
-        return uint( horizontalSpeed.length() );
+        return uint( horizontalSpeed.length() + 0.5 );
     }
 
     /**

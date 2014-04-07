@@ -6,6 +6,7 @@ setScale #NOSCALE
 moveCursor 0, 50
 setColor 1, 1, 1, 1
 
+if %MATCH_STATE <= 3
 if 1 & %SHOW_SPEED
 	//horizontal bar
 	setAlign #CENTER, #MIDDLE
@@ -71,6 +72,4 @@ if 1 & %SHOW_SPEED
 	setColor 1, 1, 1, 1
 	drawStringNum %JUMPSPEED
 endif
-
-
-
+endif

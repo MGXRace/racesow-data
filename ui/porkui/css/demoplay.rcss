@@ -1,0 +1,81 @@
+#timer-text {
+	position: relative;
+	display: block;
+	text-align: center;
+}
+
+#timer-bar {
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 336px;
+	max-width: 336px;
+	height: 24px;
+}
+
+#timer-bar sliderbar {
+	width: 32px;
+}
+
+#play-button {
+	float: left;
+	height: 40px;
+	width: 40px;
+	margin-left: 12px;
+	margin-bottom: 12px;
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/controls/demoplay;
+}
+
+#play-button:hover {
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/controls/demoplay_hover;
+}
+
+#eject-button {
+	float: right;
+	height: 40px;
+	width: 40px;
+	margin-right: 12px;
+	margin-bottom: 12px;
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/controls/demoeject;
+}
+
+#eject-button:hover {
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/controls/demoeject_hover;
+}
+
+#stop-button {
+	float: right;
+	height: 40px;
+	width: 40px;
+	margin-right: 12px;
+	margin-bottom: 12px;
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/controls/demostop;
+}
+
+#stop-button:hover {
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/controls/demostop_hover;
+}
+
+#pause-button {
+	display: none; /* default at startup */
+
+	float: left;
+	height: 40px;
+	width: 40px;
+	margin-left: 12px;
+	margin-bottom: 12px;
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/controls/demopause;
+}
+
+#pause-button:hover {
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/controls/demopause_hover;
+}

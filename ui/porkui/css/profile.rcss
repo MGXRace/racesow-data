@@ -1,0 +1,119 @@
+/* login form */
+#profile_container {
+	overflow-y: auto;
+	height: 100%;
+}
+
+#profile_login {
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+#message {
+	color: #e86a2b;
+}
+
+.smaller { font-size: 11px; }
+.smaller a { color: #E86A2B; text-decoration: none; }
+.smaller a:hover { text-decoration: underline; }
+.intro { padding-left: 15%; }
+
+/* matchmaker profile stuffs  */
+
+/* text-align: center here is a trick to get tabs centered - for content divs, align text to left; */
+#wmm-home { text-align: center; margin-top: -16px; }
+
+/* profile header */
+#wmm-profile { 
+	width: 100%; 
+	float: left; 
+	padding: 8px; 
+	background-decorator: tiled-box;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_purple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_purple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_purple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_purple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_purple_middle.tga stretch;	
+}
+
+/* profile header headings */
+#wmm-profile h1, #wmm-profile hr, #wmm-profile h3 { padding: 0px; margin: 0px; }
+#wmm-profile hr { width: 95%; }
+#wmm-profile h3 { margin-top: 8px; }
+
+/* image and name alignment */
+#wmm-player-image, #wmm-player-name { float: left; text-align: left; margin-top: 8px; }
+#wmm-player-image img { width: 80px; height: 80px; margin-left: 6px; margin-top: 0px; }
+#wmm-player-image { width: 10%; }
+#wmm-player-name { width: 23%; }
+
+/* top header stats */
+#wmm-player-accuracy { width: 65%; margin-right: 2%; float: right; font-size: 12px; } /* margin trick for the stupid scrollbar :); */
+.wmm-player-item { width: 22%; padding: 1%; float: left; text-align: center; }
+
+/* time played block */
+#wmm-random-stats { 
+	width: 100%;
+	margin-top: 8px; 
+	padding-left: 8px; 
+	padding-right: 8px;
+	padding-top: 4px; 
+	padding-bottom: 8px; 
+	background-decorator: tiled-box;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_purple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_purple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_purple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_purple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_purple_middle.tga stretch;	
+}
+#wmm-time-ingame, #wmm-random-stats, #wmm-time-played { float: left; }
+#wmm-time-played { width: 75%; }
+#wmm-random-stats { font-size: 11px; }
+#wmm-time-ingame { width: 10%; color: #ccc; }
+
+/* headings fixes */
+#wmm-stats h1, #wmm-news h1 { padding-bottom: 0px; margin-bottom: 8px; }
+#wmm-stats h3 { padding-left: 4px; }
+
+/* news feed */
+#wmm-news h3 { margin-left: 8px; }
+.wmm-news-item a { padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; color: #E86A2B; }
+.wmm-news-item a:hover { text-decoration: underline; }
+.wmm-news-item span { font-size: 11px; text-decoration: none; color: white; }
+.alt { background: #1c1923a1; }
+.news-content, .news-poster { padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; }
+
+/* stats */
+#wmm-stats { margin-top: 8px; margin-right: 16px; }
+#stat-web-button { float: right; text-align: right; }
+.stats { padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; width: 100%; }
+.wep-img { width: 5%; float: left; }
+.wep-name { max-width: 45%; float: left; text-align: left; }
+.wep-name b { margin-left: 8px; font-weight: bold; }
+.use-percent { width: 10%; float: right; text-align: right; }
+.use-percent b { margin-left: 4px; font-weight: bold; }
+.accuracy-info { width: 10%; float: right; text-align: right; }
+.accuracy-info b { margin-left: 8px; font-weight: bold; }
+.clear { clear: both; }
+
+/* friends */
+.friends-connected a { color: #E86A2B; }
+.friends-connected a:hover { text-decoration: underline; }
+
+/* raise content closer to the tabs */
+#wmm-news, #wmm-friends { text-align: left; }
+
+/* tabs */
+tab { margin-top: 16px; z-index: 1; }
+panel { margin-top: 0px; padding: 0px; z-index: 999; } /* content always at top */
+.side-tab { max-width: 175px; }
+
+/* awards */
+.award { float: left; padding: 8px; width: 108px; }
+.awardCount { text-align: left; margin-top: 12px; margin-left: 24px; font-size: 11px; font-weight: bold; float: left; position: absolute; }

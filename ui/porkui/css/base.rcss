@@ -1,0 +1,335 @@
+/* Main layout */
+body {
+	width: 100%; 
+	height: 100%;
+	margin: 0; 
+	padding: 0;
+	font-family: Droid Sans;
+	font-size: 14px;
+	font-charset: U+0020-007E;
+	color: #f4f4f4;
+}
+
+h1 {
+/*
+	font-family: Droid Sans;
+	font-weight: bold;
+	font-style: italic;
+*/
+}
+
+h2 {
+/*
+	font-family: Droid Sans;
+	font-weight: bold;
+	font-style: italic;
+*/
+}
+
+#background {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+}
+
+#background-map {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	worldmodel: maps/ui.bsp;
+	vieworigin: 302 -490 120;
+	viewangles: 0 -240 0;
+	wave-yaw: 30 0 0.006;
+}
+
+#background-overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/background 0 0 1 1;
+}
+
+#header {
+	position: fixed;
+	top: 0px; left: 0px;
+	width: 100%;
+	height: 80px;
+	grad-decorator: gradient;
+	grad-gradient: vertical #3e384ec0 #1f1c27a0;
+}
+		
+#header-top {
+	position: fixed;
+	top: 0px; left: 0px;
+	width: 100%;
+	height: 54px;
+	bg-decorator: tiled-horizontal;
+	bg-left-image-src: /ui/porkui/gfx/logo.tga 0 0 1 1;
+	bg-center-image-src: /ui/porkui/gfx/logo_tile.tga 0 0 1 1;
+	bg-right-image-src: /ui/porkui/gfx/logo_tile.tga 0 0 1 1;			
+}
+
+#content {
+	position: fixed;
+	top: 126px;
+	left: 0px;
+	padding: 16px 16px 16px 16px;
+	height: 636px;
+	background: #111016a0;
+}
+
+#footer {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 92px;
+	background: #1f1c27a0;
+}
+
+#news img { 
+	max-width: 98%;
+}
+
+/* Anchors */
+a {
+	tab-index: none;
+	color: #e86a2b;
+}
+
+a:hover, a:focus {
+	color: #fff;
+}
+
+/* Navigation */
+#navi {
+	position: fixed;
+	top: 80px;
+	left: 0px;
+	height: 46px;
+	text-align: center;
+	background: #1f1c27a0;
+}
+
+#navi a, #navi button {
+	darken-font-effect: shadow;
+	darken-offset: 1px 1px;
+	darken-color: black;
+	color: #e86a2b;
+/*
+	font-family: Droid Sans;
+	font-weight: bold;
+	font-style: italic;
+*/
+	font-size: 1.5em;
+	margin: 0 8px;
+	padding: 8px 16px;
+	sound-hover: /ui/porkui/sounds/mouseover.wav;
+	sound-click: /ui/porkui/sounds/ok.wav;
+	
+	/* note, this is fucked up at the moment, due to buggy */
+	/* focus search in libRocket, pressing TAB loops through */
+	/* #navi a elements only */
+	/*tab-index: auto;*/
+}
+
+#navi a:hover, #navi a:active, #navi a:focus, #navi button:hover, #navi button:active, #navi button:focus {
+	color: #fff;
+	darken-font-effect: none;
+	background-decorator: tiled-box;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright.tga ;
+	background-top-image: /ui/porkui/gfx/controls/button_border.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/button_border.tga stretch;
+	background-left-image: /ui/porkui/gfx/controls/button_border.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/button_middle.tga stretch;
+}
+
+#login_button, #logout_button {
+	display: none;
+}
+
+/* top nicehr for navi/content */
+.uitop { margin-top: 16px; }
+
+/* Notification popup */
+#notification {
+	position: fixed;
+	top: 16px;
+	left: 40%;
+	height: 16px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	width: 10%;
+	text-align: center;
+	background: #bef4ad;
+	z-index: 2;
+	display: none;
+	font-size: 12px;
+	color: black;
+	font-weight: bold;
+}
+
+/* Console icon */
+#console {
+	position: fixed;
+	bottom: 100px;
+	width: 100%;
+	height: 24px;
+	z-index: 2;
+}
+
+#link_console img { 
+	float: right;
+	width: 24px;
+	height: 24px;
+	margin-right: 2.5%;
+}
+
+/** Left side container */
+#leftside {
+	float: left;
+	height: 100%;
+	width: 75%;
+	overflow-y: auto;
+}
+		
+/** Right side containers */
+#sidebar {
+	float: right;
+	height: 100%;
+	width: 24%;
+	border-left: 1px #121017;
+}
+		
+/* used to generate the 'nice vr' */
+#sidebar2 {
+	height: 100%;
+	width: 100%;
+	border-left: 1px #2c2839;
+}
+
+/* Sidebar buttons and tabs */			
+
+/* only for sidebar buttons */
+#sidebar2 a, #sidebar2 button {
+	display: inline-block;
+	margin: auto;
+}
+
+#sidebar2 button { margin-top: 8px; }
+
+#sidebar2 a, #sidebar2 button, .styled-button {
+	darken-font-effect: shadow;
+	darken-offset: 1px 1px;
+	darken-color: black;		
+	width: 75%;
+	margin-bottom: 8px;
+	padding: 8px;
+	text-align: center;
+	color: #e86a2b;
+/*	sound-hover: /ui/porkui/sounds/mouseover.wav; */
+	sound-click: /ui/porkui/sounds/ok.wav;
+	background-decorator: tiled-box;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_purple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_purple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_purple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_purple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_purple_middle.tga stretch;
+	tab-index: auto;	
+}
+
+#sidebar2 a:hover, #sidebar2 button:hover, #sidebar2 a:focus, #sidebar2 button:focus, .styled-button:hover, .styled-button:focus {
+	color: #fff;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_lightpurple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_lightpurple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_lightpurple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_lightpurple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;	
+}
+
+#sidebar2 a:active, #sidebar2 button:active, .styled-button:active {
+	color: #fff;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_purple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_purple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_purple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_purple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;	
+}	
+
+#sidebar2sub { margin-top: 16px; }
+
+/* in-ui titles for inputs */
+
+div.title {
+	width: 35%;
+	padding-left: 15%;
+	display: inline-block;
+	text-align: left;
+	margin-bottom: 12px;
+}
+
+tabset tab, #navibar a {
+	darken-font-effect: shadow;
+	darken-offset: 1px 1px;
+	darken-color: black;		
+	width: 75%;
+	padding: 8px;
+	text-align: center;
+	color: #e86a2b;	
+/*	font-family: Droid Sans; */
+/*	sound-hover: /ui/porkui/sounds/mouseover.wav;*/
+	sound-click: /ui/porkui/sounds/ok.wav;	
+
+	background-decorator: tiled-box;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_purple_trans.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_purple_trans.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_purple_trans.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/subbutton_purple_trans.tga stretch;
+	background-bottom-right-image: /ui/porkui/gfx/controls/subbutton_purple_trans.tga stretch;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_purple_trans.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_purple_trans.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_purple_trans.tga stretch;		
+}
+
+tabset tab:active, #navibar a:active {
+	color: #fff;
+}
+
+tabset tab:selected, tabset tab:hover, tabset tab:focus, #navibar a:hover {
+	color: #fff;
+	background-decorator: tiled-box;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_purple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_purple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-bottom-right-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;	
+}
+
+/* notes:
+   #navibar is kind of an 'alias' for tabset tab here (used in the server browser),
+   but server browser doesn't (and can't) use tabset.   
+   the rest of the styling is in the serverlist.css, 
+   but we need to override width for these fake-tabs
+   here and use inline-block to be able to set width
+   for it.
+*/
+#navibar a {
+	width: 150px;
+	display: inline-block;
+}

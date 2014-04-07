@@ -1,0 +1,15 @@
+#player-setup { text-align: center; }
+#player-setup panel { text-align: left; }
+
+tabset tab {
+	width: 20%;
+	text-align: center;
+}
+
+#crosshair {
+	z-index: 0;
+}
+
+#player-setup h4 { 
+	margin-left: 15%;
+}

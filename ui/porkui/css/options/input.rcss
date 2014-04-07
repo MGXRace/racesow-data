@@ -1,0 +1,13 @@
+#binds {
+	text-align: center;
+	width: 100%;
+}
+
+.sens-input { width: 75px; }
+
+/* margin and z-index are a little hack to get setup view closer to top navi */
+tabset tab  { width: 15%; z-index: 2; }
+.keys       {  }
+
+/* align hack to match sensitity sliders :/ */
+.checkbox_opt { margin-left: -250px; }

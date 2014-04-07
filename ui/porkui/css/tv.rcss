@@ -1,0 +1,42 @@
+#modal-frame {
+	width: 600px;
+}
+
+#modal-block-rel {
+	position: relative;
+	left: -332px; 	 /* - ( 0.5 * modal-frame width + padding-left ) */
+	top: -250px;
+}
+
+#tv-header1 {
+/*
+	font-family: Hemi Head;
+	font-weight: bold;
+	font-style: italic;
+*/
+	font-size: 1.5em;
+}
+
+#tvchannels-frame {
+	width: 100%;
+	padding-bottom: 16px;	
+}
+
+#tvchannels-datagrid {
+	width: 100%;
+	text-align: left;
+}
+
+#tvchannels-datagrid datagridrow:hover, #tvchannels-datagrid datagridrow:active, #tvchannels-datagrid datagridrow:selected { 
+	background: #3f3c49; 
+}
+
+#tv-frame button, #tv-frame a {
+	width: 100px;
+	display: inline-block;
+	float: left;
+}
+
+#tv-frame button:last-child, #tv-frame a:last-child {
+	float: right;
+}

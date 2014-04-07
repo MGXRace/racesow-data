@@ -1,0 +1,362 @@
+<rml>
+<head>
+	<title>chat</title>
+	<link type="text/template" href="template.rml" />
+	<link rel="stylesheet" type="text/css" href="css/chat.rcss" />
+	<script>
+	const uint IRC_POLL_INTERVAL = 100;
+	int ircConnectionState = -1;
+
+	Cvar irc_server;
+	Cvar irc_port;
+	Cvar irc_nick;
+	Cvar irc_defaultChannel;
+	Cvar ui_defaultIrcChannels;
+
+	ElementTabSet @chat_tabset;
+
+	Element @chat_login;
+	Element @irc_server_tab;
+	Element @irc_server_panel;
+	ElementOptionsForm @connect_form;
+	ElementOptionsForm @disconnect_form;
+
+	DataSource @channels_ds;
+	ElementOptionsForm @channel_form;
+	ElementFormControl @irc_channel;
+	ElementFormControl @irc_message;
+
+	void onChatLoad( Element @body, Event @event )
+	{
+		onTemplateLoad( body, event );
+
+		irc_server = Cvar( 'irc_server', 'irc.quakenet.org', CVAR_ARCHIVE );
+		irc_port = Cvar( 'irc_port', '6667', CVAR_ARCHIVE );
+		irc_nick = Cvar( 'irc_nick', 'WarsowPlayer', CVAR_ARCHIVE );
+		irc_defaultChannel = Cvar( 'irc_defaultChannel', '', 0 );
+		ui_defaultIrcChannels = Cvar( 'ui_defaultIrcChannels', '#warsow #warsow.pickup', CVAR_ARCHIVE );
+
+		@chat_tabset = body.getElementById( 'chat-tabset' ) ;
+		@chat_login = body.getElementById( 'chat-connect' ) ;
+		@connect_form = body.getElementById( 'connect-form' );
+		@disconnect_form = body.getElementById( 'disconnect-form' );
+
+		@irc_server_tab = body.getElementById( 'irc-server-tab' );
+		@irc_server_panel = body.getElementById( 'irc-server-panel' );
+
+		@channels_ds = getDataSource( 'ircchannels' );
+		@channel_form = body.getElementById( 'irc-channel-form' );
+		@irc_channel = body.getElementById( 'input-irc-channel' );
+		@irc_message = body.getElementById( 'input-irc-message' );
+
+		irc_channel.disabled = true;
+
+		// init IRC state
+		ircConnectionState = -1;
+		ircTrackState();
+
+		window.setInterval( ircTimerPoll, IRC_POLL_INTERVAL );
+	}
+
+	void onChatShow( Element @body, Event @event )
+	{
+		onTemplateShow( body, event );
+
+		// if irc_nick value matches the default one, pick either MM login name or the ingame name
+		if( !irc.connected && irc_nick.string == irc_nick.defaultString ) {
+			String newNick = "";
+
+			if( matchmaker.state == MM_LOGIN_STATE_LOGGED_IN ) {
+				newNick = matchmaker.user;
+			}
+			else {
+				Cvar name( "name", "player", CVAR_ARCHIVE );
+				if( name.string != name.defaultString ) {
+					newNick = name.string;
+				}
+			}
+
+			if( !newNick.empty() ) {
+				irc_nick.set( newNick );
+			}
+		}
+		
+		connect_form.storeOptions();
+		disconnect_form.storeOptions();
+		channel_form.storeOptions();
+
+		Element @chat_log = body.getElementById( 'irchat-log' );
+		chat_log.css( 'height',
+			( int( body.getElementById( 'chat-container' ).clientHeight() - irc_server_tab.clientHeight() )
+			- body.getElementById( 'irchat-say-container' ).css( 'height' ).toInt()
+			- body.getElementById( 'irchat-channels-container' ).css( 'height' ).toInt()
+			- 24 /* safeguard */
+			) + 'px'
+		);
+
+		// message input field width
+		Element @input_message = cast<Element>(irc_message);
+		Element @send_button = body.getElementById( 'input-irc-send-btn' );
+
+		int input_width = int( body.getElementById( 'chat-container' ).clientWidth() )
+			- send_button.css( 'width' ).toInt()
+			- send_button.css( 'margin-left' ).toInt()
+			- input_message.css( 'margin-right' ).toInt()
+			- 16 /* safeguard */;
+
+		input_message.css( 'width', input_width + 'px' ).css( 'max-width', input_width + 'px' );
+	}
+
+	void onConnectFormSubmit( Element @form, Event @event )
+	{
+		connect_form.applyOptions();
+
+		String hostname = irc_server.string;
+		int port = irc_port.integer;
+
+		// join specified channels on End of MOTD
+		
+		irc.joinOnEndOfMotd( '' );
+
+		array<String @>channels = StringUtils::Split( ui_defaultIrcChannels.string, ' ' );
+		for( uint i = 0; i < channels.length(); ) {
+			String channel = channels[i++];
+			if (i < channels.length() && channels[i].substr( 0, 1 ) != "#" ) {
+				channel += ' ' + channels[i++];
+			}
+			irc.joinOnEndOfMotd( channel );
+		}
+
+		irc.connect();
+	}
+
+	void onDisconnectFormSubmit( Element @form, Event @event )
+	{
+		irc.disconnect();
+	}
+
+	void onSendFormSubmit( Element @form, Event @event )
+	{
+		String line = irc_message.value;
+		bool isCmd = false;
+		
+		if( line.substr( 0, 1 ) == '/' ) {
+			// check whether this is a known command
+			array<String @>cmds = StringUtils::Split( line.substr( 1 ), ' ' );
+
+			String cmd = cmds[0];
+			String arg0 = '', args0 = ''; // first argument; all arguments, starting with the first one
+			String arg1 = '', args1 = ''; // second argument; all arguments, starting with the second one
+			String arg2 = ''; // third argument
+
+			cmds.removeAt( 0 );
+
+			if( cmds.length() >= 1 ) {
+				arg0 = cmds[0]; 
+				args0 = StringUtils::Join( cmds, ' ' );
+				cmds.removeAt( 0 );
+
+				if( cmds.length() >= 1 ) {
+					arg1 = cmds[0]; 
+					args1 = StringUtils::Join( cmds, ' ' );
+					cmds.removeAt( 0 );
+					
+					if( cmds.length() >= 1 ) {
+						arg2 = cmds[0];
+					}
+				}				
+			}
+
+			// target comes as the first argument
+			// if empty, target the default channel
+			String channel = arg0;
+			if( channel.empty() ) {
+				channel = irc_defaultChannel.string;
+			}
+
+			isCmd = true;
+			if( cmd == "join" ) {
+				irc.join( arg0, args1 );
+			}
+			else if( cmd == "leave" || cmd == "part" ) {
+				irc.part( channel );
+			}
+			else if( cmd == "quit" ) {
+				irc.disconnect();
+			}
+			else if( cmd == "privmsg" || cmd == "pm" || cmd == "msg" ) {
+				irc.privateMessage( arg0, args1 );
+			}
+			else if( cmd == "chanmsg" || cmd == "cm" ) {
+				irc.channelMessage( args0 );
+			}	
+			else if( cmd == "mode" ) {
+				irc.mode( arg0, arg1, arg2 );
+			}
+			else if( cmd == "who" ) {
+				irc.who( arg0 );
+			}
+			else if( cmd == "whois" ) {
+				irc.whois( arg0 );
+			}
+			else if( cmd == "whowas" ) {
+				irc.whowas( arg0 );
+			}
+			else if( cmd == "quote" ) {
+				irc.quote( args0 );
+			}
+			else if( cmd == "topic" ) {
+				irc.topic( arg0, args1 );
+			}
+			else if( cmd == "names" ) {
+				irc.names( channel );
+			}
+			else if( cmd == "kick" ) {
+				irc.kick( arg0, args1 );
+			}
+			else if( cmd == "me" ) {
+				irc.action( args0 );
+			}
+			else {
+				// not a command, not at least one of those we can handle
+				isCmd = false;
+			}
+		}
+
+		if( !isCmd ) {
+			irc.channelMessage( line );
+		}
+		irc_message.value = '';
+		cast<Element>(irc_message).focus();
+	}
+
+	void ircTrackState( void )
+	{
+		int state = irc.connected ? 1 : 0;
+		bool haveChannels = irc.connected && @channels_ds != null && channels_ds.numRows( 'list' ) > 0 ? true : false;
+
+		// disable channel picker if no channels available and vise versa
+		if( @irc_channel != null && @channel_form != null && irc_channel.disabled == haveChannels ) {
+			irc_channel.disabled = !haveChannels;		
+			if( haveChannels ) {
+				channel_form.storeOptions();
+			}
+		}
+
+		if( ircConnectionState == state ) {
+			return;
+		}
+
+		if( irc.connected ) {
+			// connected to IRC server
+
+			cast<Element>(connect_form).css( 'display', 'none' )
+				.css( 'visibility', 'hidden' );
+			cast<Element>(disconnect_form).css( 'display', 'block' )
+				.css( 'visibility', 'visible' );
+			
+			irc_server_panel.css( 'visibility', 'visible' );			
+			irc_server_tab.css( 'display', 'inline-block' ).setInnerRML( irc_server.string );
+			chat_tabset.setActiveTab( 1 );
+		}
+		else {
+			cast<Element>(connect_form).css( 'display', 'block' )
+				.css( 'visibility', 'visible' );
+			cast<Element>(disconnect_form).css( 'display', 'none' )
+				.css( 'visibility', 'hidden' );
+
+			// keep the server tab visible
+
+			if( ircConnectionState < 0 ) {
+				// initialization call
+				irc_server_panel.css( 'visibility', 'hidden' );
+				irc_server_tab.css( 'display', 'none' );
+			}
+		}
+
+		ircConnectionState = state;
+	}
+	
+	bool ircTimerPoll( void )
+	{
+		ircTrackState();
+		return true;
+	}
+
+	</script>
+</head>
+<body template="porkui" onload="$onChatLoad" onshow="$onChatShow">
+
+	<div id="chat-container">
+		<tabset id="chat-tabset">
+			<tab id="irc-main">IRC</tab>
+			<panel class="dropshadow">
+				<div id="chat-connect">
+					<h1 class="intro">IRC server connection</h1>
+					<br/>
+					
+					<optionsform id="connect-form" onsubmit="$onConnectFormSubmit">
+						<div class="title">Server name</div>
+						<input type="text" cvar="irc_server" id="input-irc-server" />
+						<br/>
+
+						<div class="title">Server port</div>
+						<input type="text" cvar="irc_port" id="input-irc-port" />
+						<br/>
+
+						<div class="title">Nickname</div>
+						<input type="text" cvar="irc_nick" id="input-irc-nickname" />
+						<br/>
+
+						<div class="title">Channels</div>
+						<input type="text" cvar="ui_defaultIrcChannels" id="input-irc-join" />
+						<br/>
+
+						<input type="submit" class="button-cancel button-apply" id="irc-connect-submit">Connect</input>
+					</optionsform>
+
+					<optionsform id="disconnect-form" onsubmit="$onDisconnectFormSubmit">
+						<div class="title">Server</div>
+						<input type="text" cvar="irc_server" disabled="true" />
+						<br/>
+
+						<div class="title">Server port</div>
+						<input type="text" cvar="irc_port" disabled="true" />
+						<br/>
+
+						<div class="title">Nickname</div>
+						<input type="text" cvar="irc_nick" disabled="true" />
+						<br/>
+
+						<input type="submit" class="button-cancel button-apply" id="irc-disconnect-submit">Disconnect</input>						
+					</optionsform>
+				</div>
+			</panel>
+
+			<tab id="irc-server-tab">Server</tab>
+			<panel id="irc-server-panel" class="dropshadow">
+				<div id="irchat-container">
+					<irclog id="irchat-log" />
+					
+					<hr class="nicehr" />
+					
+					<div id="irchat-channels-container">
+						<optionsform id="irc-channel-form">
+							<span>You are currently talking in:</span>&nbsp;
+							<dataselect cvar="irc_defaultChannel" id="input-irc-channel" source="ircchannels.list" fields="name" valuefield="name" realtime="1" />
+						</optionsform>
+					</div>
+
+					<div id="irchat-say-container">
+						<form onsubmit="$onSendFormSubmit">
+							<input type="text" id="input-irc-message" />
+							<input type="submit" id="input-irc-send-btn">Send</input>
+						</form>
+					</div>
+				</div>
+			</panel>
+		</tabset>
+	</div>
+
+</body>
+</rml>

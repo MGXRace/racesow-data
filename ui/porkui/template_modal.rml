@@ -1,0 +1,92 @@
+<template name="porkui_modal" content="content">
+<head>
+	<link rel="stylesheet" type="text/css" href="css/html4.rcss" />
+	<link rel="stylesheet" type="text/css" href="css/common.rcss" />
+	<link rel="stylesheet" type="text/css" href="css/controls.rcss" />
+	<link rel="stylesheet" type="text/css" href="css/modal.rcss" />
+	<script src="as/base.as" />
+	<script>	
+		int dragOffsetLeft, dragOffsetTop;
+
+		funcdef bool clickCallback( Element @body, Event @ev );
+		clickCallback @beforeOKClickCb;
+		clickCallback @beforeCancelClickCb;
+		
+		void onModalLoad( Element @body, Event @evt )
+		{
+			/* set font-family, font-charset, etc */
+			SetDocumentFontProperties( body );		
+		}
+		
+		void onModalShow( Element @body, Event @ev, clickCallback @beforeOKClick = null, clickCallback @beforeCancelClick = null )
+		{
+			@beforeOKClickCb = @beforeOKClick;
+			@beforeCancelClickCb = @beforeCancelClick;
+
+			// reset frame position
+			Element @modal_frame = body.getElementById( 'modal-frame' );
+			modal_frame.css( 'left', '0px' );
+			modal_frame.css( 'top', '0px' );
+		}
+
+		/* Called on drag-and-drop start */
+		void onModalFrameDragStart( Element @self, Event @ev )
+		{
+			String @mouse_x = ev.getParameter( 'mouse_x', '0' );
+			String @mouse_y = ev.getParameter( 'mouse_y', '0' );
+
+			dragOffsetLeft = self.css( 'left' ).toInt() - mouse_x.toInt();
+			dragOffsetTop = self.css( 'top' ).toInt() - mouse_y.toInt();
+		}
+
+		/* Continuosly called for an element during the dragging */
+		void onModalFrameDrag( Element @self, Event @ev )
+		{
+			int mouse_x = ev.getParameter( 'mouse_x', '0' ).toInt();
+			int mouse_y = ev.getParameter( 'mouse_y', '0' ).toInt();
+
+			self.css( 'left', dragOffsetLeft + mouse_x + 'px' );
+			self.css( 'top', dragOffsetTop + mouse_y + 'px' );
+		}
+
+		void onCancelClick( Element @self, Event @ev )
+		{
+			if( @beforeCancelClickCb != null ) {
+				if( beforeCancelClickCb( self, ev ) != true ) {
+					return;
+				}
+			}
+			window.close( 1 );
+		}
+
+		void onOKClick( Element @self, Event @ev )
+		{
+			if( @beforeOKClickCb != null ) {
+				if( beforeOKClickCb( self, ev ) != true ) {
+					return;
+				}
+			}
+			window.close( 0 );
+		}
+	</script>	
+</head>
+<body>
+	<!-- background div -->
+	<div id="background" />
+	
+	<!-- Content -->
+	<div id="modal-block-abs">
+		<div id="modal-block-rel">	
+			<div id="modal-frame" ondragstart="$onModalFrameDragStart" ondrag="$onModalFrameDrag">
+				<div id="modal-contentflow">
+					<div id="content" />
+				</div>
+
+				<div id="modal-controls">
+					<button class="button-cancel" onclick="$onCancelClick">Cancel</button>&nbsp;<button class="button-apply" onclick="$onOKClick">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</template>

@@ -1,0 +1,149 @@
+<rml>
+<head>
+	<title>profile</title>
+	<link type="text/template" href="template.rml" />
+	<link type="text/css" rel="stylesheet" href="css/profile.rcss" />
+	<script>
+		const uint MATCHMAKER_POLL_INTERVAL = 100;
+		int matchmakerState = -1;
+		
+		Element @profile_login_div;
+		Element @profile_login_msg;
+		ElementOptionsForm @login_form;
+		ElementFormControl @login_form_username;
+		ElementFormControl @login_form_password;
+
+		Element @profile_div;
+
+		void onProfileLoad( Element @body, Event @event )
+		{
+			if( event.getPhase() != EVENT_PHASE_TARGET ) {
+				// some idiv loading
+				return;
+			}
+
+			onTemplateLoad( body, event );
+
+			@profile_login_div = body.getElementById( 'profile_login' );	
+			@profile_login_msg = profile_login_div.getElementById( 'message' );
+			@login_form = profile_login_div.getElementById( 'login-form' );
+			@login_form_username = profile_login_div.getElementById( 'username' );
+			@login_form_password = profile_login_div.getElementById( 'password' );
+
+			@profile_div = body.getElementById( 'profile' );
+
+			matchmakerTrackState();
+
+			matchmakerState = -1;
+			window.setInterval( matchmakerTimerPoll, MATCHMAKER_POLL_INTERVAL );
+		}
+
+		bool matchmakerTimerPoll( void )
+		{
+			matchmakerTrackState();
+			return true;
+		}
+
+		void onProfileShow( Element @body, Event @event )
+		{
+			onTemplateShow( body, event );
+			login_form.storeOptions();
+			animationsOnShow( false, 'profile_container' );
+		}
+
+		void matchmakerTrackState( void )
+		{
+			if( matchmakerState == matchmaker.state ) {
+				return;
+			}
+
+			matchmakerState = matchmaker.state;
+
+			// ok, matchmaker's state has changed, do something about it!
+			URL profileURL( matchmaker.profileURL( true ) );
+			profileURL.setParameter( 'lang', GetUserLanguage() );
+
+			switch( matchmaker.state ) {
+				case MM_LOGIN_STATE_LOGGED_OUT:
+					profile_div.css( 'display', 'none' )
+						.setAttr( 'src', '' );
+					profile_login_msg.setInnerRML( matchmaker.lastError );
+					cast<Element>(login_form).css( 'display', 'block' )
+						.css('visibility', 'visible');
+					profile_login_div.css( 'display', 'block' );
+					break;
+				case MM_LOGIN_STATE_IN_PROGRESS:
+					profile_login_msg.setInnerRML( 'Logging in, hold on...' );
+					cast<Element>(login_form).css( 'display', 'none' )
+						.css('visibility', 'hidden');
+					break;
+				case MM_LOGIN_STATE_LOGGED_IN:
+					profile_div.css( 'display', 'block' )
+						.setAttr( 'src', profileURL.getURL() );
+					profile_login_div.css( 'display', 'none' );
+					break;
+			}
+		}
+
+		void onLoginSubmit( Element @form, Event @event )
+		{
+			if( matchmaker.state != MM_LOGIN_STATE_LOGGED_OUT ) {
+				return;
+			}
+
+			login_form.applyOptions();
+
+			if( matchmaker.login( login_form_username.value, login_form_password.value ) == false ) {
+				// failed to initialize the login procedure, update layout
+				matchmakerState = -1;
+			}
+
+			matchmakerTrackState();
+		}
+		
+		void onRemoteProfileLoad( Element @elem, Event @event )
+		{
+			if( event.getPhase() != EVENT_PHASE_TARGET ) {
+				return;
+			}
+			if( elem.getAttr( 'src', '' ).empty() ) {
+				return;
+			}
+			animationsOnShow( false, 'profile_container' );
+		}
+	</script>
+</head>
+<body template="porkui" onload="$onProfileLoad" onshow="$onProfileShow">
+
+<div id="profile_container">
+	<div id="profile_login">
+		<h1 class="intro">Login to warsow.net</h1>
+		<p class="intro">Login with your warsow.net account to save your statistics and match results.</p>
+		<p class="smaller intro"><t>Don't have an account?</t>&nbsp;<a href="http://www.warsow.net/forum_registration" target="_browser">Register for free account here.</a></p>
+
+		<br/>
+		<span id="message" class="intro"></span>
+		
+		<optionsform id="login-form" onsubmit="$onLoginSubmit">
+			<div class="title">Username</div>
+			<input type="text" cvar="cl_mm_user" id="username" />
+			<br/>
+
+			<div class="title">Password</div>
+			<input type="password" id="password" />
+			<br/>
+
+			<div class="title">Remember login</div>
+			<input type="checkbox" cvar="cl_mm_autologin" class="checkbox" />
+			<br/>
+
+			<input type="submit" class="button-cancel button-apply" id="login-submit">Login</input>
+		</optionsform>
+	</div>
+
+	<idiv id="profile" style="overflow-y: auto;" src="" nocache="1" onload="$onRemoteProfileLoad">
+	</idiv>
+</div>
+
+</body>
+</rml>

@@ -1,0 +1,45 @@
+#modal-frame {
+	width: 360px;
+}
+
+#modal-block-rel {
+	left: -212px;  /* - ( 0.5 * modal-frame width + padding-left ) */
+	top: -250px;
+}
+
+#menu-ingame {
+	text-align: center;
+}
+
+#menu-commands {
+	text-align: center;
+}
+
+#menu-ingame button, #menu-ingame a {
+	width: 60%;
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 8px;
+}
+
+#menu-header1 {
+	display: block;
+/*
+	font-family: DejaVu Sans;
+	font-weight: bold;
+	font-style: italic;
+*/
+	font-size: 1.5em;
+	margin-bottom: 16px;
+}
+
+#menu-header2 {
+	display: block;
+/*
+	font-family: DejaVu Sans;
+	font-weight: bold;
+	font-style: italic;
+*/
+	font-size: 1.3em;
+	margin-bottom: 16px;
+}

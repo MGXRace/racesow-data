@@ -1,0 +1,52 @@
+.matchInfoLevelshot {
+	float: left;
+	width: 100px;
+}
+
+.matchInfoDetails { 
+	float: left;
+	padding: 0px;
+	margin: 0px;
+	text-align: left;
+	margin-left: 40px;
+	width: 300px;
+	font-size: 13px;
+}
+
+.matchInfoDetails h2 { 
+	margin: 0px;
+	padding: 0px;
+}
+
+.matchInfoDetailsGametime {
+	margin: 0px;
+	padding: 0px;
+}
+
+.matchInfoLevelshotImage {
+	width: 128px;
+	height: 96px;
+}
+
+#wmm-match-info {	
+	clear: both;
+	float: left;
+	text-align: left;
+}
+
+.tbl-thead {
+	font-weight: bold;
+}
+
+.tbl-cell, .tbl-row {
+	float: left;
+}
+
+.tbl-cell {
+	width: 50%;
+}
+
+.box-30 {
+	float: left;
+	width: 50%;
+}

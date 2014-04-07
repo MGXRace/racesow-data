@@ -1,0 +1,23 @@
+<rml>
+<head>
+	<title>modal</title>
+	<link type="text/template" href="template_modal.rml" />
+	<script>
+		void onModalBasicShow( Element @body, Event @evt )
+		{
+			URL url( body.ownerDocument.URL );
+			const Dictionary @dict = url.getParameters();
+
+			String @remote_url;
+			dict.get( 'url', @remote_url );
+
+			body.getElementById( 'remote_content' ).setAttr( 'src', remote_url );
+
+			onModalShow( body, evt );
+		}
+	</script>
+</head>
+<body template="porkui_modal" onload="$onModalLoad" onshow="$onModalBasicShow">
+	<idiv id="remote_content" />
+</body>
+</rml>

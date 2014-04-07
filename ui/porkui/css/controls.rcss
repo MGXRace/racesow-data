@@ -1,0 +1,328 @@
+/* Buttons */
+button {
+	tab-index: auto;
+}
+
+button, .button, input.submit {
+	darken-font-effect: shadow;
+	darken-offset: 1px 1px;
+	darken-color: black;		
+	margin-bottom: 8px;
+	padding: 8px;
+	text-align: center;
+	color: #e86a2b;	
+/*	sound-hover: /ui/porkui/sounds/mouseover.wav; */
+	sound-click: /ui/porkui/sounds/ok.wav;
+	background-decorator: tiled-box;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_purple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_purple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_purple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_purple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_purple_middle.tga stretch;
+}
+
+input.submit:disabled, input.submit:disabled:hover, input.submit:disabled:active {
+	color: #fff;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_lightpurple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_lightpurple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_lightpurple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_lightpurple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;		
+}
+
+button:hover, .button:hover, input.submit:hover, button:focus, .button:focus, input.submit:focus {
+	color: #fff;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_lightpurple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_lightpurple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_lightpurple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_lightpurple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;	
+}
+
+button:active, .button:active, input.submit:active {
+	color: #fff;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_purple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_purple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_purple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_purple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;	
+}
+
+/* Inputs */
+input {
+	height: 26px;
+	padding: 4px;
+	max-width: 25%;
+	tab-index: auto;
+}
+
+input.text, input.password {
+	background-color: #141219;
+	border-top: 1px #272134;
+	border-right: 1px #272134;
+	border-bottom: 1px #272134;
+	border-left: 1px #272134;
+	color: #fff;
+}	
+
+.short { width: 75px; }
+
+input.text:hover, input.text:focus, input.password:hover, input.password:focus { background-color: #3f3c49; }
+
+/* Tabsets */
+tabset tab {
+	text-align: center;
+	margin-right: 4px;
+	margin-left: 4px;
+	tab-index: auto;
+}
+
+tabset panel {
+	padding-top: 16px;
+}
+
+/* Apply buttons class */
+.button-apply, .button-cancel { 
+	width: 100px; 
+	float: left; 
+	margin-left: 8px;
+}
+
+.button-large {
+	float: left; 
+	margin-left: 8px;
+	min-width: 175px;
+}
+
+.button-cancel  { 
+	margin-left: 50%;
+	sound-click: /ui/porkui/sounds/back.wav;
+}
+
+.button-apply { 
+	font-weight: bold;
+}
+
+/* Scrollbar */
+scrollbarvertical {
+	width: 16px;
+	z-index: 99999;
+}
+
+scrollbarvertical sliderarrowdec {
+	width: 16px; height: 16px;
+	background-decorator: image;
+	background-image: /ui/porkui/gfx/controls/scrollbar_top 0 0 1 1;
+	z-index: 99999;
+}
+
+scrollbarvertical sliderarrowinc {
+	width: 16px; height: 16px;
+	background-decorator: image;
+	background-image: /ui/porkui/gfx/controls/scrollbar_bottom 0 0 1 1;
+	z-index: 99999;
+}
+
+scrollbarvertical slidertrack {
+	width: 16px;
+	background-decorator: tiled-vertical;
+	background-top-image: /ui/porkui/gfx/controls/scrollbar_middle_background 0 0 1 1;
+	background-center-image: /ui/porkui/gfx/controls/scrollbar_middle_background 0 0 1 1;
+	background-bottom-image: /ui/porkui/gfx/controls/scrollbar_middle_background 0 0 1 1;
+	z-index: 99999;
+	color:#ff0000;
+}
+
+scrollbarvertical sliderbar {
+	width: 16px;
+	background-decorator: tiled-vertical;
+	background-top-image: /ui/porkui/gfx/controls/scrollbar_bar_top 0 0 1 1;
+	background-center-image: /ui/porkui/gfx/controls/scrollbar_bar_middle 0 0 1 1;
+	background-bottom-image: /ui/porkui/gfx/controls/scrollbar_bar_bottom 0 0 1 1;
+	z-index: 99999;
+}
+
+scrollbarvertical sliderbar:hover, scrollbarvertical sliderbar:focus {
+	background-decorator: tiled-vertical;
+	background-top-image: /ui/porkui/gfx/controls/scrollbar_bar_top_h 0 0 1 1;
+	background-center-image: /ui/porkui/gfx/controls/scrollbar_bar_middle_h 0 0 1 1;
+	background-bottom-image: /ui/porkui/gfx/controls/scrollbar_bar_bottom_h 0 0 1 1;
+}
+
+/* Input: checkbox */
+input.checkbox {
+	width: 18px;
+	height: 18px;
+	background-decorator: image;
+	background-image: /ui/porkui/gfx/controls/checkbox 0 0 1 1;
+}
+
+input.checkbox:hover, input.checkbox:focus                { background-image: /ui/porkui/gfx/controls/checkbox_hover 0 0 1 1; }
+input.checkbox:checked                                    { background-image: /ui/porkui/gfx/controls/checkbox_checked 0 0 1 1; }
+input.checkbox:hover:checked,input.checkbox:focus:checked { background-image: /ui/porkui/gfx/controls/checkbox_checked_hover 0 0 1 1; }
+
+/* Color picker */
+colorselector {
+	position: relative;
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	text-align: center;
+}
+
+colorselector color {
+	display: inline-block;
+	margin: 2px;
+	height: 18px;
+	min-height: 18px;
+	width: 18px;
+	min-width: 18px;
+	border-color: #fff;
+}
+
+colorselector color:selected, colorselector color:focus {
+	border-width: 2px;
+	margin: 0px;
+}
+
+/* Selects */
+
+select, dataselect {
+	width: 184px;	
+	height: 24px;
+}
+
+select, dataselect, keyselect {
+	display: inline-block;	
+	text-align: left;
+	padding: 2px;
+	padding-left: 8px;
+	margin-bottom: 8px;
+	border-top: 1px #272134;
+	border-right: 1px #272134;
+	border-bottom: 1px #272134;
+	border-left: 1px #272134;
+	background-decorator: tiled-box;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_purple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_purple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_purple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_purple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;		
+}
+
+select:hover, dataselect:hover, keyselect:hover,/* input.range slidertrack:hover,*/
+select:focus, dataselect:focus, keyselect:focus/*, input.range slidertrack:focus*/ {
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_lightpurple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_lightpurple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_lightpurple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_lightpurple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;	
+}
+
+select selectbox, dataselect selectbox {
+	max-height: 120px;
+	padding: 4px;
+	padding-left: 8px;
+	overflow-y: scroll;	
+	background-color: #141219;	
+}
+
+/* retard keyselect hack */
+keyselect {
+	max-width: 25%;
+}
+
+/* Dropdowns row hover */
+select selectbox option:hover, dataselect selectbox option:hover, dataselect selectbox option:focus { color: #e86a2b; }
+
+/* Range slider */
+input.range slidertrack {
+	background-decorator: tiled-box;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_purple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_purple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_purple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_purple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;		
+}
+
+input.range {
+	width: 200px;
+	height: 24px;
+	padding: 0px;
+	margin-bottom: 8px;
+}
+
+input sliderarrowdec {
+	background-decorator:image;
+	background-image: /gfx/ui/scrollbar_left 0 0 1 1;
+}
+
+input sliderarrowinc {
+	background-decorator:image;
+	background-image: /gfx/ui/scrollbar_right 0 0 1 1;
+}
+
+input.range sliderbar {
+	width: 64px; 
+	height: 16px;
+	margin-top: 4px;
+	
+	icon-decorator: tiled-horizontal;
+	icon-left-image: /ui/porkui/gfx/controls/scrollbar_bar_left 0 0 1 1;
+	icon-center-image: /ui/porkui/gfx/controls/scrollbar_bar_middle 0 0 1 1;
+	icon-right-image: /ui/porkui/gfx/controls/scrollbar_bar_right 0 0 1 1;	
+}
+
+input.range sliderbar:hover, input.range sliderbar:focus {
+	icon-decorator: tiled-horizontal;
+	icon-left-image: /ui/porkui/gfx/controls/scrollbar_bar_left_h 0 0 1 1;
+	icon-center-image: /ui/porkui/gfx/controls/scrollbar_bar_middle_h 0 0 1 1;
+	icon-right-image: /ui/porkui/gfx/controls/scrollbar_bar_right_h 0 0 1 1;	
+}
+
+/* datagrids */
+datagrid datagridheader { font-weight: bold; }
+
+datagrid datagridrow datagridcell {
+	overflow: hidden;
+	white-space: pre;
+}
+
+/* filebrowser classes */
+dirtype  {
+	darken-font-effect: shadow;
+	darken-offset: 1px 1px;
+	darken-color: black;		
+	color: #e86a2b;	
+}
+
+filetype { color: #fff; }
+
+/* dataspinner */
+
+dataspinner {
+	margin-top: -36px;
+	z-index: 2;
+}

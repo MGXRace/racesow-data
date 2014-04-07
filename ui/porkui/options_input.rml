@@ -111,7 +111,7 @@
 					<div class="keys">
 						<optionsform id="options-form">
 							<div class="title">Mouse sensitivity</div>
-							<input id="mouse-sens" cvar="sensitivity" type="range" min="0.1" max="13" step="0.05" value="1" realtime="1" onchange="onSensChange(self,false);"/>
+							<input id="mouse-sens" cvar="sensitivity" type="range" min="0.05" max="6" step="0.05" value="1" realtime="1" onchange="onSensChange(self,false);"/>
 							<input id="mouse-sens-txt" cvar="sensitivity" type="text" class="sens-input" realtime="1" onchange="onSensChange(self,true);"/>
 							<br/>
 							
@@ -180,29 +180,13 @@
 						<keyselect bind="weapnext"/>
 						<br />
 					
-						<div class="title">Last weapon</div>
+						<div class="title">Last used weapon</div>
 						<keyselect bind="weaplast"/>
 						<br />
 					
 						<div class="title">Zoom</div>
 						<keyselect bind="+zoom"/>
 						<br />	
-					
-						<div class="title">Drop weapon</div>
-						<keyselect bind="drop weapon"/>
-						<br />
-					
-						<div class="title">Drop flag</div>
-						<keyselect bind="drop flag"/>
-						<br />					
-					
-						<div class="title">Class action 1</div>
-						<keyselect bind="classaction1"/>
-						<br />				
-					
-						<div class="title">Class action 2</div>
-						<keyselect bind="classaction2"/>
-						<br />
 
 						<div class="title">Chat</div>
 						<keyselect bind="messagemode"/>
@@ -217,6 +201,22 @@
 				<tab>Weapons</tab>
 				<panel class="dropshadow">
 					<div class="keys">
+						<div class="title">Rocket Launcher (RL)</div>
+						<keyselect bind="use Rocket Launcher"/>
+						<br />	
+						
+						<div class="title">Plasmagun (PG)</div>
+						<keyselect bind="use Plasmagun"/>
+						<br />
+						
+						<div class="title">Grenade Launcher (GL)</div>
+						<keyselect bind="use Grenade Launcher"/>
+						<br />
+						
+						<br />
+						<hr class="nicehr"/>
+						<br />
+						
 						<div class="title">Gunblade (GB)</div>
 						<keyselect bind="use Gunblade"/>
 						<br />
@@ -227,18 +227,6 @@
 						
 						<div class="title">Riotgun (RG)</div>
 						<keyselect bind="use Riotgun"/>
-						<br />
-						
-						<div class="title">Grenade Launcher (GL)</div>
-						<keyselect bind="use Grenade Launcher"/>
-						<br />
-						
-						<div class="title">Rocket Launcher (RL)</div>
-						<keyselect bind="use Rocket Launcher"/>
-						<br />	
-						
-						<div class="title">Plasmagun (PG)</div>
-						<keyselect bind="use Plasmagun"/>
 						<br />
 						
 						<div class="title">Lasergun (LG)</div>

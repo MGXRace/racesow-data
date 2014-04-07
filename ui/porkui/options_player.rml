@@ -94,7 +94,6 @@
 						<br/>
 						
 						<hr class="nicehr"/>
-						<br/>
 
 						
 						<br/>
@@ -202,9 +201,14 @@
 				<tab class="side-tab">Misc</tab>		
 				<panel class="dropshadow">
 					<optionsform id="misc-options-form" onsubmit="$OptionsForm_OnSubmit">
-						<div class="title">Automatically record demos</div>
-						<input cvar="cg_autoaction_demo" type="checkbox" realtime="1"/>
-						<br/>
+						<div class="title">Number of demos to store for each map</div>
+						<select cvar="hand" realtime="1">
+							<option value="1" selected>keep your personal best</option>
+							<option value="3">keep your 3 best</option>
+							<option value="5">keep your 5 best</option>
+							<option value="-1">keep all</option>
+							<option value="0">none</option>
+						</select>
 					</optionsform>
 				</panel>
 			

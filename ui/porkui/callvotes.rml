@@ -68,8 +68,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		void onCallvotesShow( Element @body, Event @evt )
 		{
 			animationsOnShow();
-
-			body.getElementById( 'back-btn' ).css( 'display', window.history_size()>1 ? 'block' : 'none' );
 			
 			callvotesSetDataSources();
 
@@ -268,7 +266,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 				</div>
 			</form>
 
-			<button onclick="window.history_back();" id="back-btn">Back</button>
 			<button onclick="window.close();">Return to game</button>		
 		</div>			
 	</div>

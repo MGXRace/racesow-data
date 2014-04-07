@@ -1,8 +1,7 @@
 setScale #DEFAULTSCALE
-setCursor 400, 72
-// old - electrofield_18
-setFontFamily "warsow"
-setFontSize 18
-setColor 1, 1, 1, 1
+setCursor 400, 80
+setFontFamily "Droid Sans"
+setFontSize 22
 setAlign #CENTER, #TOP
+setColor 1, 1, 1, 1
 drawAwards

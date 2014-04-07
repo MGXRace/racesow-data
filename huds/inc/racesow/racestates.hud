@@ -6,21 +6,21 @@ if %PREJUMP_STATE == 1
 			setCursor 400, 300
 			setScale #NOSCALE
 			setColor 1, 1, 1, 1
-			setFontFamily "Virtue"
-			setFontSize 20
+			setFontFamily "Droid Sans"
+			setFontSize 22
 			setAlign #MIDDLE, #CENTER
 			moveCursor -1, -79
-			setColor 0, 0, 0, 0.05
-			drawstring "PREJUMPED"
+			setColor 0, 0, 0, 0.3
+			drawstring "PREJUMPED!"
 			moveCursor 2, 0
-			drawstring "PREJUMPED"
+			drawstring "PREJUMPED!"
 			moveCursor 0, -2
-			drawstring "PREJUMPED"
+			drawstring "PREJUMPED!"
 			moveCursor -2, 0
-			drawstring "PREJUMPED"
+			drawstring "PREJUMPED!"
 			moveCursor 1, 1
-			setColor 255, 0, 0, 0.5
-			drawstring "PREJUMPED"
+			setColor 255, 0, 0, 1
+			drawstring "PREJUMPED!"
 		endif
 	endif
 endif
@@ -33,21 +33,21 @@ if %PREJUMP_STATE == 1
 			setCursor 400, 300
 			setScale #NOSCALE
 			setColor 1, 1, 1, 1
-			setFontFamily "Virtue"
-			setFontSize 20
+			setFontFamily "Droid Sans"
+			setFontSize 22
 			setAlign #MIDDLE, #CENTER
 			moveCursor -1, -79
-			setColor 0, 0, 0, 0.05
-			drawstring "PREJUMPED"
+			setColor 0, 0, 0, 0.3
+			drawstring "PREJUMPED!"
 			moveCursor 2, 0
-			drawstring "PREJUMPED"
+			drawstring "PREJUMPED!"
 			moveCursor 0, -2
-			drawstring "PREJUMPED"
+			drawstring "PREJUMPED!"
 			moveCursor -2, 0
-			drawstring "PREJUMPED"
+			drawstring "PREJUMPED!"
 			moveCursor 1, 1
-			setColor 255, 0, 0, 0.5
-			drawstring "PREJUMPED"
+			setColor 255, 0, 0, 1
+			drawstring "PREJUMPED!"
 		endif
 	endif
 endif
@@ -58,11 +58,11 @@ if %RACE_STATE == 0
 	setCursor 400, 300
 	setScale #NOSCALE
 	setColor 1, 1, 1, 1
-	setFontFamily "Virtue"
-	setFontSize 20
+	setFontFamily "Droid Sans"
+	setFontSize 22
 	setAlign #MIDDLE, #CENTER
 	moveCursor -1, -209
-	setColor 0, 0, 0, 0.25
+	setColor 0, 0, 0, 0.3
 	drawstring "Practicing"
 	moveCursor 2, 0
 	drawstring "Practicing"
@@ -71,6 +71,6 @@ if %RACE_STATE == 0
 	moveCursor -2, 0
 	drawstring "Practicing"
 	moveCursor 1, 1
-	setColor 0, 125, 125, 0.4
+	setColor 0, 125, 125, 1
 	drawstring "Practicing"
 endif

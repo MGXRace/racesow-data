@@ -4,12 +4,12 @@ if %SHOW_TIMER >= 1
 
 	// draws the backdrop shadow
 	setScale #DEFAULTSCALE
-	setCursor 400, 0
+	setCursor setCursor 387, 0
 	setScale #NOSCALE
 	moveCursor 2, 2
 	setFontFamily "Hemi Head"
 	setFontSize 22
-	setAlign #CENTER, #TOP
+	setAlign #LEFT, #TOP
 	setColor 0, 0, 0, 1
 	drawClock
 

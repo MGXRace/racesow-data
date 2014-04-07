@@ -220,7 +220,7 @@
 						<div class="title">Gunblade (GB)</div>
 						<keyselect bind="use Gunblade"/>
 						<br />
-						
+
 						<div class="title">Machinegun (MG)</div>
 						<keyselect bind="use Machinegun"/>
 						<br />

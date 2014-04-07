@@ -4,7 +4,7 @@ if %SHOW_TIMER >= 1
 
 	// draws the backdrop shadow
 	setScale #DEFAULTSCALE
-	setCursor setCursor 383, 0
+	setCursor 383, 0
 	setScale #NOSCALE
 	moveCursor 2, 2
 	setFontFamily "Hemi Head"

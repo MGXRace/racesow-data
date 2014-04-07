@@ -1,0 +1,34 @@
+<rml>
+<head>
+	<title>home</title>
+	<link type="text/template" href="template.rml" />
+	<link rel="stylesheet" type="text/css" href="css/home.rcss" />
+	<script>
+	void onHomeLoad( Element @body, Event @event )
+	{
+		if( event.getPhase() != EVENT_PHASE_TARGET ) {
+			// idiv loading
+			return;
+		}
+		onTemplateLoad( body, event );
+		
+		body.getElementById( 'news' ).setAttr( 'src', 'http://www.warsow.net/blog/rml?lang=' + GetUserLanguage() );
+	}
+
+	void onHomeShow( Element @body, Event @event )
+	{
+		onTemplateShow( body, event );
+		animationsOnShow( false, 'news_container' );
+	}
+	</script>
+</head>
+<body template="porkui" onload="$onHomeLoad" onshow="$onHomeShow">
+
+<div id="news_container">
+	<idiv id="news" src="http://www.warsow.net/blog/rml">
+		<!-- news goes here -->
+	</idiv>
+</div>
+
+</body>
+</rml>

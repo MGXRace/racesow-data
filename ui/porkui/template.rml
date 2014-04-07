@@ -1,0 +1,225 @@
+<template name="porkui" content="content">
+<head>
+	<link rel="stylesheet" type="text/css" href="css/html4.rcss" />
+	<link rel="stylesheet" type="text/css" href="css/common.rcss" />
+	<link rel="stylesheet" type="text/css" href="css/base.rcss" />
+	<link rel="stylesheet" type="text/css" href="css/controls.rcss" />
+	<script src="as/base.as" />
+	<script src="as/popup.as" />
+	<script src="as/animations.as" />
+	<script>
+		/* navigation panel */
+		Element @navi = null;
+
+		void onTemplateLoad( Element @body, Event @ev )
+		{
+			if( ev.getPhase() != EVENT_PHASE_TARGET ) {
+				// some idiv loading
+				return;
+			}
+
+			/* set content div height */
+			Element @content = body.getElementById( 'content' );
+			
+			if( @content != null ) {
+				int contentHeight = window.height 
+					- body.getElementById( 'footer' ).css( 'height' ).toInt()
+					- content.css( 'padding-top' ).toInt()
+					- content.css( 'padding-bottom' ).toInt()
+					- content.css( 'top' ).toInt();
+
+				content.css( 'height', String( contentHeight ) );
+
+				int max_width = 1024;
+				if( window.width > max_width ) {
+					int padding = (window.width - max_width) / 2;
+					content.css( 'padding-left', String ( padding ) );
+					content.css( 'padding-right', String ( padding ) );
+				}
+			}
+
+			/* grab the navigation panel */
+			@navi = body.getElementById( 'navi' );
+			
+			/* set font-family, font-charset, etc */
+			SetDocumentFontProperties( body );
+		}
+
+		void onTemplateShow( Element @body, Event @ev )
+		{
+			ElementDocument @document = body.ownerDocument;
+
+			/* set active page */
+			if( document.title.length() > 0 ) {
+				setActivePage( document.title );
+			}
+
+			/* make the background invisible if the engine says so */
+			Element @header = body.getElementById( 'header' );
+			if( @header != null ) {
+				header.css( 'visibility', window.drawBackground ? 'visible' : 'hidden' );
+			}
+
+			Element @background = body.getElementById( 'background' );
+			if( @background != null ) {
+				background.css( 'visibility', window.drawBackground ? 'visible' : 'hidden' );
+			}
+
+			Element @footer = body.getElementById( 'footer' );
+			if( @footer != null ) {
+				footer.css( 'visibility', window.drawBackground ? 'visible' : 'hidden' );
+			}
+
+			window.setTimeout( startBackgroundTrack, 300 );
+		}
+
+		bool startBackgroundTrack()
+		{
+			/* start the background track if not already playing */
+			if( window.drawBackground ) {
+				window.startBackgroundTrack( "sounds/music/menu.m3u", "3", false ); // shuffle and loop
+			}		
+			return false;
+		}
+
+		/* Enables notification popup and starts the alpha fade process */
+		void notificationPopup( const String &in text )
+		{
+			/* sets notification text and schedules timer updates */
+			NotificationPopup( 'notification', text, 500 );
+		}
+
+		/* active page is one of home, join, local, options and demos */
+		void setActivePage( const String @id )
+		{
+			Element @elem;
+
+			if( @navi == null ) {
+				// Com_Printf("^4Warning: setActivePage, @navi is null\n");
+				return;
+			}
+
+			/* disable active pages */
+			String activeId = 'link_' + id;
+
+			uint numChildren = navi.getNumChildren();
+			for( uint i = 0; i < numChildren; i++ ) {
+				Element @child = navi.getChild( i );
+				if( child.id == activeId ) {
+					child.setAttr( 'href', '#' ); // anchor to self
+					child.togglePseudo( 'active', true );
+				}
+				else {
+					child.togglePseudo( 'active', false );
+				}
+			}
+		}
+
+		void openConsole( Element @self, Event @ev )
+		{
+			game.execAppend( 'toggleconsole\n' );
+		}
+
+		void animationsOnShow( bool noAnim = false, String contentBlock = "leftside" ) // called onShow of every element with animations
+		{
+			Element @body = @window.document.body;
+
+			Element @content = @body.getElementById( contentBlock );
+			if( @content == null ) {
+				game.print( S_COLOR_YELLOW + 'animationsOnShow: missing content block "' + contentBlock + '"\n' );
+				return;
+			}
+
+			if( noAnim ) {
+				MoveAnimation anim( content, 0, ANIM_ORIGIN, ANIM_ORIGIN, EASE_OUT, null );
+			}
+			else {
+				MoveAnimation anim( content, ANIMATION_DURATION_FAST, ANIM_LEFT, ANIM_ORIGIN, EASE_OUT, null );
+			}
+		}
+
+		String menuloc;
+		void animOpenMenu( String menu ) // This function automatically animates the content away and opens a new menu after that.
+		{
+			if( menu.length() <= 0 )
+				return;				
+				
+			URL currentURL( window.document.URL );
+			String currentDocFilename = currentURL.getFileName() + '.' + currentURL.getFileExtension();
+			if( currentDocFilename == menu ) {
+				// FIXME: not sure this works correct in all cases of valid input URL
+				return;
+			}
+
+			menuloc = menu;
+			
+			Element @body = @window.document.body;
+			Element @content = @body.getElementById( "leftside" );
+			if( @content == null )
+				return;
+				
+			MoveAnimation anim( content, ANIMATION_DURATION_FAST, ANIM_ORIGIN, ANIM_LEFT, EASE_IN, animOpenMenuCallback );
+		}
+
+		void animOpenMenuCallback()
+		{
+			window.location = menuloc;
+		}
+
+		void quitGame( Element @self, Event @ev )
+		{
+			game.execAppend( "quit\n" );
+		}
+
+	</script>
+</head>
+<!-- ch : onshow and onhide dont work in template, you have to explicitly define them in each page using template :( -->
+<body onload="$onTemplateLoad" onshow="$onTemplateShow">
+	<!-- Few layout display divs -->
+	<!-- YELLOW shows the location of header leaving 1 visible pixel below it -->
+	<!--
+	<div style="position:fixed; width:100%; height:69px; top:0px; left:0px; background:#ff0;" />
+	-->
+	
+	<!-- background div -->
+	<div id="background">
+		<worldview id="background-map" />
+		<div id="background-overlay" />
+	</div>
+
+	<div id="header">
+		<div id="header-top" />
+	</div>
+	
+	<!-- Main navigation bar -->
+	<div id="navi">
+		<a href="index.rml" id="link_home">News</a>
+		<a href="game_join.rml" id="link_game">New Game</a>		
+		<a href="profile.rml" id="link_profile">Profile</a>
+		<a href="chat.rml" id="link_chat">Chat</a>
+		<a href="options.rml" id="link_options">Options</a>
+		<a href="#" id="link_quit" onclick="game.execAppend('quit\n');">Quit</a>
+		<br/>
+		<hr class="w100p nicehr uitop" />
+	</div>
+	
+	<!-- Saved- dialog -->
+	<div id="notification">
+	</div>		
+
+	<!-- Content -->
+	<div id="content">
+	</div>
+
+	<!-- Footer -->
+	<div id="footer">
+		<hr class="w100p nicehr" />
+	</div>
+	
+	<div id="console">
+		<!-- Console icon -->
+		<a href="#" id="link_console" onclick="$openConsole"><img src="/ui/porkui/gfx/console.tga" /></a>	
+	</div>
+	
+</body>
+</template>

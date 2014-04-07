@@ -1,0 +1,372 @@
+<rml>
+<head>
+	<title>options</title>
+	<link type="text/template" href="template.rml" />
+	<link rel="stylesheet" type="text/css" href="css/options/input.rcss" />
+	<script>
+		void onInputShow( Element @body, Event @evt )
+		{
+			onTemplateShow( body, evt );
+
+			ElementOptionsForm @optForm = body.getElementById("options-form");
+			if( @optForm == null ) 
+				return;
+
+			optForm.storeOptions();	
+			onMouseInvertShow( body.getElementById( 'mouse-invert' ) );
+			
+			ElementFormControl @bar = body.getElementById( 'mouse-accel' );
+			ElementFormControl @txt = body.getElementById( 'mouse-accel-txt' );	
+
+			if( @bar != null && @txt != null ) {
+				txt.value = StringUtils::FormatFloat( bar.value.toFloat(), "0", 1, 2 );
+		
+				@bar = body.getElementById( 'mouse-sens' );
+				@txt = body.getElementById( 'mouse-sens-txt' );	
+
+				if( @bar == null || @txt == null )
+					return;
+				txt.value = StringUtils::FormatFloat( bar.value.toFloat(), "0", 1, 2 );
+			}
+
+			animationsOnShow();
+		}
+		
+		void onSensChange( Element @elem, bool txtChanged )
+		{
+			ElementFormControl @bar = elem.getElementById( 'mouse-sens' );
+			ElementFormControl @txt = elem.getElementById( 'mouse-sens-txt' );	
+
+			if( @bar == null || @txt == null )
+				return;
+				
+			if( txtChanged )
+				bar.value = StringUtils::FormatFloat( txt.value.toFloat(), "0", 1, 2 );
+			else
+				txt.value = StringUtils::FormatFloat( bar.value.toFloat(), "0", 1, 2 );
+		}
+
+		void onAccelChange( Element @elem, bool txtChanged )
+		{
+			ElementFormControl @bar = elem.getElementById( 'mouse-accel' );
+			ElementFormControl @txt = elem.getElementById( 'mouse-accel-txt' );	
+
+			if( @bar == null || @txt == null )
+				return;
+				
+			if( txtChanged )
+				bar.value = StringUtils::FormatFloat( txt.value.toFloat(), "0", 1, 3 );
+			else
+				txt.value = StringUtils::FormatFloat( bar.value.toFloat(), "0", 1, 3 );
+		}
+
+		// reflect m_pitch state on the checkbox
+		void onMouseInvertShow( Element @elem )
+		{
+			bool inverted = Cvar( "m_pitch", '', ::CVAR_ARCHIVE ).value < 0 ? true : false;
+			if( inverted ) {
+				elem.setAttr( 'checked', '1' );
+			}
+			else {
+				elem.removeAttr( 'checked' );
+			}
+		}
+
+		void onMouseInvertChange( Element @elem, Event @ev )
+		{
+			Cvar m_pitch = Cvar( "m_pitch", '', ::CVAR_ARCHIVE );
+			float pitch_value = m_pitch.value;
+			bool inverted = pitch_value < 0 ? true : false;
+
+			bool checked = elem.hasAttr( 'checked' );			
+			if( checked == inverted ) {
+				// prevent endless loops
+				return;
+			}
+
+			m_pitch.set( -pitch_value );
+		}
+	</script>
+</head>
+<body template="porkui" onshow="$onInputShow">
+
+	<!-- divide the screen to two vertical contexts -->
+	<div id="sidebar">
+		<div id="sidebar2">
+			<!-- options navigation -->
+			<a href="#" onclick="animOpenMenu('options_player.rml');">Player</a>
+			<a href="#" onclick="animOpenMenu('options_video.rml');">Video</a>
+			<a href="#" onclick="animOpenMenu('options_audio.rml');">Audio</a>
+			<a href="#" onclick="animOpenMenu('options_input.rml');">Input</a>
+		</div>
+	</div>
+	
+	<div id="leftside">
+		
+		<!-- input setup -->
+		<div id="binds">		
+			<tabset>
+				<tab>Mouse</tab>
+				<panel class="dropshadow">
+					<div class="keys">
+						<optionsform id="options-form">
+							<div class="title">Mouse sensitivity</div>
+							<input id="mouse-sens" cvar="sensitivity" type="range" min="0.1" max="13" step="0.05" value="1" realtime="1" onchange="onSensChange(self,false);"/>
+							<input id="mouse-sens-txt" cvar="sensitivity" type="text" class="sens-input" realtime="1" onchange="onSensChange(self,true);"/>
+							<br/>
+							
+							<div class="title">Mouse acceleration</div>						
+							<input id="mouse-accel" cvar="m_accel" type="range" min="0" max="0.5" step="0.002" value="0" realtime="1" onchange="onAccelChange(self,false);"/>
+							<input id="mouse-accel-txt" cvar="m_accel" type="text" class="sens-input" realtime="1" onchange="onAccelChange(self,true);"/>
+							<br/>	
+
+							<div class="title checkbox_opt">Mouse filter</div>
+							<input id="mouse-filter" cvar="m_filter" type="checkbox" realtime="1"/>
+							<br/>
+
+							<div class="title checkbox_opt">Invert mouse</div>
+							<input id="mouse-invert" type="checkbox" onchange="$onMouseInvertChange"/>
+						</optionsform>
+					</div>				
+				</panel>
+				<tab>Movement</tab>
+				<panel class="dropshadow">
+					<div class="keys">
+						<div class="title">Forward</div>
+						<keyselect bind="+forward"/>
+						<br />
+						
+						<div class="title">Back</div>
+						<keyselect bind="+back"/>
+						<br />
+						
+						<div class="title">Left</div>
+						<keyselect bind="+moveleft"/>
+						<br/>
+						
+						<div class="title">Right</div>
+						<keyselect bind="+moveright"/>
+						<br />
+						
+						<div class="title">Up / jump</div>
+						<keyselect bind="+moveup"/>
+						<br />
+						
+						<div class="title">Down / crouch</div>
+						<keyselect bind="+movedown"/>
+						<br />
+						
+						<div class="title">Dash / walljump</div>
+						<keyselect bind="+special"/>
+						<br />
+						
+						<div class="title">Run / walk</div>
+						<keyselect bind="+speed"/>
+						<br />
+					</div>
+				</panel>
+				<tab>Actions</tab>
+				<panel class="dropshadow">
+					<div class="keys">
+						<div class="title">Attack</div>
+						<keyselect bind="+attack"/>
+						<br />
+					
+						<div class="title">Previous weapon</div>
+						<keyselect bind="weapprev"/>
+						<br />
+					
+						<div class="title">Next weapon</div>
+						<keyselect bind="weapnext"/>
+						<br />
+					
+						<div class="title">Last weapon</div>
+						<keyselect bind="weaplast"/>
+						<br />
+					
+						<div class="title">Zoom</div>
+						<keyselect bind="+zoom"/>
+						<br />	
+					
+						<div class="title">Drop weapon</div>
+						<keyselect bind="drop weapon"/>
+						<br />
+					
+						<div class="title">Drop flag</div>
+						<keyselect bind="drop flag"/>
+						<br />					
+					
+						<div class="title">Class action 1</div>
+						<keyselect bind="classaction1"/>
+						<br />				
+					
+						<div class="title">Class action 2</div>
+						<keyselect bind="classaction2"/>
+						<br />
+
+						<div class="title">Chat</div>
+						<keyselect bind="messagemode"/>
+						<br />
+
+						<div class="title">Team chat</div>
+						<keyselect bind="messagemode2"/>
+						<br />
+
+					</div>
+				</panel>
+				<tab>Weapons</tab>
+				<panel class="dropshadow">
+					<div class="keys">
+						<div class="title">Gunblade (GB)</div>
+						<keyselect bind="use Gunblade"/>
+						<br />
+						
+						<div class="title">Machinegun (MG)</div>
+						<keyselect bind="use Machinegun"/>
+						<br />
+						
+						<div class="title">Riotgun (RG)</div>
+						<keyselect bind="use Riotgun"/>
+						<br />
+						
+						<div class="title">Grenade Launcher (GL)</div>
+						<keyselect bind="use Grenade Launcher"/>
+						<br />
+						
+						<div class="title">Rocket Launcher (RL)</div>
+						<keyselect bind="use Rocket Launcher"/>
+						<br />	
+						
+						<div class="title">Plasmagun (PG)</div>
+						<keyselect bind="use Plasmagun"/>
+						<br />
+						
+						<div class="title">Lasergun (LG)</div>
+						<keyselect bind="use Lasergun"/>
+						<br />
+						
+						<div class="title">Electrobolt (EB)</div>
+						<keyselect bind="use Electrobolt"/>
+						<br />
+					</div>
+				</panel>
+				<tab>Voice chat</tab>
+				<panel class="dropshadow">
+					<div class="keys">
+						<div class="title">Yes</div>
+						<keyselect bind="vsay yes"/>
+						<br/>
+						
+						<div class="title">No</div>
+						<keyselect bind="vsay no"/>
+						<br/>
+						
+						<div class="title">Oops</div>
+						<keyselect bind="vsay oops"/>
+						<br/>
+						
+						<div class="title">Sorry</div>
+						<keyselect bind="vsay sorry"/>
+						<br/>
+						
+						<div class="title">Thanks</div>
+						<keyselect bind="vsay thanks"/>
+						<br/>
+						
+						<div class="title">Yeehaa</div>
+						<keyselect bind="vsay yeehaa"/>
+						<br/>
+						
+						<div class="title">Good Game</div>
+						<keyselect bind="vsay goodgame"/>
+						<br/>
+						
+						<div class="title">Booo</div>
+						<keyselect bind="vsay booo"/>
+						<br/>
+						
+						<div class="title">Shut Up</div>
+						<keyselect bind="vsay shutup"/>
+						<br/>
+						
+						<div class="title">Affermative</div>
+						<keyselect bind="vsay_team affermative"/>
+						<br/>
+						
+						<div class="title">Roger</div>
+						<keyselect bind="vsay_team roger"/>
+						<br/>
+						
+						<div class="title">Negative</div>
+						<keyselect bind="vsay_team negative"/>
+						<br/>
+						
+						<div class="title">Goto Quad</div>
+						<keyselect bind="vsay_team gotoquad"/>
+						<br/>						
+							
+						<div class="title">Need Health</div>
+						<keyselect bind="vsay_team needhealth"/>
+						<br/>
+						
+						<div class="title">Need Weapon</div>
+						<keyselect bind="vsay_team needweapon"/>
+						<br/>
+						
+						<div class="title">Need Armor</div>
+						<keyselect bind="vsay_team needarmor"/>
+						<br/>
+						
+						<div class="title">On Defense</div>
+						<keyselect bind="vsay_team ondefense"/>
+						<br/>
+						
+						<div class="title">On Offense</div>
+						<keyselect bind="vsay_team onoffense"/>
+						<br/>
+						
+						<div class="title">No Problem</div>
+						<keyselect bind="vsay_team noproblem"/>
+						<br/>
+						
+						<div class="title">Defend!</div>
+						<keyselect bind="vsay_team defend"/>
+						<br/>
+						
+						<div class="title">Attack!</div>
+						<keyselect bind="vsay_team attack"/>
+						<br/>
+						
+						<div class="title">Need Backup</div>
+						<keyselect bind="vsay_team needbackup"/>
+						<br/>							
+						
+						<div class="title">Need Defense</div>
+						<keyselect bind="vsay_team needdefense"/>
+						<br/>
+						
+						<div class="title">Need Offense</div>
+						<keyselect bind="vsay_team needoffense"/>
+						<br/>
+						
+						<div class="title">Need Help</div>
+						<keyselect bind="vsay_team needhelp"/>
+						<br/>
+						
+						<div class="title">Armor Free</div>
+						<keyselect bind="vsay_team armorfree"/>
+						<br/>
+						
+						<div class="title">Area Secured</div>
+						<keyselect bind="vsay_team areasecured"/>
+						<br/>		
+					</div>				
+				</panel>
+			</tabset>
+		</div>
+		
+		<!-- ******* main view end   ******* -->
+	</div>
+	
+</body>
+</rml>

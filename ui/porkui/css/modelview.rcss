@@ -1,0 +1,58 @@
+.model-view-content {
+	display: block;
+	height: 45%;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;	
+}
+
+.left-arrow {
+	position: relative;
+	float: left;
+	width: 32px;
+	height: 50%;
+	padding-top: 23%;
+}
+
+.left-arrow-gfx {
+	width: 32px;
+	height: 32px;
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/arrow_left.tga 0 0 1 1;
+}
+
+.left-arrow-gfx:hover {
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/arrow_left_h.tga 0 0 1 1;
+}
+
+.right-arrow {
+	position: relative;
+	float: right;
+	width: 32px;
+	height: 50%;
+	padding-top: 23%;
+}
+
+.right-arrow-gfx {
+	width: 32px;
+	height: 32px;
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/arrow_right.tga 0 0 1 1;
+}
+
+.right-arrow-gfx:hover {
+	bg-decorator: image;
+	bg-image: /ui/porkui/gfx/arrow_right_h.tga 0 0 1 1;
+}
+
+.model-view {
+	display: block;
+	position: relative;
+	height: 100%;
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.model-color { width: 100%; }

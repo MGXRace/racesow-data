@@ -1,0 +1,34 @@
+#callvotes_left_frame { overflow: auto; width: 150px; height: 240px; float: left; }
+
+#callvotes_datagrid datagridheader { font-size: 14px; text-align: left; }
+#callvotes_datagrid datagridrow { font-size: 14px; text-align: left; }
+#callvotes_datagrid datagridrow:hover { background: #3f3c49; }
+#callvotes_datagrid datagridrow:selected  { background: #3f3c49; }
+#callvotes_datagrid datagridcolumn:hover { background: #3f3c49; }
+
+#callvotes_spacer_frame { width: 12px; height: 240px; float: left; }
+
+#callvotes_right_frame { height: 240px; font-size: 14px; text-align: left; }
+#callvotes_options_frame { }
+
+#callvote_picker_frame { height: 100px; }
+#callvote_options { display: none; }
+#callvote_options selectvalue { height: 18px; overflow-x: hidden; }
+
+#callvote_yesno { display: none; }
+
+#callvote_text { display: none; margin-bottom: 8px; }
+
+#callvote_help { display: inline-block; width: 50px; }
+
+#callvote_active { position: relative; height: 40px; }
+
+#callvote_ongoing_text { position: absolute; top: 0px; z-index: 0; }
+#callvote_btn_start { max-width: 100%; position: absolute; top: 0px; width: 216px; display: block; margin: 0 auto; margin-top: 8px; z-index: 1; }
+
+#callvotes_frame_f1f2 { padding-left: 63px; margin-top: 8px; margin-bottom: 8px; }
+#callvotes_form_f1f2 input { display: inline-block; max-width: 100%; width: 100px; float: left; margin-top: 0; margin-bottom: 0px; }
+#callvotes_form_f1f2 input:first-child { margin-left: 0px; margin-right: 0px; }
+#callvotes_form_f1f2 input:last-child { margin-left: 0px; margin-right: 0px; }
+
+#callvote_yesno selectbox { overflow-y: hidden; }

@@ -1,0 +1,123 @@
+body {
+	width: 100%; 
+	height: 100%;
+	margin: 0; 
+	padding: 0;
+	font-family: Droid Sans;
+	font-size: 14px;
+	background-color: transparent;
+}
+
+h1 {
+/*
+	font-family: Hemi Head;
+	font-weight: bold;
+	font-style: italic;
+*/
+}
+
+h2 {
+/*
+	font-family: Hemi Head;
+	font-weight: bold;
+	font-style: italic;
+*/
+}
+
+#background {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	bg-decorator: none;
+	grad-decorator: none;
+	background-color: #1f1c2750;
+}
+
+#modal-block-abs {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+}
+
+#modal-block-rel {
+	position: relative;
+	left: -262px; /* - ( 0.5 * modal-frame width + padding-left ) */
+	top: -230;
+}
+
+#modal-frame {
+	padding: 32px;
+	position: relative;
+
+	background-decorator: tiled-box;
+	background-top-left-image: /ui/porkui/gfx/controls/modal_topleft.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/modal_topright.tga ;
+	background-top-image: /ui/porkui/gfx/controls/modal_top.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/modal_bottomleft.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/modal_bottomright.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/modal_bottom.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/modal_left.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/modal_background.tga stretch;			
+	
+	width: 460px;
+	overflow: hidden;
+	text-align: center;
+	drag: drag;
+}
+
+#modal-contentflow {
+	overflow: auto;
+	max-height: 300px;	
+}
+
+#modal-controls {
+	padding-top: 32px;
+/*	padding-bottom: 15px; */
+}
+
+/* Sidebar buttons and tabs */	
+#modal-controls button {
+	darken-font-effect: shadow;
+	darken-offset: 1px 1px;
+	darken-color: black;		
+
+	margin-bottom: 8px;
+	padding: 8px;
+	text-align: center;
+	color: #e86a2b;
+	width: 100px;	
+	display: inline-block;
+	drag: none;
+
+	background-decorator: tiled-box;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_purple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_purple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_purple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_purple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_purple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_purple_middle.tga stretch;		
+}
+
+#modal-controls button:hover {
+	color: white;
+	background-top-left-image: /ui/porkui/gfx/controls/button_corner_topleft_lightpurple.tga;
+	background-top-right-image: /ui/porkui/gfx/controls/button_corner_topright_lightpurple.tga ;
+	background-top-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-bottom-left-image: /ui/porkui/gfx/controls/button_corner_bottomleft_lightpurple.tga;
+	background-bottom-right-image: /ui/porkui/gfx/controls/button_corner_bottomright_lightpurple.tga;
+	background-bottom-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-left-image:/ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;
+	background-center-image: /ui/porkui/gfx/controls/subbutton_lightpurple.tga stretch;		
+}
+
+.button-apply, .button-cancel { 
+	width: 100px; 
+	float: none; 
+	margin-left: 0px;
+}
+
+.button-cancel {
+	margin-left: 0;
+}

@@ -1,0 +1,13 @@
+#bgimage{
+	width:100%; 
+	height:100%;
+}
+
+#content{
+	text-align:center; 
+	position:fixed; 
+	top:60%;
+	background:rgba(0,0,0,0);
+}
+
+

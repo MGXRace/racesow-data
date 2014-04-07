@@ -1,0 +1,66 @@
+/* server browser */
+
+/* notes:
+   #navibar is kind of an 'alias' for tabset tab here,
+   but server browser doesn't (and can't) use tabset.
+   the actual styling is in the base.css!
+ */
+#navibar { 
+	text-align: center;
+}
+
+#navibar a {
+	width: 120px;
+}
+
+#serverbrowser_frame { overflow: auto; }
+
+#serverblock levelshot {
+	width: 128px;
+	height: 96px;
+}
+
+#serverbrowser_datagrid datagridheader { padding-left: 18px; }
+#serverbrowser_datagrid datagridrow { padding-left: 18px; }
+#serverbrowser_datagrid datagridrow:hover { background: #3f3c49; }
+#serverbrowser_datagrid datagridrow:selected  { background: #3f3c49; }
+#serverbrowser_datagrid datagridcolumn:hover { background: #3f3c49; }
+
+#serverbrowser_datagrid datagridrow span { 
+	display: inline; 
+	margin: 0px;
+	padding: 0px;
+	width: auto;	
+}
+
+#serverbrowser_datagrid datagridrow {
+	star-decorator: tiled-horizontal;
+	star-left-image: /ui/porkui/gfx/star_grey_padded.tga 0.0 0.0 1.0 1.0;
+	star-center-image: /ui/porkui/gfx/null.tga 0.0 0.0 1.0 1.0;
+	star-right-image: /ui/porkui/gfx/null.tga 0.0 0.0 1.0 1.0;
+	star-center-image-repeat: repeat-truncate;
+}
+
+#serverbrowser_datagrid datagridrow.passworded {
+	tiled-decorator: tiled-horizontal;
+	tiled-left-image: /ui/porkui/gfx/passworded.tga 0.0 0.0 1.0 1.0;
+	tiled-center-image: /ui/porkui/gfx/null.tga 0.0 0.0 1.0 1.0;
+	tiled-right-image: /ui/porkui/gfx/null.tga 0.0 0.0 1.0 1.0;
+	tiled-center-image-repeat: repeat-truncate;	    
+}
+
+#serverbrowser_datagrid datagridrow.favorite {
+	favstar-decorator: tiled-horizontal;
+	favstar-left-image: /ui/porkui/gfx/star_selected_padded.tga 0.0 0.0 1.0 1.0;
+	favstar-center-image: /ui/porkui/gfx/null.tga 0.0 0.0 1.0 1.0;
+	favstar-right-image: /ui/porkui/gfx/null.tga 0.0 0.0 1.0 1.0;
+	favstar-center-image-repeat: repeat-truncate;
+}
+
+// use with caution: causes MASSIVE slowdowns due to
+// datagrid cells' style updates
+/*
+#serverbrowser_datagrid datagridrow:nth-child(even) {
+
+}
+*/

@@ -9,22 +9,28 @@ class RS_CMD_Position : RS_Command
 		name = "position";
     	description = "Commands to store and load position";
     	usage = "position <command> where command is one of :\n"
-			+ "position cp <id> - Teleport to a checkpoint (id order may vary)\n"
-            + "position set <x> <y> <z> <pitch> <yaw> - Teleport to specified position\n"
-            + "position store <id> <name> - Store a position for another session\n"
-            + "position restore <id> - Restore a stored position from another session\n"
-            + "position storedlist <limit> - Sends you a list of your stored positions\n";
+			+ "position cp <id> - Teleport to a checkpoint (id order may vary)\n";
 
         registerSubcommand( RS_CMD_PositionSave() );
         registerSubcommand( RS_CMD_PositionLoad() );
         registerSubcommand( RS_CMD_PositionSpeed() );
         registerSubcommand( RS_CMD_PositionPrerace() );
         registerSubcommand( RS_CMD_PositionPlayer() );
+        registerSubcommand( RS_CMD_PositionSet() );
     	register();
 	}
 
     bool execute(RS_Player @player, String &args, int argc)
     {
+    	if( argc == 0 )
+    	{
+    		Entity @ent = @player.client.getEnt();
+    		sendMessage( @player, "Current position:"
+    			+ " " + ent.origin.x + " " + ent.origin.y + " " + ent.origin.z 
+    			+ " " + ent.angles.x + " " + ent.angles.y + " " + ent.angles.z );
+    		return true;
+    	}
+
     	return RS_Command::execute( @player, args, argc );
     }
 }
@@ -174,5 +180,45 @@ class RS_CMD_PositionPlayer : RS_Command
 
 		Entity @ent = @target.client.getEnt();
 		return player.teleport( ent.origin, ent.angles, false, false, false );
+	}
+}
+
+class RS_CMD_PositionSet : RS_Command
+{
+	RS_CMD_PositionSet()
+	{
+		name = "set";
+    	description = "Teleport to a particular location";
+    	usage = "position player <x> <y> <z> <pitch> <yaw>\n";
+	}
+
+	bool validate( RS_Player @player, String &args, int argc )
+	{
+		if( player.client.team == TEAM_PLAYERS && player.state != RS_STATE_PRACTICE )
+		{
+			sendMessage( @player, "Position set may only be used in practicemode\n" );
+			return false;				
+		}
+
+		if( argc != 5 )
+		{
+			sendErrorMessage( @player, "Invalid arguments\n");
+			sendMessage( @player, getUsage() );
+			return false;
+		}
+
+		return true;
+	}
+
+	bool execute(RS_Player @player, String &args, int argc)
+	{
+		Vec3 origin, angles;
+		origin.x = args.getToken( 1 ).toFloat();
+		origin.y = args.getToken( 2 ).toFloat();
+		origin.z = args.getToken( 3 ).toFloat();
+		angles.x = args.getToken( 4 ).toFloat();
+		angles.y = args.getToken( 5 ).toFloat();
+
+		return player.teleport( origin, angles, false, false, false );
 	}
 }

@@ -48,7 +48,25 @@ class RS_Command
      * @var String
      */
     String usage;
-	
+
+    /**
+     * Container of all subcommands
+     * @var Dictionary
+     */
+    Dictionary subcommands;
+
+    /**
+     * Container of all subcommands
+     * @var RS_Command[]
+     */
+    RS_Command@[] subcommandsByIndex;
+
+    /**
+     * Number of registered subcommands
+     * @var int
+     */
+	int subcommandCount;
+
     /**
      * Default constructor
      * Registers the command on instantiation. Use these as singletons.
@@ -68,6 +86,18 @@ class RS_Command
     }
 
     /**
+     * Register a subcommand
+     * @return  void
+     */
+    void registerSubcommand( RS_Command @cmd )
+    {
+        if( @cmd is null )
+            return;
+
+        subcommands.set( cmd.name, @cmd );
+    }
+
+    /**
      * This is called before the actual work is done.
      *
      * Here you should only check the number of arguments and that
@@ -80,6 +110,14 @@ class RS_Command
      */
     bool validate(RS_Player @player, String &args, int argc)
     {
+        RS_Command @cmd;
+
+        if( subcommands.get( args.getToken( 0 ), @cmd ) )
+        {
+            String subArgs = args.substr( args.getToken( 0 ).len() + 1 );
+            return cmd.validate( @player, subArgs, argc - 1 );
+        }
+
         return true;
     }
 
@@ -95,7 +133,15 @@ class RS_Command
      */
     bool execute(RS_Player @player, String &args, int argc)
     {
-        return true;
+        RS_Command @cmd;
+
+        if( subcommands.get( args.getToken( 0 ), @cmd ) )
+        {
+            String subArgs = args.substr( args.getToken( 0 ).len() + 1 );
+            return cmd.execute( @player, subArgs, argc - 1 );
+        }
+
+        return false;
     }
 
     /**
@@ -103,8 +149,18 @@ class RS_Command
      */
     String getDescription()
     {
+        RS_Command @cmd;
+
         String cname = ( name.substr( 0, 2 ) == '__' ) ? name.substr( 2 ) : name;
-        return S_COLOR_ORANGE + cname + ": " + S_COLOR_WHITE + this.description + "\n";
+        String message = S_COLOR_ORANGE + cname + ": " + S_COLOR_WHITE + this.description + "\n";
+
+        for( int i = 0; i < subcommandCount; i++ )
+        {
+            @cmd = @subcommandsByIndex[i];
+            message += "    " + cmd.getDescription();
+        }
+
+        return message;
     }
 
     /**
@@ -112,10 +168,16 @@ class RS_Command
      */
     String getUsage()
     {
-        if ( this.usage.len() > 0 )
-            return S_COLOR_ORANGE + "Usage: " + S_COLOR_WHITE + this.usage + "\n";
-        else
-            return "";
+        RS_Command @cmd;
+
+        String message = this.usage + "\n";
+        for( int i = 0; i < subcommandCount; i++ )
+        {
+            @cmd = @subcommandsByIndex[i];
+            message += cmd.getUsage() + "\n";
+        }
+
+        return message;
     }
 }
 

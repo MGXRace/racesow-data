@@ -201,12 +201,13 @@
 				<tab class="side-tab">Misc</tab>		
 				<panel class="dropshadow">
 					<optionsform id="misc-options-form" onsubmit="$OptionsForm_OnSubmit">
-						<div class="title">Number of demos to store for each map</div>
+						<div class="title">Demos to keep per map</div>
 						<select cvar="hand" realtime="1">
-							<option value="1" selected>keep your personal best</option>
-							<option value="3">keep your 3 best</option>
-							<option value="5">keep your 5 best</option>
-							<option value="-1">keep all</option>
+							<option value="1" selected>only your best run</option>
+							<option value="3">your 3 best runs</option>
+							<option value="5">your 5 best runs</option>
+							<option value="-2">all personal bests</option>
+							<option value="-1">all finished runs</option>
 							<option value="0">none</option>
 						</select>
 					</optionsform>

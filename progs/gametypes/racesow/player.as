@@ -35,6 +35,12 @@ class RS_Player
     RS_Race @race;
 
     /**
+     * The player's last race, used for sending demo recording cmds
+     * @var RS_Race
+     */
+    RS_Race @lastRace;
+
+    /**
      * The player's best race
      * @var RS_Race
      */
@@ -95,12 +101,6 @@ class RS_Player
     uint privsayCount;
 
     /**
-     * Flag to call "dstop" on next respawn
-     * @var bool
-     */
-    bool dstop;
-
-    /**
      * Amount of time spent playing
      * @var uint
      */
@@ -123,7 +123,6 @@ class RS_Player
         positionPrerace = RS_Position( @this );
         auth = RS_PlayerAuth( @this );
         noclipWeapon = WEAP_NONE;
-        dstop = false;
         state = RS_STATE_PRERACE;
         privsayTimes.resize( PRIVSAY_FLOODCOUNT );
     }
@@ -155,16 +154,25 @@ class RS_Player
         cancelRace();
         respawnTime = 0;
 
-        if( dstop )
+        // Did we finish the last race?
+        if( @lastRace !is null )
         {
-            int time =  @record is null ? 0 : record.getTime();
-            client.execGameCommand( "dstop " + time );
-            dstop = false;
+            int time = lastRace.getTime();
+            if( @lastRace is @record )
+            {
+                sendMessage( @this, "Demo best\n" );
+                client.execGameCommand( "dstop " + time + " " + 1 );
+            }
+            else
+            {
+                sendMessage( @this, "Demo save\n" );
+                client.execGameCommand( "dstop " + time + " " + 0 );
+            }
+
         }
         else
-        {
             client.execGameCommand( "dcancel" );
-        }
+        @lastRace = null;
 
         if( @client.getEnt() !is null )
             G_RemoveProjectiles( client.getEnt() );
@@ -290,6 +298,7 @@ class RS_Player
         respawnTime = realTime + 3000;
         races += 1;
         map.races += 1;
+        @lastRace = @race;
 
         // Report the race
         if( auth.id != 0 && map.auth.id != 0 )
@@ -327,7 +336,6 @@ class RS_Player
         {
             // First record or New record
             @record = @race;
-            dstop = true;
 
             // Send record award to player and spectators
             specCallback @func = @sendAward;

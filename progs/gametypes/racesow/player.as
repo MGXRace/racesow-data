@@ -159,16 +159,9 @@ class RS_Player
         {
             int time = lastRace.getTime();
             if( @lastRace is @record )
-            {
-                sendMessage( @this, "Demo best\n" );
                 client.execGameCommand( "dstop " + time + " " + 1 );
-            }
             else
-            {
-                sendMessage( @this, "Demo save\n" );
                 client.execGameCommand( "dstop " + time + " " + 0 );
-            }
-
         }
         else
             client.execGameCommand( "dcancel" );

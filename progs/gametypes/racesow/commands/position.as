@@ -16,6 +16,7 @@ class RS_CMD_Position : RS_Command
         registerSubcommand( RS_CMD_PositionSpeed() );
         registerSubcommand( RS_CMD_PositionPrerace() );
         registerSubcommand( RS_CMD_PositionPlayer() );
+        registerSubcommand( RS_CMD_PositionCp() );
         registerSubcommand( RS_CMD_PositionSet() );
     	register();
 	}
@@ -180,6 +181,48 @@ class RS_CMD_PositionPlayer : RS_Command
 
 		Entity @ent = @target.client.getEnt();
 		return player.teleport( ent.origin, ent.angles, false, false, false );
+	}
+}
+
+class RS_CMD_PositionCp : RS_Command
+{
+	RS_CMD_PositionCp()
+	{
+		name = "cp";
+    	description = "Teleport to a particular checkpoint (id order may vary)";
+    	usage = "position cp <id>\n";
+	}
+
+	bool validate( RS_Player @player, String &args, int argc )
+	{
+		if( player.client.team == TEAM_PLAYERS && player.state != RS_STATE_PRACTICE )
+		{
+			sendMessage( @player, "Position cp may only be used in practicemode\n" );
+			return false;				
+		}
+
+		if( argc != 1 )
+		{
+			sendErrorMessage( @player, "Invalid arguments\n");
+			sendMessage( @player, getUsage() );
+			return false;
+		}
+
+		return true;
+	}
+
+	bool execute(RS_Player @player, String &args, int argc)
+	{
+        int index = args.getToken( 0 ).toInt();
+        for( int i = 0; i <= numEntities; i++ )
+        {
+            Entity @ent = @G_GetEntity( i );
+            if( @ent != null && ent.count == index - 1 && ent.get_classname() == "target_checkpoint" )
+                return player.teleport( ent.origin, ent.angles, false, false, false );
+        }
+
+        sendErrorMessage( @player, "Undefined checkpoint: " + index );
+        return true;
 	}
 }
 

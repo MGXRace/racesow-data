@@ -72,6 +72,25 @@ class RS_CMD_Position : RS_Command
 		else if( args.getToken( 0 ) == "speed" )
 			return player.position.saveSpeed( args.getToken( 1 ) );
 
+		else if( args.getToken( 0 ) == "player" )
+		{
+			if( player.state != RS_STATE_PRACTICE )
+			{
+				sendMessage( @player, "Position player may only be used in practicemode\n" );
+				return false;				
+			}
+
+			RS_Player @target = @RS_getPlayerFromArgs( args.getToken( 1 ) );
+			if( @target is null || @target.client is null )
+			{
+				sendMessage( @player, "Matching player for " + args.getToken( 1 ) + " not found.\n" );
+				return false;
+			}
+
+			Entity @ent = @target.client.getEnt();
+			return player.teleport( ent.origin, ent.angles, false, false, false );
+		}
+
 		return false;
     }
 }

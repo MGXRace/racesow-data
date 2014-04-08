@@ -206,8 +206,8 @@
 							<option value="1" selected>only your best run</option>
 							<option value="3">your 3 best runs</option>
 							<option value="5">your 5 best runs</option>
-							<option value="-2">all personal bests</option>
-							<option value="-1">all finished runs</option>
+							<option value="-1">all personal bests</option>
+							<option value="-2">all finished runs</option>
 							<option value="0">none</option>
 						</select>
 					</optionsform>

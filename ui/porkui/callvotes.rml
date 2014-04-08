@@ -234,7 +234,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 				<div id="callvotes-container" class="dropshadow">
 					<div id="callvotes_left_frame">
 						<datagrid id="callvotes_datagrid" source="" onrowselect="$onCallvotesRowSelect">
-							<col fields="name" width="150px">Name</col>
+							<col fields="name">Name</col>
 						</datagrid>
 					</div>
 					<div id="callvotes_spacer_frame" >&nbsp;</div>
@@ -253,7 +253,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 					</div>
 
 					<div id="callvote_active">
-						<input id="callvote_btn_start" type="submit">Call a vote</input>
+						<input id="callvote_btn_start" type="submit">Call vote</input>
 						<span id="callvote_ongoing_text"></span>
 					</div>
 				</div>			

@@ -170,12 +170,11 @@ class RS_Command
     {
         RS_Command @cmd;
 
-        String cname = ( name.substr( 0, 2 ) == '__' ) ? name.substr( 2 ) : name;
         String message = this.usage + "\n";
         for( int i = 0; i < subcommandCount; i++ )
         {
             @cmd = @subcommandsByIndex[i];
-            message += cname + " " + cmd.getUsage() + "\n";
+            message += cmd.getUsage() + "\n";
         }
 
         return message;

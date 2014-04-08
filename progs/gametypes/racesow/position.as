@@ -12,12 +12,6 @@ class RS_Position
 	RS_Player @player;
 
 	/**
-	 * Time the position command was last called
-	 * @var uint
-	 */
-	uint lastcmd;
-
-	/**
 	 * Whether a position has been saved
 	 * @var bool
 	 */
@@ -104,17 +98,11 @@ class RS_Position
      * @param floodProtect Set to true to flood check the load call
 	 * @return bool True if succesful
 	 */
-	bool load( bool floodProtect = false )
+	bool load()
 	{
 		Entity @ent = @player.client.getEnt();
 		if( !saved || @ent is null )
 			return false;
-
-		if( floodProtect && lastcmd + 500 > realTime ) // Not sure why we flood protect this
-		{
-			sendMessage( @player, "Cannot load position now (flood protection)" );
-			return false;
-		}
 
 		// teleport the player
 		player.teleport( origin, angles, false, false, false );
@@ -137,7 +125,6 @@ class RS_Position
 		if( ent.moveType != MOVETYPE_NOCLIP )
 			ent.set_velocity( a );
 
-		lastcmd = realTime;
 		return true;
 	}
 

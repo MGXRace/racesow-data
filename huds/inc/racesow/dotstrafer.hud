@@ -1,6 +1,6 @@
 //
-
-if 0 == 8 & %SHOW_SPEED
+if %MATCH_STATE <= 3
+if %SHOW_STRAFE == 1
 
 setScale #DEFAULTSCALE
 setCursor 400, 300
@@ -67,4 +67,4 @@ setAlign #CENTER, #BOTTOM
 drawPicByName gfx/ui/white
 
 endif
-
+endif

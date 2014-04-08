@@ -1,4 +1,4 @@
-#callvotes_left_frame { overflow: auto; width: 150px; height: 240px; float: left; }
+#callvotes_left_frame { overflow: auto; width: 100px; height: 240px; float: left; }
 
 #callvotes_datagrid datagridheader { font-size: 14px; text-align: left; }
 #callvotes_datagrid datagridrow { font-size: 14px; text-align: left; }
@@ -19,7 +19,7 @@
 
 #callvote_text { display: none; margin-bottom: 8px; }
 
-#callvote_help { display: inline-block; width: 50px; }
+#callvote_help { display: inline-block; width: 200px; }
 
 #callvote_active { position: relative; height: 40px; }
 

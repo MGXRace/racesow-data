@@ -66,23 +66,6 @@ class RS_Race
     }
 
     /**
-     * Construct from a Json Server response
-     * TODO: link to response definition / format spec
-     * @param data Json object representing the race
-     */
-    RS_Race( Json @data )
-    {
-        checkpoints.resize( numCheckpoints );
-
-        // TODO: Handle malformed responses
-        Json @node = data.getItem("time");
-        endTime = node.valueint;
-
-        @node = data.getItem("checkpoints");
-        parseCheckpoints( node );
-    }
-
-    /**
      * Constructor
      * Constructing with a player starts the race automatically
      * @param RS_Player player The owner of the race

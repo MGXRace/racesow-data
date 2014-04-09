@@ -136,27 +136,4 @@ class RS_Race
 
         return player.client.uCmdTimeStamp - startTime;
     }
-
-    /**
-     * Parse checkpoints passed as Json data
-     * @param Json cpNode Object with cp data
-     * @return void
-     */
-    void parseCheckpoints( Json @cpNode )
-    {
-        if( cpNode is null || cpNode.type != cJSON_Object )
-            return;
-
-        Json @node = cpNode.child;
-        while( @node !is null )
-        {
-            int num = node.getName().toInt();
-            uint time = uint(node.valueint);
-
-            if( num < numCheckpoints )
-                checkpoints[num] = time;
-
-            @node = @node.next;
-        }
-    }
 }

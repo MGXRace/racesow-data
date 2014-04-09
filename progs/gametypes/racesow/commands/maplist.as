@@ -57,34 +57,3 @@ class RS_CMD_MapList : RS_Command
     	return true;
     }
 }
-
-/**
- * Callback for maplist RS_CMD_MapList
- */
-void RS_QueryMaps_Done( int status, Client @client, Json @data )
-{
-    RS_Player @player = RS_getPlayer( client );
-    if( @player is null )
-        return;
-
-    if( status == 200 )
-    {
-        Json @maps = data.getItem( "maps" );
-        int start = data.getItem( "start" ).valueint;
-        int count = data.getItem( "count" ).valueint;
-        for( int i = 0; i < count; i++ )
-        {
-            sendMessage( player, S_COLOR_ORANGE + "# " + (start + i + 1) + S_COLOR_WHITE
-                + ": " + maps.getItem( i ).getItem( "name" ).getString() + "\n" );
-        }
-    }
-    else if( @data !is null )
-    {
-        String error = data.getItem("error").getString();
-        sendErrorMessage( player, error );
-    }
-    else
-    {
-        sendErrorMessage( player, "Failed to retrieve maplist" );
-    }
-}

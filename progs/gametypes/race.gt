@@ -22,8 +22,6 @@ racesow/entities/replacementitem.as;
 racesow/entities/shooters.as;
 racesow/entities/target_init.as;
 
-racesow/commands/__register.as;
-racesow/commands/__login.as;
 racesow/commands/base.as;
 racesow/commands/cancelvote.as;
 racesow/commands/racerestart.as;
@@ -39,10 +37,6 @@ racesow/commands/whoisgod.as;
 racesow/commands/weapondefs.as;
 racesow/commands/give.as;
 racesow/commands/top.as;
-
-racesow/auth/player.as;
-racesow/auth/map.as;
-racesow/auth/callbacks.as;
 
 racesow/utils.as;
 racesow/gametype.as;

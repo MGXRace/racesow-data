@@ -151,32 +151,11 @@ class RS_GT_Race : RS_Gametype
      */
     void ScoreEvent( Client @client, const String &score_event, const String &args )
     {
-        if( score_event == "disconnect" )
-        {
-            RS_Player @player = RS_getPlayer( client );
-            if( @player !is null && player.auth.id != 0 )
-                RS_ReportPlayer( player.auth.user, map.auth.id, player.playTime, player.races );
-        }
-
         RS_Gametype::ScoreEvent( client, score_event, args );
     }
 
     void Shutdown()
     {
-        // Report the map and players
-        RS_ReportMap( map.playTime, map.races );
-        G_Print( "Report Map\n");
-
-        for( int i = 0; i < maxClients; i++ )
-        {
-            RS_Player @player = players[i];
-            if( @player !is null && player.auth.id != 0 )
-            {
-                G_Print( "Report Player: " + player.auth.user + "\n" );
-                RS_ReportPlayer( player.auth.user, map.auth.id, player.playTime, player.races );
-            }
-        }
-
         RS_Gametype::Shutdown();
     }
 }

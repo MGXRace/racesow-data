@@ -23,12 +23,6 @@ class RS_Player
     uint state;
 
     /**
-     * The clients auth credentials
-     * @var RS_PlayerAuth
-     */
-    RS_PlayerAuth auth;
-
-    /**
      * The player's inprogress or just finished race
      * @var RS_Race
      */
@@ -121,7 +115,6 @@ class RS_Player
         @this.client = @client;
         position = RS_Position( @this );
         positionPrerace = RS_Position( @this );
-        auth = RS_PlayerAuth( @this );
         noclipWeapon = WEAP_NONE;
         state = RS_STATE_PRERACE;
         privsayTimes.resize( PRIVSAY_FLOODCOUNT );
@@ -293,11 +286,7 @@ class RS_Player
         map.races += 1;
         @lastRace = @race;
 
-        // Report the race
-        if( auth.id != 0 && map.auth.id != 0 )
-            RS_ReportRace( client, auth.id, map.auth.id, race.getTime(), @race.checkpoints );
-
-        if( auth.id != 0 && ( @map.worldRecord is null || map.worldRecord.getTime() > newTime ) )
+        if( @map.worldRecord is null || map.worldRecord.getTime() > newTime )
         {
             @map.worldRecord = @race;
 
@@ -418,9 +407,6 @@ class RS_Player
      */
     void Think()
     {
-        // auth check
-        auth.Think();
-
         // check maxHealth rule
         Entity @ent = client.getEnt();
         if ( ent.health > ent.maxHealth )

@@ -78,8 +78,6 @@ class RS_Gametype
         // Until angelscript supports static class members/methods or better
         // namespacing we can't make a proper plugin achitecture
         RS_CMD_Cancelvote cmd_cancelvote;
-        RS_CMD_Login cmd_login;
-        RS_CMD_Register cmd_register;
         RS_CMD_RaceRestart cmd_racerestart;
         RS_CMD_Join cmd_join;
         RS_CMD_Kill cmd_kill;
@@ -242,12 +240,6 @@ class RS_Gametype
             // Release the associated RS_Player object
             @players[client.get_playerNum()] = null;
         }
-        else if( score_event == 'userinfochanged' )
-        {
-            RS_Player @player = RS_getPlayer( client );
-            if( @player !is null )
-              player.auth.UserInfoChanged( args );
-        }
     }
 
     /**
@@ -333,30 +325,6 @@ class RS_Gametype
                 return false;
 
             return command.execute( @player, args, argc );
-        }
-
-        // Make admins immune to callvotes
-        else if( cmdString == "callvotecheckpermission" )
-        {
-            String vote = args.getToken( 0 );
-            if( vote == "mute" || vote == "vmute" ||
-                vote == "kick" || vote == "kickban" || vote == "remove" ||
-                vote == "joinlock" || vote == "joinunlock" )
-            {
-                RS_Player @victim = RS_getPlayerFromArgs( args.getToken( 1 ) );
-                if( @victim is null )
-                    return true;
-
-                if( victim.auth.admin )
-                {
-                    G_PrintMsg( null, S_COLOR_WHITE + client.get_name()
-                                + S_COLOR_RED + " tried to "
-                                + args.getToken( 0 ) + " an admin.\n" );
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         return false;

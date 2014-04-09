@@ -95,18 +95,6 @@ class RS_Player
     uint privsayCount;
 
     /**
-     * Amount of time spent playing
-     * @var uint
-     */
-    uint playTime;
-
-    /**
-     * Number of races finished on the map
-     * @var uint
-     */
-    uint races;
-
-    /**
      * Constructor
      * @param Client client The client to associate with the player
      */
@@ -282,8 +270,6 @@ class RS_Player
         uint newTime = race.getTime();
         raceReport( @race );
         respawnTime = realTime + 3000;
-        races += 1;
-        map.races += 1;
         @lastRace = @race;
 
         if( @map.worldRecord is null || map.worldRecord.getTime() > newTime )
@@ -412,13 +398,8 @@ class RS_Player
         if ( ent.health > ent.maxHealth )
             ent.health -= ( frameTime * 0.001f );
 
-        // update playtime
-        // TODO: afk check incase we dont autoremove afks
-        if( client.team == TEAM_PLAYERS )
-            playTime += frameTime;
-
         // repawn check
-        if( respawnTime != 0 && realTime > respawnTime)
+        if( respawnTime != 0 && realTime > respawnTime )
             respawn();
 
         // update highest speed

@@ -17,6 +17,12 @@ class RS_Player
     Client @client;
 
     /**
+     * The clients playerauth
+     * @var RS_PlayerAuth
+     */
+    RS_PlayerAuth @auth;
+
+    /**
      * Player's current racing state
      * @var state
      */
@@ -101,6 +107,7 @@ class RS_Player
     RS_Player( Client @client )
     {
         @this.client = @client;
+        @this.auth = @client.getAuth();
         position = RS_Position( @this );
         positionPrerace = RS_Position( @this );
         noclipWeapon = WEAP_NONE;

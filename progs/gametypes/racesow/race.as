@@ -82,6 +82,19 @@ class RS_Race
     }
 
     /**
+     * Construct a race from a string of the form
+     * "time cp1 cp2 cp3... cpN"
+     * @param args The argstring
+     */
+    RS_Race( String &args )
+    {
+        endTime = args.getToken( 0 ).toInt();
+        checkpoints.resize( numCheckpoints );
+        for( int i = 0; i < numCheckpoints; i++ )
+            checkpoints[i] = args.getToken( i + 1 ).toInt();
+    }
+
+    /**
      * Destructor
      */
     ~RS_Race()

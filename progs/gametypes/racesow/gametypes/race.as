@@ -151,6 +151,9 @@ class RS_GT_Race : RS_Gametype
      */
     void ScoreEvent( Client @client, const String &score_event, const String &args )
     {
+        if( score_event == "rs_loadmap" )
+            @map.worldRecord = @RS_Race( args );
+
         RS_Gametype::ScoreEvent( client, score_event, args );
     }
 

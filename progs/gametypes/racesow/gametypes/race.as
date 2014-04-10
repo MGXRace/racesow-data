@@ -154,6 +154,15 @@ class RS_GT_Race : RS_Gametype
         if( score_event == "rs_loadmap" )
             @map.worldRecord = @RS_Race( args );
 
+        else if( score_event == "rs_loadplayer" )
+        {
+            RS_Player @player = RS_getPlayer( client );
+            if( @player is null )
+                return;
+
+            @player.record = @RS_Race( args );
+        }
+
         RS_Gametype::ScoreEvent( client, score_event, args );
     }
 

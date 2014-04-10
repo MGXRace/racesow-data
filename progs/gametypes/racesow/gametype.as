@@ -77,6 +77,7 @@ class RS_Gametype
         // Initialize Commands common to all race gametypes
         // Until angelscript supports static class members/methods or better
         // namespacing we can't make a proper plugin achitecture
+        RS_CMD_Login cmd_login;
         RS_CMD_Cancelvote cmd_cancelvote;
         RS_CMD_RaceRestart cmd_racerestart;
         RS_CMD_Join cmd_join;

@@ -10,6 +10,8 @@ class RS_CMD_Admin : RS_Command
     	usage = "";
 
         registerSubcommand( RS_CMD_AdminMap() );
+        registerSubcommand( RS_CMD_AdminMaplistUpdate() );
+        registerSubcommand( RS_CMD_AdminRestart() );
     	register();
 	}
 
@@ -65,6 +67,22 @@ class RS_CMD_AdminMaplistUpdate : RS_Command
     bool execute(RS_Player @player, String &args, int argc)
     {
         RS_UpdateMaplist();
+        return true;
+    }
+}
+
+class RS_CMD_AdminRestart : RS_Command
+{
+    RS_CMD_AdminMap()
+    {
+        name = "restart";
+        description = "Restart the match";
+        usage = "admin restart";
+    }
+
+    bool execute(RS_Player @player, String &args, int argc)
+    {
+        G_CmdExecute( "match restart\n" );
         return true;
     }
 }

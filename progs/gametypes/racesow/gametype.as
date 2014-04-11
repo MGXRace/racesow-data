@@ -92,6 +92,7 @@ class RS_Gametype
         RS_CMD_NoClip cmd_noclip;
         RS_CMD_Privsay cmd_privsay;
         RS_CMD_MapName cmd_mapname;
+        RS_CMD_Spec cmd_spec;
         RS_CMD_WhoIsGod cmd_whoisgod;
         RS_CMD_WeaponDefs cmd_weapondefs;
         RS_CMD_Give cmd_give;

@@ -311,6 +311,7 @@ class RS_Player
         {
             // First record or New record
             @record = @race;
+            auth.reportRace( newTime, race.checkpoints );
 
             // Send record award to player and spectators
             specCallback @func = @sendAward;

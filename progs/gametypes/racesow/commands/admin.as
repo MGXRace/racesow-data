@@ -19,6 +19,7 @@ class RS_CMD_Admin : RS_Command
         registerSubcommand( RS_CMD_AdminKick() );
         registerSubcommand( RS_CMD_AdminKickban() );
         registerSubcommand( RS_CMD_AdminIp() );
+        registerSubcommand( RS_CMD_AdminRemove() );
     	register();
 	}
 
@@ -299,6 +300,35 @@ class RS_CMD_AdminIp : RS_Command
 
         String ip = target.client.getUserInfoKey( "ip" );
         sendMessage( @player, target.client.get_name() + S_COLOR_WHITE + " " + ip + "\n" );
+        return false;
+    }
+}
+
+class RS_CMD_AdminRemove : RS_Command
+{
+    RS_CMD_AdminRemove()
+    {
+        name = "remove";
+        description = "Force a player to spectators";
+        usage = "admin remove <player>";
+    }
+
+    bool validate(RS_Player @player, String &args, int argc)
+    {
+        if( argc == 1 )
+            return true;
+
+        return false;
+    }
+
+    bool execute(RS_Player @player, String &args, int argc)
+    {
+        RS_Player @target = @RS_getPlayerFromArgs( args.getToken( 0 ) );
+        if( @target is null || target.auth.admin )
+            return false;
+
+        target.client.team = TEAM_SPECTATOR;
+        target.client.respawn( true );
         return false;
     }
 }

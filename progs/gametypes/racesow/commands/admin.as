@@ -20,6 +20,7 @@ class RS_CMD_Admin : RS_Command
         registerSubcommand( RS_CMD_AdminKickban() );
         registerSubcommand( RS_CMD_AdminIp() );
         registerSubcommand( RS_CMD_AdminRemove() );
+        registerSubcommand( RS_CMD_AdminTag() );
     	register();
 	}
 
@@ -330,5 +331,21 @@ class RS_CMD_AdminRemove : RS_Command
         target.client.team = TEAM_SPECTATOR;
         target.client.respawn( true );
         return false;
+    }
+}
+
+class RS_CMD_AdminTag : RS_Command
+{
+    RS_CMD_AdminTag()
+    {
+        name = "tag";
+        description = "Add/remove tags to a map, use '-tagname' to remove";
+        usage = "admin tag <tag> <tag> <tag>...";
+    }
+
+    bool execute(RS_Player @player, String &args, int argc)
+    {
+        RS_ReportMap( args );
+        return true;
     }
 }

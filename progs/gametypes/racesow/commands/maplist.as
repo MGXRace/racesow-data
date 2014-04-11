@@ -12,7 +12,7 @@ class RS_CMD_MapList : RS_Command
     	description = "List available maps";
     	usage = "maplist <page> - Show page <page> of the maps\n"
               + "maplist <filter> <page> - show page <page> of maps matching <filter>\n"
-              + "maplist <filter> <tag>... <page> - show page <page> of maps matching <filter> with tags\n"
+              + "maplist <filter> <page> <tag>... - show page <page> of maps matching <filter> with tags\n"
               + "Tags can be prependend with \"!\" to exclude, ie. \"!tech\" to return non-tech maps";
     	register();
 	}
@@ -46,11 +46,10 @@ class RS_CMD_MapList : RS_Command
         }
         else
         {
-            String tags;
-            for( int i = 1; i < argc - 1; i++)
-                tags += args.getToken( i ) + " ";
+            String tags = args.substr( args.getToken( 0 ).len() + 1 );
+            tags = tags.substr( tags.getToken( 0 ).len() + 1 );
 
-            RS_QueryMaps( @player.client, args.getToken( 0 ), tags, args.getToken( argc - 1 ).toInt() );
+            RS_QueryMaps( @player.client, args.getToken( 0 ), tags, args.getToken( 1 ).toInt() );
         }
 
         CMD_ML_TIMES[player.client.get_playerNum()] = realTime + CMD_ML_FLOODTIME;

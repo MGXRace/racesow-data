@@ -66,6 +66,7 @@ class RS_CMD_AdminMaplistUpdate : RS_Command
 
     bool execute(RS_Player @player, String &args, int argc)
     {
+        sendMessage( @player, "Updating the maplist\n" );
         RS_UpdateMaplist();
         return true;
     }
@@ -73,7 +74,7 @@ class RS_CMD_AdminMaplistUpdate : RS_Command
 
 class RS_CMD_AdminRestart : RS_Command
 {
-    RS_CMD_AdminMap()
+    RS_CMD_AdminRestart()
     {
         name = "restart";
         description = "Restart the match";

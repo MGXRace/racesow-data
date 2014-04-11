@@ -272,6 +272,7 @@ class RS_Player
         }
 
         // Not practicing or prejumped, its a real race
+        auth.incrementRace();
         RS_Race @refRace = @getRefRace();
         uint refBest = @refRace is null ? 0 : refRace.getTime();
         uint newTime = race.getTime();

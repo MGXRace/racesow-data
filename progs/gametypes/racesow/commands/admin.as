@@ -52,3 +52,19 @@ class RS_CMD_AdminMap : RS_Command
         return true;
     }
 }
+
+class RS_CMD_AdminMaplistUpdate : RS_Command
+{
+    RS_CMD_AdminMaplistUpdate()
+    {
+        name = "updateml";
+        description = "Update the maplist";
+        usage = "admin updateml";
+    }
+
+    bool execute(RS_Player @player, String &args, int argc)
+    {
+        RS_UpdateMaplist();
+        return true;
+    }
+}

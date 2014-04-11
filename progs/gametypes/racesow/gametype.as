@@ -323,6 +323,17 @@ class RS_Gametype
 
         if( cmdString == "callvotecheckpermission" )
         {
+            String vote = args.getToken( 0 );
+            RS_Player @victim = RS_getPlayerFromArgs( args.getToken( 1 ) );
+            if( @victim !is null && ( vote == "mute" || vote == "vmute" ||
+                vote == "kick" || vote == "kickban" || vote == "remove" ||
+                vote == "joinlock" || vote == "joinunlock" ) )
+            {
+                G_PrintMsg( null, S_COLOR_WHITE + client.get_name()
+                            + S_COLOR_RED + " tried to "
+                            + args.getToken( 0 ) + " an admin.\n" );
+                return false;
+            }
             return true;
         }
 

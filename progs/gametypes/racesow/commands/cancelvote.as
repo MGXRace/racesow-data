@@ -21,7 +21,7 @@ class RS_CMD_Cancelvote : RS_Command
         if( @player is null )
             return false;
 
-        RS_Cancelvote( player.client.getEnt(), false );
+        RS_Cancelvote( player.client.getEnt(), player.auth.admin );
     	return true;
     }
 }

@@ -9,7 +9,6 @@ class RS_CMD_Position : RS_Command
 		name = "position";
     	description = "Commands to store and load position";
     	usage = "position <command> where command is one of :\n"
-			+ "position cp <id> - Teleport to a checkpoint (id order may vary)\n";
 
         registerSubcommand( RS_CMD_PositionSave() );
         registerSubcommand( RS_CMD_PositionLoad() );

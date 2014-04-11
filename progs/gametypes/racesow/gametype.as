@@ -321,6 +321,11 @@ class RS_Gametype
         if( @player is null )
             return false;
 
+        if( cmdString == "callvotecheckpermission" )
+        {
+            return true;
+        }
+
         if( RS_CommandByName.get( cmdString, @command ) )
         {
             if( !command.validate( @player, args, argc ) )

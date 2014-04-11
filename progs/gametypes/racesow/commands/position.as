@@ -8,7 +8,7 @@ class RS_CMD_Position : RS_Command
 	{
 		name = "position";
     	description = "Commands to store and load position";
-    	usage = "position <command> where command is one of :\n"
+    	usage = "position <command> where command is one of:";
 
         registerSubcommand( RS_CMD_PositionSave() );
         registerSubcommand( RS_CMD_PositionLoad() );
@@ -42,7 +42,7 @@ class RS_CMD_PositionSave : RS_Command
 	{
 		name = "save";
     	description = "Save the current position";
-    	usage = "position save\n";
+    	usage = "position save";
 	}
 
 	bool execute(RS_Player @player, String &args, int argc)
@@ -60,7 +60,7 @@ class RS_CMD_PositionLoad : RS_Command
 	{
 		name = "load";
     	description = "Load the saved position";
-    	usage = "position load\n";
+    	usage = "position load";
 	}
 
 	bool execute(RS_Player @player, String &args, int argc)
@@ -148,7 +148,7 @@ class RS_CMD_PositionPlayer : RS_Command
 	{
 		name = "player";
     	description = "Teleport to a particular player";
-    	usage = "position player (playerName|playerNum)\n";
+    	usage = "position player (playerName|playerNum)";
 	}
 
 	bool validate( RS_Player @player, String &args, int argc )
@@ -189,7 +189,7 @@ class RS_CMD_PositionCp : RS_Command
 	{
 		name = "cp";
     	description = "Teleport to a particular checkpoint (id order may vary)";
-    	usage = "position cp <id>\n";
+    	usage = "position cp <id>";
 	}
 
 	bool validate( RS_Player @player, String &args, int argc )
@@ -231,7 +231,7 @@ class RS_CMD_PositionSet : RS_Command
 	{
 		name = "set";
     	description = "Teleport to a particular location";
-    	usage = "position player <x> <y> <z> <pitch> <yaw>\n";
+    	usage = "position player <x> <y> <z> <pitch> <yaw>";
 	}
 
 	bool validate( RS_Player @player, String &args, int argc )

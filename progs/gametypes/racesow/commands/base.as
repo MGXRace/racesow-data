@@ -59,7 +59,7 @@ class RS_Command
      * Container of all subcommands
      * @var RS_Command[]
      */
-    RS_Command@[] subcommandsByIndex;
+    RS_Command@[] subcommandsByIndex( RS_MaxCommands );
 
     /**
      * Number of registered subcommands
@@ -94,6 +94,7 @@ class RS_Command
         if( @cmd is null )
             return;
 
+        @subcommandsByIndex[subcommandCount++] = @cmd;
         subcommands.set( cmd.name, @cmd );
     }
 
@@ -174,7 +175,7 @@ class RS_Command
         for( int i = 0; i < subcommandCount; i++ )
         {
             @cmd = @subcommandsByIndex[i];
-            message += cmd.getUsage() + "\n";
+            message += cmd.getUsage();
         }
 
         return message;

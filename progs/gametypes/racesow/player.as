@@ -101,6 +101,18 @@ class RS_Player
     uint privsayCount;
 
     /**
+     * Last gametype entity touched
+     * @var Entity
+     */
+    Entity @triggerEnt;
+
+    /**
+     * Time the last entity was touched
+     * @var uint
+     */
+    uint triggerTime;
+
+    /**
      * Constructor
      * @param Client client The client to associate with the player
      */
@@ -559,5 +571,28 @@ class RS_Player
             ent.teleportEffect( false );
 
         return true;
+    }
+
+    /**
+     * Player touched an entity, save info for trigger checking later
+     * @param ent The touched entity
+     */
+    void triggerSet( Entity @ent )
+    {
+        @triggerEnt = @ent;
+        triggerTime = levelTime;
+    }
+
+    /**
+     * Check if a player can activate an entity
+     * @param ent     Entity touched
+     * @param timeout Time player must wait to retrigger
+     */
+    bool triggerCheck( Entity @ent, int timeout )
+    {
+        if( triggerEnt !is ent )
+            return true;
+
+        return triggerTime + timeout < int(levelTime);
     }
 }

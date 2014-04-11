@@ -16,6 +16,9 @@ class RS_CMD_Admin : RS_Command
         registerSubcommand( RS_CMD_AdminUnmute() );
         registerSubcommand( RS_CMD_AdminVmute() );
         registerSubcommand( RS_CMD_AdminVunmute() );
+        registerSubcommand( RS_CMD_AdminKick() );
+        registerSubcommand( RS_CMD_AdminKickban() );
+        registerSubcommand( RS_CMD_AdminIp() );
     	register();
 	}
 
@@ -24,7 +27,6 @@ class RS_CMD_Admin : RS_Command
         if( @player is null || @player.client is null )
             return false;
 
-        G_Print( "Admin is " + ( player.auth.admin ? 1 : 0 ) + "\n" );
         if( !player.auth.admin )
         {
             sendErrorMessage( @player, "You are not an admin" );
@@ -212,5 +214,91 @@ class RS_CMD_AdminVunmute : RS_Command
 
         target.client.muted &= ~2;
         return true;
+    }
+}
+
+class RS_CMD_AdminKick : RS_Command
+{
+    RS_CMD_AdminKick()
+    {
+        name = "kick";
+        description = "Kick a player";
+        usage = "admin kick <player>";
+    }
+
+    bool validate(RS_Player @player, String &args, int argc)
+    {
+        if( argc == 1 )
+            return true;
+
+        return false;
+    }
+
+    bool execute(RS_Player @player, String &args, int argc)
+    {
+        RS_Player @target = @RS_getPlayerFromArgs( args.getToken( 0 ) );
+        if( @target is null || target.auth.admin )
+            return false;
+
+        G_CmdExecute( "kick " + target.client.playerNum );
+        return true;
+    }
+}
+
+class RS_CMD_AdminKickban : RS_Command
+{
+    RS_CMD_AdminKickban()
+    {
+        name = "kickban";
+        description = "Kickban a player";
+        usage = "admin kickban <player>";
+    }
+
+    bool validate(RS_Player @player, String &args, int argc)
+    {
+        if( argc == 1 )
+            return true;
+
+        return false;
+    }
+
+    bool execute(RS_Player @player, String &args, int argc)
+    {
+        RS_Player @target = @RS_getPlayerFromArgs( args.getToken( 0 ) );
+        if( @target is null || target.auth.admin )
+            return false;
+
+        String ip = target.client.getUserInfoKey( "ip" );
+        G_CmdExecute( "addip " + ip + " 15;kick " + target.client.playerNum );
+        return true;
+    }
+}
+
+class RS_CMD_AdminIp : RS_Command
+{
+    RS_CMD_AdminIp()
+    {
+        name = "ip";
+        description = "Show a players ip address";
+        usage = "admin ip <player>";
+    }
+
+    bool validate(RS_Player @player, String &args, int argc)
+    {
+        if( argc == 1 )
+            return true;
+
+        return false;
+    }
+
+    bool execute(RS_Player @player, String &args, int argc)
+    {
+        RS_Player @target = @RS_getPlayerFromArgs( args.getToken( 0 ) );
+        if( @target is null || target.auth.admin )
+            return false;
+
+        String ip = target.client.getUserInfoKey( "ip" );
+        sendMessage( @player, target.client.get_name() + S_COLOR_WHITE + " " + ip + "\n" );
+        return false;
     }
 }

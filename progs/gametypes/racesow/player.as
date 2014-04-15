@@ -471,11 +471,7 @@ class RS_Player
         if( target == "personal" )
             return @record;
 
-        if( target.isNumerical() && target.toInt() <= maxClients )
-            @player = @RS_getPlayer( target.toInt() );
-        else
-            @player = @RS_getPlayer( target );
-
+        @player = @RS_getPlayerFromArgs( target );
         if( @player !is null )
             return @player.record;
 

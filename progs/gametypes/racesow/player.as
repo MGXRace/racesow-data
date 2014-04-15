@@ -266,6 +266,7 @@ class RS_Player
         if( @race is null || race.endTime != 0 )
             return;
 
+        specCallback @func = @sendAward;
         race.stopRace();
 
         if( state == RS_STATE_PRACTICE )
@@ -276,7 +277,6 @@ class RS_Player
 
         if( race.prejumped )
         {
-            specCallback @func = @sendAward;
             execSpectators( @func, @this, "Prejump Time: " + TimeToString( race.getTime() ) );
             sendErrorMessage( @this, "Prejumped records are not recorded." );
             respawnTime = realTime + 3000;
@@ -292,46 +292,34 @@ class RS_Player
         respawnTime = realTime + 3000;
         @lastRace = @race;
 
+        // World Record - Beats record loaded from database
         if( @map.worldRecord is null || map.worldRecord.getTime() > newTime )
         {
             @map.worldRecord = @race;
-
-            // Send record award to player and spectators
-            specCallback @func = @sendAward;
             execSpectators( @func, @this, S_COLOR_GREEN + "New World record!" );
-
-            // Print record message to chat
             G_PrintMsg(null, client.name + " "
                              + S_COLOR_YELLOW + "made a new world record: "
                              + TimeToString( newTime ) + "\n");
         }
 
+        // Server record
         if( @map.serverRecord is null || map.serverRecord.getTime() > newTime )
         {
             @map.serverRecord = @race;
-
-            // Send record award to player and spectators
-            specCallback @func = @sendAward;
             execSpectators( @func, @this, S_COLOR_GREEN + "New server record!" );
-
-            // Print record message to chat
             G_PrintMsg(null, client.name + " "
                              + S_COLOR_YELLOW + "made a new server record: "
                              + TimeToString( newTime ) + "\n");
         }
 
+        // Personal record
         if( @record is null || record.getTime() > newTime )
         {
-            // First record or New record
             @record = @race;
             auth.reportRace( newTime, race.checkpoints );
-
-            // Send record award to player and spectators
-            specCallback @func = @sendAward;
             execSpectators( @func, @this, "Personal record!" );
         }
 
-        specCallback @func = @sendAward;
         String message = "Time: " + TimeToString( newTime ) + ( refBest == 0 ? "" : ( "\n" + diffString( refBest, newTime ) ) );
         execSpectators( @func, @this, message );
     }

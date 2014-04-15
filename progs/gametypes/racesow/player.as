@@ -413,7 +413,7 @@ class RS_Player
 
         // update highest speed
         uint hspeed = getSpeed();
-        if( state != RS_STATE_PRACTICE && hspeed > highestSpeed )
+        if( ent.team == TEAM_PLAYERS && state != RS_STATE_PRACTICE && hspeed > highestSpeed )
             highestSpeed = hspeed;
 
         // Update HUD variables

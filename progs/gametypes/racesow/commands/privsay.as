@@ -62,11 +62,14 @@ class RS_CMD_Privsay : RS_Command
         else
             player.privsayTimes[player.privsayCount++] = realTime;
 
-        // Send the message
-        String message = args.substr( args.getToken( 0 ).length() + 1, args.len() );
-        sendMessage( @target, player.client.name + S_COLOR_RED + " <<< " + S_COLOR_WHITE + message + "\n" );
-        sendMessage( @player, target.client.name + S_COLOR_RED + " >>> " + S_COLOR_WHITE + message + "\n" );
-        
+        // Send the message to the player
+        String message = " \"" + args.substr( args.getToken( 0 ).length() + 1, args.len() ).replace( "\"", "\'" ) + "\"";
+        String cmd = "pch 0 " + target.client.getEnt().get_entNum() + message;
+        player.client.execGameCommand( cmd );
+
+        // Send the message to the target
+        cmd = "pch 1 " + player.client.getEnt().get_entNum() + message;
+        target.client.execGameCommand( cmd );        
         return true;
     }
 }

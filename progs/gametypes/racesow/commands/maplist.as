@@ -12,7 +12,7 @@ class RS_CMD_MapList : RS_Command
     	description = "List available maps";
     	usage = "maplist <page> - Show page <page> of the maps\n"
               + "maplist <filter> <page> - show page <page> of maps matching <filter>\n"
-              + "maplist <filter> <tag>... <page> - show page <page> of maps matching <filter> with tags\n"
+              + "maplist <filter> <page> <tag>... - show page <page> of maps matching <filter> with tags\n"
               + "Tags can be prependend with \"!\" to exclude, ie. \"!tech\" to return non-tech maps";
     	register();
 	}
@@ -46,45 +46,13 @@ class RS_CMD_MapList : RS_Command
         }
         else
         {
-            String tags;
-            for( int i = 1; i < argc - 1; i++)
-                tags += args.getToken( i ) + " ";
+            String tags = args.substr( args.getToken( 0 ).len() + 1 );
+            tags = tags.substr( tags.getToken( 0 ).len() + 1 );
 
-            RS_QueryMaps( @player.client, args.getToken( 0 ), tags, args.getToken( argc - 1 ).toInt() );
+            RS_QueryMaps( @player.client, args.getToken( 0 ), tags, args.getToken( 1 ).toInt() );
         }
 
         CMD_ML_TIMES[player.client.get_playerNum()] = realTime + CMD_ML_FLOODTIME;
     	return true;
-    }
-}
-
-/**
- * Callback for maplist RS_CMD_MapList
- */
-void RS_QueryMaps_Done( int status, Client @client, Json @data )
-{
-    RS_Player @player = RS_getPlayer( client );
-    if( @player is null )
-        return;
-
-    if( status == 200 )
-    {
-        Json @maps = data.getItem( "maps" );
-        int start = data.getItem( "start" ).valueint;
-        int count = data.getItem( "count" ).valueint;
-        for( int i = 0; i < count; i++ )
-        {
-            sendMessage( player, S_COLOR_ORANGE + "# " + (start + i + 1) + S_COLOR_WHITE
-                + ": " + maps.getItem( i ).getItem( "name" ).getString() + "\n" );
-        }
-    }
-    else if( @data !is null )
-    {
-        String error = data.getItem("error").getString();
-        sendErrorMessage( player, error );
-    }
-    else
-    {
-        sendErrorMessage( player, "Failed to retrieve maplist" );
     }
 }

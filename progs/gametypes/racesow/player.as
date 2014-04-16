@@ -17,16 +17,16 @@ class RS_Player
     Client @client;
 
     /**
+     * The clients playerauth
+     * @var RS_PlayerAuth
+     */
+    RS_PlayerAuth @auth;
+
+    /**
      * Player's current racing state
      * @var state
      */
     uint state;
-
-    /**
-     * The clients auth credentials
-     * @var RS_PlayerAuth
-     */
-    RS_PlayerAuth auth;
 
     /**
      * The player's inprogress or just finished race
@@ -101,16 +101,16 @@ class RS_Player
     uint privsayCount;
 
     /**
-     * Amount of time spent playing
-     * @var uint
+     * Last gametype entity touched
+     * @var Entity
      */
-    uint playTime;
+    Entity @triggerEnt;
 
     /**
-     * Number of races finished on the map
+     * Time the last entity was touched
      * @var uint
      */
-    uint races;
+    uint triggerTime;
 
     /**
      * Constructor
@@ -119,9 +119,9 @@ class RS_Player
     RS_Player( Client @client )
     {
         @this.client = @client;
+        @this.auth = @client.getAuth();
         position = RS_Position( @this );
         positionPrerace = RS_Position( @this );
-        auth = RS_PlayerAuth( @this );
         noclipWeapon = WEAP_NONE;
         state = RS_STATE_PRERACE;
         privsayTimes.resize( PRIVSAY_FLOODCOUNT );
@@ -278,26 +278,21 @@ class RS_Player
         {
             specCallback @func = @sendAward;
             execSpectators( @func, @this, "Prejump Time: " + TimeToString( race.getTime() ) );
-            sendMessage( @this, "Prejumped records are not recorded.");
+            sendErrorMessage( @this, "Prejumped records are not recorded." );
             respawnTime = realTime + 3000;
             return;
         }
 
         // Not practicing or prejumped, its a real race
+        auth.incrementRace();
         RS_Race @refRace = @getRefRace();
         uint refBest = @refRace is null ? 0 : refRace.getTime();
         uint newTime = race.getTime();
         raceReport( @race );
         respawnTime = realTime + 3000;
-        races += 1;
-        map.races += 1;
         @lastRace = @race;
 
-        // Report the race
-        if( auth.id != 0 && map.auth.id != 0 )
-            RS_ReportRace( client, auth.id, map.auth.id, race.getTime(), @race.checkpoints );
-
-        if( auth.id != 0 && ( @map.worldRecord is null || map.worldRecord.getTime() > newTime ) )
+        if( @map.worldRecord is null || map.worldRecord.getTime() > newTime )
         {
             @map.worldRecord = @race;
 
@@ -329,6 +324,7 @@ class RS_Player
         {
             // First record or New record
             @record = @race;
+            auth.reportRace( newTime, race.checkpoints );
 
             // Send record award to player and spectators
             specCallback @func = @sendAward;
@@ -418,21 +414,13 @@ class RS_Player
      */
     void Think()
     {
-        // auth check
-        auth.Think();
-
         // check maxHealth rule
         Entity @ent = client.getEnt();
         if ( ent.health > ent.maxHealth )
             ent.health -= ( frameTime * 0.001f );
 
-        // update playtime
-        // TODO: afk check incase we dont autoremove afks
-        if( client.team == TEAM_PLAYERS )
-            playTime += frameTime;
-
         // repawn check
-        if( respawnTime != 0 && realTime > respawnTime)
+        if( respawnTime != 0 && realTime > respawnTime )
             respawn();
 
         // update highest speed
@@ -583,5 +571,28 @@ class RS_Player
             ent.teleportEffect( false );
 
         return true;
+    }
+
+    /**
+     * Player touched an entity, save info for trigger checking later
+     * @param ent The touched entity
+     */
+    void triggerSet( Entity @ent )
+    {
+        @triggerEnt = @ent;
+        triggerTime = levelTime;
+    }
+
+    /**
+     * Check if a player can activate an entity
+     * @param ent     Entity touched
+     * @param timeout Time player must wait to retrigger
+     */
+    bool triggerCheck( Entity @ent, int timeout )
+    {
+        if( triggerEnt !is ent )
+            return true;
+
+        return triggerTime + timeout < int(levelTime);
     }
 }

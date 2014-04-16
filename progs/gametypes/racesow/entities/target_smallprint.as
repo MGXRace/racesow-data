@@ -1,6 +1,4 @@
 Dictionary ent_smallprint_messages;
-uint[] ent_smallprint_times( maxClients );
-const uint ENT_SMALLPRINT_TIMEOUT = 1000;
 
 void target_smallprint( Entity @ent )
 {
@@ -18,12 +16,16 @@ void target_smallprint( Entity @ent )
 
 void target_smallprint_use( Entity @ent, Entity @other, Entity @activator )
 {
-	if( @activator.client is null ||
-        ent_smallprint_times[activator.get_playerNum()] > realTime )
+    RS_Player @player = RS_getPlayer( @activator );
+    if( @player is null || (activator.svflags & SVF_NOCLIENT) == 1 || @ent.enemy is null )
         return;
+
+    // Timeout check
+    if( !player.triggerCheck( ent, int(ent.wait * 1000) ) )
+        return;
+    player.triggerSet( ent );
 
     String @message;
     ent_smallprint_messages.get( String( ent.entNum ), @message );
-    ent_smallprint_times[activator.get_playerNum()] = realTime + ENT_SMALLPRINT_TIMEOUT + uint( ent.wait );
 	G_CenterPrintMsg( activator, message );
 }

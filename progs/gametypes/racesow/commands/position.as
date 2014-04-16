@@ -8,70 +8,259 @@ class RS_CMD_Position : RS_Command
 	{
 		name = "position";
     	description = "Commands to store and load position";
-    	usage = "position <command> where command is one of :\n"
-            + "position save - Save current position\n"
-            + "position speed <speed> - Set saved position speed\n"
-            + "position load - Teleport to saved position\n"
-            + "position prerace - Set the prerace spawn point\n"
-			+ "position player <id> - Teleport to a player\n"
-			+ "position cp <id> - Teleport to a checkpoint (id order may vary)\n"
-            + "position set <x> <y> <z> <pitch> <yaw> - Teleport to specified position\n"
-            + "position store <id> <name> - Store a position for another session\n"
-            + "position restore <id> - Restore a stored position from another session\n"
-            + "position storedlist <limit> - Sends you a list of your stored positions\n";
-    	register();
-	}
+    	usage = "position <command> where command is one of:";
 
-	bool validate(RS_Player @player, String &args, int argc)
-	{
-		return true;
+        registerSubcommand( RS_CMD_PositionSave() );
+        registerSubcommand( RS_CMD_PositionLoad() );
+        registerSubcommand( RS_CMD_PositionSpeed() );
+        registerSubcommand( RS_CMD_PositionPrerace() );
+        registerSubcommand( RS_CMD_PositionPlayer() );
+        registerSubcommand( RS_CMD_PositionCp() );
+        registerSubcommand( RS_CMD_PositionSet() );
+    	register();
 	}
 
     bool execute(RS_Player @player, String &args, int argc)
     {
-        bool success;
-    	if( args.getToken( 0 ) == "save" )
-        {
-			success = player.position.save();
-            if( success )
-                sendMessage( @player, "Position saved\n" );
-            return success;
-        }
+    	if( argc == 0 )
+    	{
+    		Entity @ent = @player.client.getEnt();
+    		sendMessage( @player, "Current position:"
+    			+ " " + ent.origin.x + " " + ent.origin.y + " " + ent.origin.z 
+    			+ " " + ent.angles.x + " " + ent.angles.y + " " + ent.angles.z );
+    		return true;
+    	}
 
-		else if( args.getToken( 0 ) == "prerace" )
+    	return RS_Command::execute( @player, args, argc );
+    }
+}
+
+
+class RS_CMD_PositionSave : RS_Command
+{
+	RS_CMD_PositionSave()
+	{
+		name = "save";
+    	description = "Save the current position";
+    	usage = "position save";
+	}
+
+	bool execute(RS_Player @player, String &args, int argc)
+	{
+		bool success = player.position.save();
+        if( success )
+            sendMessage( @player, "Position saved\n" );
+        return success;
+	}
+}
+
+class RS_CMD_PositionLoad : RS_Command
+{
+	RS_CMD_PositionLoad()
+	{
+		name = "load";
+    	description = "Load the saved position";
+    	usage = "position load";
+	}
+
+	bool execute(RS_Player @player, String &args, int argc)
+	{
+		player.respawn();
+		return true;
+	}
+}
+
+class RS_CMD_PositionSpeed : RS_Command
+{
+	RS_CMD_PositionSpeed()
+	{
+		name = "speed";
+    	description = "Set the speed for the saved position";
+    	usage = "position speed <speed>\n" +
+    			"    Set the absolute speed\n" +
+    			"position speed (+|-)<speed>\n" +
+    			"    Set the speed relative to your current speed";
+	}
+
+	bool validate( RS_Player @player, String &args, int argc )
+	{
+		if( argc != 1 )
 		{
-			if( player.state != RS_STATE_PRERACE ||
-				@player.client is null ||
-				player.client.team != TEAM_PLAYERS )
-			{
-				sendMessage( @player, "Prerace postion must be set in prerace state\n");
-				return false;
-			}
+			sendErrorMessage( @player, "Invalid arguments\n");
+			sendMessage( @player, getUsage() );
+			return false;
+		}
+		return true;
+	}
 
-			if( player.getHeight() != 0 )
-			{
-				sendMessage( @player, "Prerace position must be set on solid ground\n");
-				return false;
-			}
+	bool execute(RS_Player @player, String &args, int argc)
+	{
+		return player.position.saveSpeed( args.getToken( 0 ) );
+	}
+}
 
-			if( player.client.getEnt().velocity.length() > .01 )
-			{
-				sendMessage( @player, "Prerace position must be set while standing still\n");
-				return false;
-			}
+class RS_CMD_PositionPrerace : RS_Command
+{
+	RS_CMD_PositionPrerace()
+	{
+		name = "prerace";
+    	description = "Set the prerace respawn position and inventory";
+    	usage = "position prerace";
+	}
 
-			success = player.positionPrerace.save();
-            if( success )
-                sendMessage( @player, "Position prerace saved\n" );
-            return success;
+	bool validate( RS_Player @player, String &args, int argc )
+	{
+		if( player.state != RS_STATE_PRERACE ||
+			@player.client is null ||
+			player.client.team != TEAM_PLAYERS )
+		{
+			sendMessage( @player, "Prerace postion must be set in prerace state\n");
+			return false;
 		}
 
-		else if( args.getToken( 0 ) == "load" )
-			return player.position.load();
+		if( player.getHeight() != 0 )
+		{
+			sendMessage( @player, "Prerace position must be set on solid ground\n");
+			return false;
+		}
 
-		else if( args.getToken( 0 ) == "speed" )
-			return player.position.saveSpeed( args.getToken( 1 ) );
+		if( player.client.getEnt().velocity.length() > .01 )
+		{
+			sendMessage( @player, "Prerace position must be set while standing still\n");
+			return false;
+		}
 
-		return false;
-    }
+		return true;
+	}
+
+	bool execute(RS_Player @player, String &args, int argc)
+	{
+		bool success = player.positionPrerace.save();
+        if( success )
+            sendMessage( @player, "Position prerace saved\n" );
+        return success;
+	}
+}
+
+class RS_CMD_PositionPlayer : RS_Command
+{
+	RS_CMD_PositionPlayer()
+	{
+		name = "player";
+    	description = "Teleport to a particular player";
+    	usage = "position player (playerName|playerNum)";
+	}
+
+	bool validate( RS_Player @player, String &args, int argc )
+	{
+		if( player.client.team == TEAM_PLAYERS && player.state != RS_STATE_PRACTICE )
+		{
+			sendMessage( @player, "Position player may only be used in practicemode\n" );
+			return false;				
+		}
+
+		if( argc != 1 )
+		{
+			sendErrorMessage( @player, "Invalid arguments\n");
+			sendMessage( @player, getUsage() );
+			return false;
+		}
+
+		return true;
+	}
+
+	bool execute(RS_Player @player, String &args, int argc)
+	{
+		RS_Player @target = @RS_getPlayerFromArgs( args.getToken( 0 ) );
+		if( @target is null || @target.client is null )
+		{
+			sendErrorMessage( @player, "Matching player for " + args.getToken( 1 ) + " not found." );
+			return false;
+		}
+
+		Entity @ent = @target.client.getEnt();
+		return player.teleport( ent.origin, ent.angles, false, false, false );
+	}
+}
+
+class RS_CMD_PositionCp : RS_Command
+{
+	RS_CMD_PositionCp()
+	{
+		name = "cp";
+    	description = "Teleport to a particular checkpoint (id order may vary)";
+    	usage = "position cp <id>";
+	}
+
+	bool validate( RS_Player @player, String &args, int argc )
+	{
+		if( player.client.team == TEAM_PLAYERS && player.state != RS_STATE_PRACTICE )
+		{
+			sendMessage( @player, "Position cp may only be used in practicemode\n" );
+			return false;				
+		}
+
+		if( argc != 1 )
+		{
+			sendErrorMessage( @player, "Invalid arguments\n");
+			sendMessage( @player, getUsage() );
+			return false;
+		}
+
+		return true;
+	}
+
+	bool execute(RS_Player @player, String &args, int argc)
+	{
+        int index = args.getToken( 0 ).toInt();
+        for( int i = 0; i <= numEntities; i++ )
+        {
+            Entity @ent = @G_GetEntity( i );
+            if( @ent != null && ent.count == index - 1 && ent.get_classname() == "target_checkpoint" )
+                return player.teleport( ent.origin, ent.angles, false, false, false );
+        }
+
+        sendErrorMessage( @player, "Undefined checkpoint: " + index );
+        return true;
+	}
+}
+
+class RS_CMD_PositionSet : RS_Command
+{
+	RS_CMD_PositionSet()
+	{
+		name = "set";
+    	description = "Teleport to a particular location";
+    	usage = "position player <x> <y> <z> <pitch> <yaw>";
+	}
+
+	bool validate( RS_Player @player, String &args, int argc )
+	{
+		if( player.client.team == TEAM_PLAYERS && player.state != RS_STATE_PRACTICE )
+		{
+			sendMessage( @player, "Position set may only be used in practicemode\n" );
+			return false;				
+		}
+
+		if( argc != 5 )
+		{
+			sendErrorMessage( @player, "Invalid arguments\n");
+			sendMessage( @player, getUsage() );
+			return false;
+		}
+
+		return true;
+	}
+
+	bool execute(RS_Player @player, String &args, int argc)
+	{
+		Vec3 origin, angles;
+		origin.x = args.getToken( 1 ).toFloat();
+		origin.y = args.getToken( 2 ).toFloat();
+		origin.z = args.getToken( 3 ).toFloat();
+		angles.x = args.getToken( 4 ).toFloat();
+		angles.y = args.getToken( 5 ).toFloat();
+
+		return player.teleport( origin, angles, false, false, false );
+	}
 }

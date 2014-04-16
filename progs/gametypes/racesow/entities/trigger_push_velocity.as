@@ -1,6 +1,4 @@
 Dictionary ent_pushvelocity_values;
-uint[] ent_pushvelocity_times( maxClients );
-const uint ENT_PUSHVELOCITY_TIMEOUT = 1000;
 
 /**
  * trigger_push_velocity
@@ -54,13 +52,14 @@ void trigger_push_velocity_touch( Entity @ent, Entity @other, const Vec3 planeNo
 	Vec3 dir, velocity;
 	// if(( ent.spawnFlags & 1 ) == 0 )
 	velocity = other.velocity;
-	if( velocity.length() == 0 ||
-		other.type != ET_PLAYER ||
-		other.moveType != MOVETYPE_PLAYER ||
-		ent_pushvelocity_times[other.get_playerNum()] > realTime )
+	if( velocity.length() == 0 || other.type != ET_PLAYER || other.moveType != MOVETYPE_PLAYER )
 		return;
 
-	ent_pushvelocity_times[other.get_playerNum()] = realTime + ENT_PUSHVELOCITY_TIMEOUT + uint( ent.wait );
+	// Timeout check
+	RS_Player @player = @RS_getPlayer( other );
+	if( @player is null || !player.triggerCheck( ent, int(ent.wait * 1000) ) )
+		return;
+	player.triggerSet( ent );
 
 	String @speedString;
 	ent_pushvelocity_values.get( String( ent.entNum ) + "_speed", @speedString );

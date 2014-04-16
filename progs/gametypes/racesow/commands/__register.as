@@ -17,12 +17,6 @@ class RS_CMD_Register : RS_Command
         if( argc != 3 )
             return false;
 
-        if( player.auth.playerStatus == AUTH_STATUS_PENDING )
-        {
-            sendErrorMessage( @player, "Please wait for your current auth query to finish" );
-            return false;
-        }
-
         return true;
 	}
 
@@ -31,7 +25,7 @@ class RS_CMD_Register : RS_Command
     	if( @player.client is null )
     		return false;
 
-        player.auth.registerPlayer( args.getToken( 0 ), args.getToken( 1 ), args.getToken( 2 ) );
+        player.auth.register( args.getToken( 0 ), args.getToken( 1 ), args.getToken( 2 ) );
         return true;
     }
 }

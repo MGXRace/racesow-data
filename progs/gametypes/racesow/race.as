@@ -66,23 +66,6 @@ class RS_Race
     }
 
     /**
-     * Construct from a Json Server response
-     * TODO: link to response definition / format spec
-     * @param data Json object representing the race
-     */
-    RS_Race( Json @data )
-    {
-        checkpoints.resize( numCheckpoints );
-
-        // TODO: Handle malformed responses
-        Json @node = data.getItem("time");
-        endTime = node.valueint;
-
-        @node = data.getItem("checkpoints");
-        parseCheckpoints( node );
-    }
-
-    /**
      * Constructor
      * Constructing with a player starts the race automatically
      * @param RS_Player player The owner of the race
@@ -96,6 +79,19 @@ class RS_Race
         prejumped = RS_QueryPjState( player.client.get_playerNum() );
 
         report = S_COLOR_ORANGE + "Start speed: " + S_COLOR_WHITE + player.getSpeed() + "\n";
+    }
+
+    /**
+     * Construct a race from a string of the form
+     * "time cp1 cp2 cp3... cpN"
+     * @param args The argstring
+     */
+    RS_Race( String &args )
+    {
+        endTime = args.getToken( 0 ).toInt();
+        checkpoints.resize( numCheckpoints );
+        for( int i = 0; i < numCheckpoints; i++ )
+            checkpoints[i] = args.getToken( i + 1 ).toInt();
     }
 
     /**
@@ -152,28 +148,5 @@ class RS_Race
             return endTime - startTime;
 
         return player.client.uCmdTimeStamp - startTime;
-    }
-
-    /**
-     * Parse checkpoints passed as Json data
-     * @param Json cpNode Object with cp data
-     * @return void
-     */
-    void parseCheckpoints( Json @cpNode )
-    {
-        if( cpNode is null || cpNode.type != cJSON_Object )
-            return;
-
-        Json @node = cpNode.child;
-        while( @node !is null )
-        {
-            int num = node.getName().toInt();
-            uint time = uint(node.valueint);
-
-            if( num < numCheckpoints )
-                checkpoints[num] = time;
-
-            @node = @node.next;
-        }
     }
 }

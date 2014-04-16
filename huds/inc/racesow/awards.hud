@@ -1,7 +1,7 @@
 setScale #DEFAULTSCALE
-setCursor 400, 80
+setCursor 400, 130
 setFontFamily "Droid Sans"
-setFontSize 22
+setFontSize 18
 setAlign #CENTER, #TOP
-setColor 1, 1, 1, 1
+setColor 1, 1, 1, 0.75
 drawAwards

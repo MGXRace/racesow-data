@@ -11,6 +11,7 @@ if %TIME_SELF != #NOTSET
 			setAlign #CENTER, #BOTTOM
 			drawstring "Start speed:"
 			setAlign #CENTER, #TOP
+			setFontFamily "Virtue"
 			setFontSize 14
 			setColor 0, 0, 0, 1
 			moveCursor -1, -1

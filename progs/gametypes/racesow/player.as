@@ -219,7 +219,7 @@ class RS_Player
 
             if( tr.doTrace( ent.origin, mins, maxs, ent.origin, 0, contentMask ) )
             {
-                sendErrorMessage( @this, "Can't switch noclip back when in something solid.\n" );
+                sendErrorMessage( @this, "Can't switch noclip back when in something solid." );
                 return false;
             }
 

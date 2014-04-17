@@ -27,7 +27,7 @@ class RS_CMD_Position : RS_Command
     		Entity @ent = @player.client.getEnt();
     		sendMessage( @player, "Current position:"
     			+ " " + ent.origin.x + " " + ent.origin.y + " " + ent.origin.z 
-    			+ " " + ent.angles.x + " " + ent.angles.y + " " + ent.angles.z );
+    			+ " " + ent.angles.x + " " + ent.angles.y + " " + ent.angles.z + "\n" );
     		return true;
     	}
 

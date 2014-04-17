@@ -86,7 +86,7 @@ class RS_CMD_PositionSpeed : RS_Command
 	{
 		if( argc != 1 )
 		{
-			sendErrorMessage( @player, "Invalid arguments\n");
+			sendErrorMessage( @player, "Invalid arguments");
 			sendMessage( @player, getUsage() );
 			return false;
 		}
@@ -114,19 +114,19 @@ class RS_CMD_PositionPrerace : RS_Command
 			@player.client is null ||
 			player.client.team != TEAM_PLAYERS )
 		{
-			sendMessage( @player, "Prerace postion must be set in prerace state\n");
+			sendErrorMessage( @player, "Prerace postion must be set in prerace state");
 			return false;
 		}
 
 		if( player.getHeight() != 0 )
 		{
-			sendMessage( @player, "Prerace position must be set on solid ground\n");
+			sendErrorMessage( @player, "Prerace position must be set on solid ground");
 			return false;
 		}
 
 		if( player.client.getEnt().velocity.length() > .01 )
 		{
-			sendMessage( @player, "Prerace position must be set while standing still\n");
+			sendErrorMessage( @player, "Prerace position must be set while standing still");
 			return false;
 		}
 
@@ -161,7 +161,7 @@ class RS_CMD_PositionPlayer : RS_Command
 
 		if( argc != 1 )
 		{
-			sendErrorMessage( @player, "Invalid arguments\n");
+			sendErrorMessage( @player, "Invalid arguments");
 			sendMessage( @player, getUsage() );
 			return false;
 		}
@@ -202,7 +202,7 @@ class RS_CMD_PositionCp : RS_Command
 
 		if( argc != 1 )
 		{
-			sendErrorMessage( @player, "Invalid arguments\n");
+			sendErrorMessage( @player, "Invalid arguments");
 			sendMessage( @player, getUsage() );
 			return false;
 		}
@@ -244,7 +244,7 @@ class RS_CMD_PositionSet : RS_Command
 
 		if( argc != 5 )
 		{
-			sendErrorMessage( @player, "Invalid arguments\n");
+			sendErrorMessage( @player, "Invalid arguments");
 			sendMessage( @player, getUsage() );
 			return false;
 		}

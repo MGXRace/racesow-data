@@ -66,7 +66,7 @@ class RS_Gametype
         gametype.mathAbortDisabled = true;
         gametype.shootingDisabled = false;
         gametype.infiniteAmmo = true;
-        gametype.canForceModels = true;
+        gametype.canForceModels = false;
         gametype.canShowMinimap = false;
         gametype.teamOnlyMinimap = true;
 

@@ -110,6 +110,10 @@ class RS_CMD_PositionPrerace : RS_Command
 
 	bool validate( RS_Player @player, String &args, int argc )
 	{
+		// Always let the player clear their prerace position
+		if( args.getToken( 0 ) == "clear" )
+			return true;
+
 		if( player.state != RS_STATE_PRERACE ||
 			@player.client is null ||
 			player.client.team != TEAM_PLAYERS )
@@ -135,6 +139,13 @@ class RS_CMD_PositionPrerace : RS_Command
 
 	bool execute(RS_Player @player, String &args, int argc)
 	{
+		if( args.getToken( 0 ) == "clear" )
+		{
+			player.positionPrerace.clear();
+			sendMessage( @player, "Position prerace cleared\n" );
+			return true;
+		}
+
 		bool success = player.positionPrerace.save();
         if( success )
             sendMessage( @player, "Position prerace saved\n" );

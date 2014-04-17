@@ -146,4 +146,12 @@ class RS_Position
 
 		return true;
 	}
+
+	/**
+	 * Clear the currently saved position
+	 */
+	void clear()
+	{
+		saved = false;
+	}
 }

@@ -332,7 +332,7 @@ class RS_Player
     void cancelRace()
     {
         // If race was finished, stopRace should have reported it
-        if( @race !is null && race.endTime != 0 )
+        if( @race !is null && race.endTime == 0 && state != RS_STATE_PRACTICE )
             raceReport( @race );
         @race = null;
     }
@@ -358,7 +358,7 @@ class RS_Player
         if( race.endTime == 0 ) // race wasn't finished
             return;
 
-        sendMessage( @this, S_COLOR_WHITE + "Race finished: " + TimeToString( newTime )
+        sendMessage( @this, S_COLOR_ORANGE + "Race finished: " + S_COLOR_WHITE + TimeToString( newTime )
                 + S_COLOR_ORANGE + " Speed: " + S_COLOR_WHITE + race.endSpeed // finish speed
                 + S_COLOR_ORANGE + " Personal: " + S_COLOR_WHITE + diffString(personalBest, newTime) // personal best
                 + S_COLOR_ORANGE + " Server: " + S_COLOR_WHITE + diffString(refBest, newTime) // server best

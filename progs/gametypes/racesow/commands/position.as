@@ -128,7 +128,7 @@ class RS_CMD_PositionPrerace : RS_Command
 			return false;
 		}
 
-		if( player.client.getEnt().velocity.length() > .01 )
+		if( player.client.getEnt().velocity.length() > 50 )
 		{
 			sendErrorMessage( @player, "Prerace position must be set while standing still");
 			return false;

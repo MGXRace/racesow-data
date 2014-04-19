@@ -266,11 +266,11 @@ class RS_CMD_PositionSet : RS_Command
 	bool execute(RS_Player @player, String &args, int argc)
 	{
 		Vec3 origin, angles;
-		origin.x = args.getToken( 1 ).toFloat();
-		origin.y = args.getToken( 2 ).toFloat();
-		origin.z = args.getToken( 3 ).toFloat();
-		angles.x = args.getToken( 4 ).toFloat();
-		angles.y = args.getToken( 5 ).toFloat();
+		origin.x = args.getToken( 0 ).toFloat();
+		origin.y = args.getToken( 1 ).toFloat();
+		origin.z = args.getToken( 2 ).toFloat();
+		angles.x = args.getToken( 3 ).toFloat();
+		angles.y = args.getToken( 4 ).toFloat();
 
 		return player.teleport( origin, angles, false, false, false );
 	}

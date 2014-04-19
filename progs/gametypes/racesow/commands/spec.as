@@ -5,6 +5,7 @@ class RS_CMD_Spec : RS_Command
         name = "spec";
         description = "Move to spectators";
         usage = "spec";
+        register();
     }
 
     bool execute(RS_Player @player, String &args, int argc)

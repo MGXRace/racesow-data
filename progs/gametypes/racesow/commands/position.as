@@ -231,7 +231,7 @@ class RS_CMD_PositionSet : RS_Command
 	{
 		name = "set";
     	description = "Teleport to a particular location";
-    	usage = "position player <x> <y> <z> <pitch> <yaw>";
+    	usage = "position set <x> <y> <z> <pitch> <yaw>";
 	}
 
 	bool validate( RS_Player @player, String &args, int argc )

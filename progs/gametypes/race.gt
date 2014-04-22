@@ -40,6 +40,7 @@ racesow/commands/whoisgod.as;
 racesow/commands/weapondefs.as;
 racesow/commands/give.as;
 racesow/commands/top.as;
+racesow/commands/topold.as;
 
 racesow/utils.as;
 racesow/gametype.as;

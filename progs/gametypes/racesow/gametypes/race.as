@@ -49,6 +49,7 @@ class RS_GT_Race : RS_Gametype
         G_ConfigString( CS_SCB_PLAYERTAB_TITLES, "Name Clan Time Speed Ping State" );
 
         RS_CMD_Top cmd_top;
+        RS_CMD_TopOld cmd_topold;
         RS_InitCommands();
     }
 

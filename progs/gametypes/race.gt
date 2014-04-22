@@ -24,8 +24,6 @@ racesow/entities/target_init.as;
 
 racesow/commands/base.as;
 racesow/commands/admin.as;
-racesow/commands/__login.as;
-racesow/commands/__register.as;
 racesow/commands/cancelvote.as;
 racesow/commands/racerestart.as;
 racesow/commands/help.as;

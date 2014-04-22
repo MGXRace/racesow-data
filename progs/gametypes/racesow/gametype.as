@@ -89,6 +89,7 @@ class RS_Gametype
         RS_CMD_Machinegun cmd_machinegun;
         RS_CMD_NoClip cmd_noclip;
         RS_CMD_Privsay cmd_privsay;
+        RS_CMD_ProtectedNick cmd_protectednick;
         RS_CMD_MapName cmd_mapname;
         RS_CMD_Spec cmd_spec;
         RS_CMD_WhoIsGod cmd_whoisgod;

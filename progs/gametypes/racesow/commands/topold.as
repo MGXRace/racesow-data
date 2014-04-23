@@ -38,7 +38,7 @@ class RS_CMD_TopOld : RS_Command
         if( argc != 2 )
             RS_QueryTop( @player.client, null, 30, true );
         else
-            RS_QueryTopOld( @player.client, args.getToken( 0 ), args.getToken( 1 ).toInt(), true );
+            RS_QueryTop( @player.client, args.getToken( 0 ), args.getToken( 1 ).toInt(), true );
 
         CMD_TOPOLD_TIMES[player.client.get_playerNum()] = realTime + CMD_TOPOLD_FLOODTIME;
 		return true;

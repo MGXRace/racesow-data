@@ -390,8 +390,9 @@ class RS_Player
             execSpectators( @func, @this, S_COLOR_YELLOW + "#" + ( cpNum + 1 ) + " checkpoint personal record!" );
 
         @func = @sendAward;
-        String message = "Current: " + TimeToString( newTime ) + ( refBest == 0 ? "" : ( "\n" + diffString( refBest, newTime ) ) );
-        execSpectators( @func, @this, message );
+        execSpectators( @func, @this, "Current: " + TimeToString( newTime ) );
+        if( refBest != 0 )
+            execSpectators( @func, @this, diffString( refBest, newTime ) );
         return true;
     }
 

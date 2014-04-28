@@ -421,11 +421,11 @@ class RS_Player
         client.setHUDStat( STAT_RACE_STATE, state );
 
         if( @record !is null )
-            client.setHUDStat( STAT_TIME_BEST, bestTime() / 10 );
+            client.setLongHUDStat( STAT_TIME_BEST, bestTime() / 10 );
 
         if( @race !is null )
         {
-            client.setHUDStat( STAT_TIME_SELF, race.getTime() / 10 );
+            client.setLongHUDStat( STAT_TIME_SELF, race.getTime() / 10 );
             client.setHUDStat( STAT_START_SPEED, race.startSpeed );
             client.setHUDStat( STAT_PREJUMP_STATE, race.prejumped ? 1 : 0 );
         }
@@ -433,10 +433,10 @@ class RS_Player
             client.setHUDStat( STAT_PREJUMP_STATE, RS_QueryPjState( client.get_playerNum() ) ? 1 : 0 );
 
         if( @map.serverRecord !is null )
-            client.setHUDStat( STAT_TIME_RECORD, map.serverRecord.getTime() / 10 );
+            client.setLongHUDStat( STAT_TIME_RECORD, map.serverRecord.getTime() / 10 );
 
         if( @map.worldRecord !is null )
-            client.setHUDStat( STAT_TIME_ALPHA, map.worldRecord.getTime() / 10 );
+            client.setLongHUDStat( STAT_TIME_ALPHA, map.worldRecord.getTime() / 10 );
     }
 
     /**

@@ -16,7 +16,7 @@ String diffString( uint oldTime, uint newTime )
 {
     if ( oldTime == 0 )
     {
-        return "--:--:---";
+        return "--:--.--";
     }
     else if ( oldTime < newTime )
     {
@@ -48,6 +48,7 @@ String TimeToString( uint time )
     milli -= min * 60000;
     sec = milli / 1000;
     milli -= sec * 1000;
+    milli /= 10;
 
     if ( min == 0 )
         minsString = "00";
@@ -64,9 +65,7 @@ String TimeToString( uint time )
         secsString = sec;
 
     if ( milli == 0 )
-        millString = "000";
-    else if ( milli < 10 )
-        millString = "00" + milli;
+        millString = "00";
     else if ( milli < 100 )
         millString = "0" + milli;
     else

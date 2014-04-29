@@ -293,23 +293,30 @@ class RS_Player
         @lastRace = @race;
 
         // World Record - Beats record loaded from database
-        if( @map.worldRecord is null || map.worldRecord.getTime() > newTime )
+        if( auth.id > 0 )
         {
-            @map.worldRecord = @race;
-            execSpectators( @func, @this, S_COLOR_GREEN + "New World record!" );
-            G_PrintMsg(null, client.name + " "
-                             + S_COLOR_YELLOW + "made a new world record: "
-                             + TimeToString( newTime ) + "\n");
-        }
+            if( @map.worldRecord is null || map.worldRecord.getTime() > newTime )
+            {
+                @map.worldRecord = @race;
+                execSpectators( @func, @this, S_COLOR_GREEN + "New World record!" );
+                G_PrintMsg(null, client.name + " "
+                                 + S_COLOR_YELLOW + "made a new world record: "
+                                 + TimeToString( newTime ) + "\n");
+            }
 
-        // Server record
-        if( @map.serverRecord is null || map.serverRecord.getTime() > newTime )
+            // Server record
+            if( @map.serverRecord is null || map.serverRecord.getTime() > newTime )
+            {
+                @map.serverRecord = @race;
+                execSpectators( @func, @this, S_COLOR_GREEN + "New server record!" );
+                G_PrintMsg(null, client.name + " "
+                                 + S_COLOR_YELLOW + "made a new server record: "
+                                 + TimeToString( newTime ) + "\n");
+            }
+        }
+        else
         {
-            @map.serverRecord = @race;
-            execSpectators( @func, @this, S_COLOR_GREEN + "New server record!" );
-            G_PrintMsg(null, client.name + " "
-                             + S_COLOR_YELLOW + "made a new server record: "
-                             + TimeToString( newTime ) + "\n");
+            sendErrorMessage( @this, "You are not logged in, race was not recorded." );
         }
 
         // Personal record

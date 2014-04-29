@@ -320,8 +320,9 @@ class RS_Player
             execSpectators( @func, @this, "Personal record!" );
         }
 
-        String message = "Time: " + TimeToString( newTime ) + ( refBest == 0 ? "" : ( "\n" + diffString( refBest, newTime ) ) );
-        execSpectators( @func, @this, message );
+        execSpectators( @func, @this, "Time: " + TimeToString( newTime ) );
+        if( refBest != 0 )
+            execSpectators( @func, @this, diffString( refBest, newTime ) );
     }
 
     /**

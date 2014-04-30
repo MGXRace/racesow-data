@@ -78,7 +78,8 @@ class RS_Race
         startSpeed = player.getSpeed();
         prejumped = RS_QueryPjState( player.client.get_playerNum() );
 
-        report = S_COLOR_ORANGE + "Start speed: " + S_COLOR_WHITE + player.getSpeed() + "\n";
+        report = ( prejumped ? S_COLOR_RED + "PREJUMPED " : "" ) + S_COLOR_ORANGE 
+            + "Start speed: " + S_COLOR_WHITE + player.getSpeed() + "\n";
     }
 
     /**
@@ -126,15 +127,39 @@ class RS_Race
         checkpoints[cpNum] = player.client.uCmdTimeStamp - startTime;
 
         RS_Race @refRace = player.getRefRace();
-        uint newTime = checkpoints[cpNum];
-        uint personalBest = @player.record is null ? 0 : player.record.checkpoints[cpNum];
-        uint refBest = @refRace is null ? 0 : refRace.checkpoints[cpNum];
+        int newTime = checkpoints[cpNum];
+        int personalBest = @player.record is null ? 0 : player.record.checkpoints[cpNum];
+        int refBest = @refRace is null ? 0 : refRace.checkpoints[cpNum];
+        if( player.state == RS_STATE_PRACTICE )
+        {
+            newTime -= lastCheckpoint( cpNum );
+            refBest -= @refRace is null ? 0 : refRace.lastCheckpoint( cpNum );
+            personalBest -= @player.record is null ? 0 : player.record.lastCheckpoint( cpNum );
+        }
+
         report += S_COLOR_ORANGE + "#" + ( cpNum + 1 ) + ": "
                 + S_COLOR_WHITE + TimeToString( newTime )
                 + S_COLOR_ORANGE + " Speed: " + S_COLOR_WHITE + player.getSpeed()
                 + S_COLOR_ORANGE + " Personal: " + S_COLOR_WHITE + diffString( personalBest, newTime )
                 + S_COLOR_ORANGE + " Server: " + S_COLOR_WHITE + diffString( refBest, newTime ) + "\n";
         return true;
+    }
+
+    /**
+     * lastCheckpoint
+     * Get the first non-zero checkpoint time before cpNum
+     * @param cpNum Number of checkpoint to limit by
+     * @return  The time of the checkpoint
+     */
+    int lastCheckpoint( int cpNum )
+    {
+        int i;
+        for( i = cpNum - 1; i >= 0; i-- )
+        {
+            if( checkpoints[i] > 0 )
+                return checkpoints[i];
+        }
+        return 0;
     }
 
     /**

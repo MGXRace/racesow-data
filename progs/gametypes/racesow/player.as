@@ -268,9 +268,18 @@ class RS_Player
 
         specCallback @func = @sendAward;
         race.stopRace();
+        raceReport( @race );
+        RS_Race @refRace = @getRefRace();
+        uint refBest = @refRace is null ? 0 : refRace.getTime();
+        uint newTime = race.getTime();
 
         if( state == RS_STATE_PRACTICE )
         {
+            newTime -= race.lastCheckpoint( numCheckpoints );
+            refBest -= @refRace is null ? 0 : refRace.lastCheckpoint( numCheckpoints );
+            execSpectators( @func, @this, "Time: " + TimeToString( newTime ) );
+            if( refBest != 0 )
+                execSpectators( @func, @this, diffString( refBest, newTime ) );
             sendAward( @this, S_COLOR_CYAN + "You completed the map in practicemode, no time was set");
             return;
         }
@@ -285,10 +294,6 @@ class RS_Player
 
         // Not practicing or prejumped, its a real race
         auth.incrementRace();
-        RS_Race @refRace = @getRefRace();
-        uint refBest = @refRace is null ? 0 : refRace.getTime();
-        uint newTime = race.getTime();
-        raceReport( @race );
         respawnTime = realTime + 3000;
         @lastRace = @race;
 
@@ -340,7 +345,7 @@ class RS_Player
     void cancelRace()
     {
         // If race was finished, stopRace should have reported it
-        if( @race !is null && race.endTime == 0 && state != RS_STATE_PRACTICE )
+        if( @race !is null && race.endTime == 0 )
             raceReport( @race );
         @race = null;
     }
@@ -357,9 +362,16 @@ class RS_Player
             return;
 
         RS_Race @refRace = @getRefRace();
-        uint newTime = race.getTime();
-        uint personalBest = @record is null ? 0 : record.getTime();
-        uint refBest = @refRace is null ? 0 : refRace.getTime();
+        int newTime = race.getTime();
+        int personalBest = @record is null ? 0 : record.getTime();
+        int refBest = @refRace is null ? 0 : refRace.getTime();
+        if( state == RS_STATE_PRACTICE )
+        {
+            newTime -= race.lastCheckpoint( numCheckpoints );
+            refBest -= @refRace is null ? 0 : refRace.lastCheckpoint( numCheckpoints );
+            personalBest -= @record is null ? 0 : record.lastCheckpoint( numCheckpoints );
+        }
+
 
         sendMessage( @this, race.report );
 
@@ -386,19 +398,29 @@ class RS_Player
 
         // Make the checkpoint message
         RS_Race @refRace = getRefRace();
-        uint newTime = race.checkpoints[cpNum];
-        uint refBest = @refRace is null ? 0 : refRace.checkpoints[cpNum];
-        uint personalBest = @record is null ? 0 : record.checkpoints[cpNum];
+        int newTime = race.checkpoints[cpNum];
+        int refBest = @refRace is null ? 0 : refRace.checkpoints[cpNum];
+        int personalBest = @record is null ? 0 : record.checkpoints[cpNum];
+        String cpmsg = "Checkpoint";
         specCallback @func = @sendAward;
 
+        // Use sector diffs in practicemode
+        if( state == RS_STATE_PRACTICE )
+        {
+            newTime -= race.lastCheckpoint( cpNum );
+            refBest -= @refRace is null ? 0 : refRace.lastCheckpoint( cpNum );
+            personalBest -= @record is null ? 0 : record.lastCheckpoint( cpNum );
+            cpmsg = "Sector";
+        }
+
         if( newTime < refBest || refBest == 0 )
-            execSpectators( @func, @this, S_COLOR_GREEN + "#" + ( cpNum + 1 ) + " checkpoint record!" );
+            execSpectators( @func, @this, S_COLOR_GREEN + "#" + ( cpNum + 1 ) + " " + cpmsg + " record!" );
 
         else if( newTime < personalBest || personalBest == 0 )
-            execSpectators( @func, @this, S_COLOR_YELLOW + "#" + ( cpNum + 1 ) + " checkpoint personal record!" );
+            execSpectators( @func, @this, S_COLOR_YELLOW + "#" + ( cpNum + 1 ) + " " + cpmsg + " personal record!" );
 
         @func = @sendAward;
-        execSpectators( @func, @this, "Current: " + TimeToString( newTime ) );
+        execSpectators( @func, @this, cpmsg + ": " + TimeToString( newTime ) );
         if( refBest != 0 )
             execSpectators( @func, @this, diffString( refBest, newTime ) );
         return true;

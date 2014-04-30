@@ -203,9 +203,6 @@ class RS_Gametype
 
     void PlayerRespawn( Entity @ent, int old_team, int new_team )
     {
-        RS_Player @player = RS_getPlayer( @ent );
-        if( @player !is null )
-            player.cancelRace();
     }
 
     /**

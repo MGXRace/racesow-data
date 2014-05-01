@@ -34,6 +34,7 @@ racesow/commands/noclip.as;
 racesow/commands/privsay.as;
 racesow/commands/mapname.as;
 racesow/commands/maplist.as;
+racesow/commands/oneliner.as;
 racesow/commands/protectednick.as;
 racesow/commands/spec.as;
 racesow/commands/whoisgod.as;

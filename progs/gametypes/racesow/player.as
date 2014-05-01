@@ -113,6 +113,12 @@ class RS_Player
     uint triggerTime;
 
     /**
+     * True if the player can set a oneliner
+     * @var bool
+     */
+    bool oneliner;
+
+    /**
      * Constructor
      * @param Client client The client to associate with the player
      */
@@ -124,6 +130,7 @@ class RS_Player
         positionPrerace = RS_Position( @this );
         noclipWeapon = WEAP_NONE;
         state = RS_STATE_PRERACE;
+        oneliner = false;
         privsayTimes.resize( PRIVSAY_FLOODCOUNT );
     }
 
@@ -307,6 +314,17 @@ class RS_Player
                 G_PrintMsg(null, client.name + " "
                                  + S_COLOR_YELLOW + "made a new world record: "
                                  + TimeToString( newTime ) + "\n");
+                sendMessage( @this, "Assert your dominance by leaving a oneliner message on the map!\n" );
+                RS_Player @other;
+                for( int i = 0; i < maxClients; i++ )
+                {
+                    @other = @players[i];
+                    if( @other is null || @other.client is null )
+                        continue;
+
+                    other.oneliner = false;
+                }
+                oneliner = true;
             }
 
             // Server record

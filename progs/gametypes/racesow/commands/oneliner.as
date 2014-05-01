@@ -23,7 +23,7 @@ class RS_CMD_Oneliner : RS_Command
             return false;
         }
 
-        if( argc != 1 )
+        if( argc < 1 )
         {
             sendErrorMessage( @player, "Please provide a message" );
             return false;

@@ -110,6 +110,10 @@
 				<panel class="dropshadow">
 					<optionsform id="hud-options-form" onsubmit="$OptionsForm_OnSubmit">
 
+						<div class="title">FOV</div>
+						<input cvar="fov" type="text" class="short text" value="100" realtime="1"/>
+						<br/>
+						
 						<div class="title">Speed meter</div>
 						<select cvar="cg_showSpeed" realtime="1">
 							<option value="1" selected>new style</option>
@@ -143,7 +147,7 @@
 						</select>
 						<br/>
 						
-						<div class="title">Show FPS counter</div>
+						<div class="title">Show FPS</div>
 						<input cvar="cg_showFps" type="checkbox" realtime="1"/>
 						<br/>
 
@@ -152,6 +156,67 @@
 						<br/>
 				
 					
+						<br/>
+						<hr class="nicehr"/>
+
+						<div class="title">Crosshair</div>
+						<dataspinner id="crosshair" cvar="cg_crosshair" source="crosshair.list" fields="image" valuefield="index" formatter="crosshair" realtime="1"/>
+						<br/>
+
+						<div class="title">Show gun model</div>
+						<input cvar="cg_gun" type="checkbox" realtime="1"/>
+						<br/>
+
+						<div class="title">Gun alpha</div>
+						<input cvar="cg_gun_alpha" class="slider" type="range" min="0" max="1" step="0.1" value="0" realtime="1"/>
+						<br/>
+
+						<div class="title">Weapon handedness</div>
+						<select cvar="hand" realtime="1">
+							<option value="0" selected>right</option>
+							<option value="1">left</option>
+							<option value="2">center</option>
+						</select>
+						<br/>
+
+						<div class="title">Autoswitch to picked up weapons</div>
+						<select cvar="cg_weaponAutoswitch" realtime="1">
+							<option value="0">never</option>
+							<option value="1">if you only have gunblade</option>
+							<option value="2" selected>if stronger than your strongest</option>
+							<option value="3">if not in inventory</option>
+						</select>
+						<br/>
+					</optionsform>
+				</panel>
+
+				<tab class="side-tab">Misc</tab>		
+				<panel class="dropshadow">
+					<optionsform id="misc-options-form" onsubmit="$OptionsForm_OnSubmit">
+						<div class="title">Demos to keep per map</div>
+						<select cvar="rs_autoRaceDemo" realtime="1">
+							<option value="1" selected>only your best run</option>
+							<option value="3">your 3 best runs</option>
+							<option value="5">your 5 best runs</option>
+							<option value="-1">all personal bests</option>
+							<option value="-2">all finished runs</option>
+							<option value="0">none</option>
+						</select>
+						<br/>
+
+						<div class="title">Race reports in console</div>
+						<input cvar="rs_raceReport" type="checkbox" realtime="1"/>
+						<br/>
+
+
+						<div class="title">Checkpoint reference setting</div>
+						<select cvar="rs_diffref" realtime="1">
+							<option value="personal" selected>Personal Best</option>
+							<option value="server">Server Best</option>
+							<option value="world">MGX record</option>
+						</select>
+						<br/>
+
 						<br/>
 						<hr class="nicehr"/>
 						<br/>
@@ -168,48 +233,15 @@
 						<input cvar="cg_raceGhostsVolume" class="slider" type="range" min="0" max="1" step="0.1" value="0.3" realtime="1"/>
 						<br/>	
 
-						<br/>
-						<hr class="nicehr"/>
-						<br/>	
-
-						
-						<div class="title">FOV</div>
-						<input cvar="fov" type="text" class="short text" value="100" realtime="1"/>
-
-						<div class="title">Crosshair</div>
-						<dataspinner id="crosshair" cvar="cg_crosshair" source="crosshair.list" fields="image" valuefield="index" formatter="crosshair" realtime="1"/>
+						<div class="title">Show player names</div>
+						<input cvar="cg_showPlayerNames" type="checkbox" realtime="1"/>
 						<br/>
 
-						<div class="title">Show gun model</div>
-						<input cvar="cg_gun" type="checkbox" realtime="1"/>
+						<div class="title">Show pointed player name</div>
+						<input cvar="cg_showPointedPlayer" type="checkbox" realtime="1"/>
 						<br/>
 
-						<div class="title">Weapon handedness</div>
-						<select cvar="hand" realtime="1">
-							<option value="0" selected>right</option>
-							<option value="1">left</option>
-							<option value="2">center</option>
-						</select>
 						<br/>
-
-						<div class="title">Gun alpha</div>
-						<input cvar="cg_gun_alpha" class="slider" type="range" min="0" max="1" step="0.1" value="0" realtime="1"/>
-						<br/>		
-					</optionsform>
-				</panel>
-
-				<tab class="side-tab">Misc</tab>		
-				<panel class="dropshadow">
-					<optionsform id="misc-options-form" onsubmit="$OptionsForm_OnSubmit">
-						<div class="title">Demos to keep per map</div>
-						<select cvar="hand" realtime="1">
-							<option value="1" selected>only your best run</option>
-							<option value="3">your 3 best runs</option>
-							<option value="5">your 5 best runs</option>
-							<option value="-1">all personal bests</option>
-							<option value="-2">all finished runs</option>
-							<option value="0">none</option>
-						</select>
 					</optionsform>
 				</panel>
 			

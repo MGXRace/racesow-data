@@ -3,7 +3,7 @@ if %MATCH_STATE <= 3
 if %SHOW_TIMER >= 1
 	//draw Strings:
 	//Personal Best
-	//Server Record
+	//Server Best
 	//MGX Record
 
 	setFontFamily "Droid Sans"
@@ -20,14 +20,14 @@ if %SHOW_TIMER >= 1
 		moveCursor 0, -15
 			drawString "Personal Best: "
 		moveCursor 0, 15
-			drawString "Server Record: "
+			drawString "Server Best: "
 		moveCursor 0, 15
 			drawString "MGX Record: "
 		moveCursor -2, -32
 		setColor 1, 1, 1, 1
 			drawString "Personal Best: "
 		moveCursor 0, 15
-			drawString "Server Record: "
+			drawString "Server Best: "
 		moveCursor 0, 15
 			drawString "MGX Record: "
 		moveCursor 0, -15

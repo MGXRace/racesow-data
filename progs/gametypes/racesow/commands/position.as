@@ -27,7 +27,7 @@ class RS_CMD_Position : RS_Command
     		Entity @ent = @player.client.getEnt();
     		sendMessage( @player, "Current position:"
     			+ " " + ent.origin.x + " " + ent.origin.y + " " + ent.origin.z 
-    			+ " " + ent.angles.x + " " + ent.angles.y + " " + ent.angles.z );
+    			+ " " + ent.angles.x + " " + ent.angles.y + " " + ent.angles.z + "\n" );
     		return true;
     	}
 
@@ -86,7 +86,7 @@ class RS_CMD_PositionSpeed : RS_Command
 	{
 		if( argc != 1 )
 		{
-			sendErrorMessage( @player, "Invalid arguments\n");
+			sendErrorMessage( @player, "Invalid arguments");
 			sendMessage( @player, getUsage() );
 			return false;
 		}
@@ -110,23 +110,27 @@ class RS_CMD_PositionPrerace : RS_Command
 
 	bool validate( RS_Player @player, String &args, int argc )
 	{
+		// Always let the player clear their prerace position
+		if( args.getToken( 0 ) == "clear" )
+			return true;
+
 		if( player.state != RS_STATE_PRERACE ||
 			@player.client is null ||
 			player.client.team != TEAM_PLAYERS )
 		{
-			sendMessage( @player, "Prerace postion must be set in prerace state\n");
+			sendErrorMessage( @player, "Prerace postion must be set in prerace state");
 			return false;
 		}
 
 		if( player.getHeight() != 0 )
 		{
-			sendMessage( @player, "Prerace position must be set on solid ground\n");
+			sendErrorMessage( @player, "Prerace position must be set on solid ground");
 			return false;
 		}
 
-		if( player.client.getEnt().velocity.length() > .01 )
+		if( player.client.getEnt().velocity.length() > 50 )
 		{
-			sendMessage( @player, "Prerace position must be set while standing still\n");
+			sendErrorMessage( @player, "Prerace position must be set while standing still");
 			return false;
 		}
 
@@ -135,6 +139,13 @@ class RS_CMD_PositionPrerace : RS_Command
 
 	bool execute(RS_Player @player, String &args, int argc)
 	{
+		if( args.getToken( 0 ) == "clear" )
+		{
+			player.positionPrerace.clear();
+			sendMessage( @player, "Position prerace cleared\n" );
+			return true;
+		}
+
 		bool success = player.positionPrerace.save();
         if( success )
             sendMessage( @player, "Position prerace saved\n" );
@@ -161,7 +172,7 @@ class RS_CMD_PositionPlayer : RS_Command
 
 		if( argc != 1 )
 		{
-			sendErrorMessage( @player, "Invalid arguments\n");
+			sendErrorMessage( @player, "Invalid arguments");
 			sendMessage( @player, getUsage() );
 			return false;
 		}
@@ -202,7 +213,7 @@ class RS_CMD_PositionCp : RS_Command
 
 		if( argc != 1 )
 		{
-			sendErrorMessage( @player, "Invalid arguments\n");
+			sendErrorMessage( @player, "Invalid arguments");
 			sendMessage( @player, getUsage() );
 			return false;
 		}
@@ -244,7 +255,7 @@ class RS_CMD_PositionSet : RS_Command
 
 		if( argc != 5 )
 		{
-			sendErrorMessage( @player, "Invalid arguments\n");
+			sendErrorMessage( @player, "Invalid arguments");
 			sendMessage( @player, getUsage() );
 			return false;
 		}
@@ -255,11 +266,11 @@ class RS_CMD_PositionSet : RS_Command
 	bool execute(RS_Player @player, String &args, int argc)
 	{
 		Vec3 origin, angles;
-		origin.x = args.getToken( 1 ).toFloat();
-		origin.y = args.getToken( 2 ).toFloat();
-		origin.z = args.getToken( 3 ).toFloat();
-		angles.x = args.getToken( 4 ).toFloat();
-		angles.y = args.getToken( 5 ).toFloat();
+		origin.x = args.getToken( 0 ).toFloat();
+		origin.y = args.getToken( 1 ).toFloat();
+		origin.z = args.getToken( 2 ).toFloat();
+		angles.x = args.getToken( 3 ).toFloat();
+		angles.y = args.getToken( 4 ).toFloat();
 
 		return player.teleport( origin, angles, false, false, false );
 	}

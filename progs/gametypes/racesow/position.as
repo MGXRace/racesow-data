@@ -110,8 +110,8 @@ class RS_Position
 		// set the weapon loadout
 		for( int i = WEAP_NONE + 1; i < WEAP_TOTAL; i++ )
 		{
-			if( weapons[i] )
-				player.client.inventoryGiveItem( i );
+			if( weapons[i] || i == WEAP_GUNBLADE )
+				player.client.inventorySetCount( i, 1 );
 			player.client.inventorySetCount( G_GetItem( i ).ammoTag, ammo[i] );
 		}
 		player.client.selectWeapon( weapon );
@@ -145,5 +145,13 @@ class RS_Position
 			speed = newSpeed.toFloat();
 
 		return true;
+	}
+
+	/**
+	 * Clear the currently saved position
+	 */
+	void clear()
+	{
+		saved = false;
 	}
 }

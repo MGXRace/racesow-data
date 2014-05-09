@@ -113,6 +113,12 @@ class RS_Player
     uint triggerTime;
 
     /**
+     * True if the player can set a oneliner
+     * @var bool
+     */
+    bool oneliner;
+
+    /**
      * Constructor
      * @param Client client The client to associate with the player
      */
@@ -124,6 +130,7 @@ class RS_Player
         positionPrerace = RS_Position( @this );
         noclipWeapon = WEAP_NONE;
         state = RS_STATE_PRERACE;
+        oneliner = false;
         privsayTimes.resize( PRIVSAY_FLOODCOUNT );
     }
 
@@ -219,7 +226,7 @@ class RS_Player
 
             if( tr.doTrace( ent.origin, mins, maxs, ent.origin, 0, contentMask ) )
             {
-                sendErrorMessage( @this, "Can't switch noclip back when in something solid.\n" );
+                sendErrorMessage( @this, "Can't switch noclip back when in something solid." );
                 return false;
             }
 
@@ -268,9 +275,18 @@ class RS_Player
 
         specCallback @func = @sendAward;
         race.stopRace();
+        raceReport( @race );
+        RS_Race @refRace = @getRefRace();
+        uint refBest = @refRace is null ? 0 : refRace.getTime();
+        uint newTime = race.getTime();
 
         if( state == RS_STATE_PRACTICE )
         {
+            newTime -= race.lastCheckpoint( numCheckpoints );
+            refBest -= @refRace is null ? 0 : refRace.lastCheckpoint( numCheckpoints );
+            execSpectators( @func, @this, "Time: " + TimeToString( newTime ) );
+            if( refBest != 0 )
+                execSpectators( @func, @this, diffString( refBest, newTime ) );
             sendAward( @this, S_COLOR_CYAN + "You completed the map in practicemode, no time was set");
             return;
         }
@@ -285,31 +301,45 @@ class RS_Player
 
         // Not practicing or prejumped, its a real race
         auth.incrementRace();
-        RS_Race @refRace = @getRefRace();
-        uint refBest = @refRace is null ? 0 : refRace.getTime();
-        uint newTime = race.getTime();
-        raceReport( @race );
         respawnTime = realTime + 3000;
         @lastRace = @race;
 
         // World Record - Beats record loaded from database
-        if( @map.worldRecord is null || map.worldRecord.getTime() > newTime )
+        if( auth.id > 0 )
         {
-            @map.worldRecord = @race;
-            execSpectators( @func, @this, S_COLOR_GREEN + "New World record!" );
-            G_PrintMsg(null, client.name + " "
-                             + S_COLOR_YELLOW + "made a new world record: "
-                             + TimeToString( newTime ) + "\n");
-        }
+            if( @map.worldRecord is null || map.worldRecord.getTime() > newTime )
+            {
+                @map.worldRecord = @race;
+                execSpectators( @func, @this, S_COLOR_GREEN + "New World record!" );
+                G_PrintMsg(null, client.name + " "
+                                 + S_COLOR_YELLOW + "made a new world record: "
+                                 + TimeToString( newTime ) + "\n");
+                sendMessage( @this, "Assert your dominance by leaving a oneliner message on the map!\n" );
+                RS_Player @other;
+                for( int i = 0; i < maxClients; i++ )
+                {
+                    @other = @players[i];
+                    if( @other is null || @other.client is null )
+                        continue;
 
-        // Server record
-        if( @map.serverRecord is null || map.serverRecord.getTime() > newTime )
+                    other.oneliner = false;
+                }
+                oneliner = true;
+            }
+
+            // Server record
+            if( @map.serverRecord is null || map.serverRecord.getTime() > newTime )
+            {
+                @map.serverRecord = @race;
+                execSpectators( @func, @this, S_COLOR_GREEN + "New server record!" );
+                G_PrintMsg(null, client.name + " "
+                                 + S_COLOR_YELLOW + "made a new server record: "
+                                 + TimeToString( newTime ) + "\n");
+            }
+        }
+        else
         {
-            @map.serverRecord = @race;
-            execSpectators( @func, @this, S_COLOR_GREEN + "New server record!" );
-            G_PrintMsg(null, client.name + " "
-                             + S_COLOR_YELLOW + "made a new server record: "
-                             + TimeToString( newTime ) + "\n");
+            sendErrorMessage( @this, "You are not logged in, race was not recorded." );
         }
 
         // Personal record
@@ -320,8 +350,9 @@ class RS_Player
             execSpectators( @func, @this, "Personal record!" );
         }
 
-        String message = "Time: " + TimeToString( newTime ) + ( refBest == 0 ? "" : ( "\n" + diffString( refBest, newTime ) ) );
-        execSpectators( @func, @this, message );
+        execSpectators( @func, @this, "Time: " + TimeToString( newTime ) );
+        if( refBest != 0 )
+            execSpectators( @func, @this, diffString( refBest, newTime ) );
     }
 
     /**
@@ -332,7 +363,7 @@ class RS_Player
     void cancelRace()
     {
         // If race was finished, stopRace should have reported it
-        if( @race !is null && race.endTime != 0 )
+        if( @race !is null && race.endTime == 0 )
             raceReport( @race );
         @race = null;
     }
@@ -349,16 +380,23 @@ class RS_Player
             return;
 
         RS_Race @refRace = @getRefRace();
-        uint newTime = race.getTime();
-        uint personalBest = @record is null ? 0 : record.getTime();
-        uint refBest = @refRace is null ? 0 : refRace.getTime();
+        int newTime = race.getTime();
+        int personalBest = @record is null ? 0 : record.getTime();
+        int refBest = @refRace is null ? 0 : refRace.getTime();
+        if( state == RS_STATE_PRACTICE )
+        {
+            newTime -= race.lastCheckpoint( numCheckpoints );
+            refBest -= @refRace is null ? 0 : refRace.lastCheckpoint( numCheckpoints );
+            personalBest -= @record is null ? 0 : record.lastCheckpoint( numCheckpoints );
+        }
+
 
         sendMessage( @this, race.report );
 
         if( race.endTime == 0 ) // race wasn't finished
             return;
 
-        sendMessage( @this, S_COLOR_WHITE + "Race finished: " + TimeToString( newTime )
+        sendMessage( @this, S_COLOR_ORANGE + "Race finished: " + S_COLOR_WHITE + TimeToString( newTime )
                 + S_COLOR_ORANGE + " Speed: " + S_COLOR_WHITE + race.endSpeed // finish speed
                 + S_COLOR_ORANGE + " Personal: " + S_COLOR_WHITE + diffString(personalBest, newTime) // personal best
                 + S_COLOR_ORANGE + " Server: " + S_COLOR_WHITE + diffString(refBest, newTime) // server best
@@ -378,20 +416,31 @@ class RS_Player
 
         // Make the checkpoint message
         RS_Race @refRace = getRefRace();
-        uint newTime = race.checkpoints[cpNum];
-        uint refBest = @refRace is null ? 0 : refRace.checkpoints[cpNum];
-        uint personalBest = @record is null ? 0 : record.checkpoints[cpNum];
+        int newTime = race.checkpoints[cpNum];
+        int refBest = @refRace is null ? 0 : refRace.checkpoints[cpNum];
+        int personalBest = @record is null ? 0 : record.checkpoints[cpNum];
+        String cpmsg = "Checkpoint";
         specCallback @func = @sendAward;
 
+        // Use sector diffs in practicemode
+        if( state == RS_STATE_PRACTICE )
+        {
+            newTime -= race.lastCheckpoint( cpNum );
+            refBest -= @refRace is null ? 0 : refRace.lastCheckpoint( cpNum );
+            personalBest -= @record is null ? 0 : record.lastCheckpoint( cpNum );
+            cpmsg = "Sector";
+        }
+
         if( newTime < refBest || refBest == 0 )
-            execSpectators( @func, @this, S_COLOR_GREEN + "#" + ( cpNum + 1 ) + " checkpoint record!" );
+            execSpectators( @func, @this, S_COLOR_GREEN + "#" + ( cpNum + 1 ) + " " + cpmsg + " record!" );
 
         else if( newTime < personalBest || personalBest == 0 )
-            execSpectators( @func, @this, S_COLOR_YELLOW + "#" + ( cpNum + 1 ) + " checkpoint personal record!" );
+            execSpectators( @func, @this, S_COLOR_YELLOW + "#" + ( cpNum + 1 ) + " " + cpmsg + " personal record!" );
 
         @func = @sendAward;
-        String message = "Current: " + TimeToString( newTime ) + ( refBest == 0 ? "" : ( "\n" + diffString( refBest, newTime ) ) );
-        execSpectators( @func, @this, message );
+        execSpectators( @func, @this, cpmsg + ": " + TimeToString( newTime ) );
+        if( refBest != 0 )
+            execSpectators( @func, @this, diffString( refBest, newTime ) );
         return true;
     }
 
@@ -420,11 +469,11 @@ class RS_Player
         client.setHUDStat( STAT_RACE_STATE, state );
 
         if( @record !is null )
-            client.setHUDStat( STAT_TIME_BEST, bestTime() / 10 );
+            client.setLongHUDStat( STAT_TIME_BEST, bestTime() / 10 );
 
         if( @race !is null )
         {
-            client.setHUDStat( STAT_TIME_SELF, race.getTime() / 10 );
+            client.setLongHUDStat( STAT_TIME_SELF, race.getTime() / 10 );
             client.setHUDStat( STAT_START_SPEED, race.startSpeed );
             client.setHUDStat( STAT_PREJUMP_STATE, race.prejumped ? 1 : 0 );
         }
@@ -432,10 +481,10 @@ class RS_Player
             client.setHUDStat( STAT_PREJUMP_STATE, RS_QueryPjState( client.get_playerNum() ) ? 1 : 0 );
 
         if( @map.serverRecord !is null )
-            client.setHUDStat( STAT_TIME_RECORD, map.serverRecord.getTime() / 10 );
+            client.setLongHUDStat( STAT_TIME_RECORD, map.serverRecord.getTime() / 10 );
 
         if( @map.worldRecord !is null )
-            client.setHUDStat( STAT_TIME_ALPHA, map.worldRecord.getTime() / 10 );
+            client.setLongHUDStat( STAT_TIME_ALPHA, map.worldRecord.getTime() / 10 );
     }
 
     /**

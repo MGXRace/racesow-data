@@ -24,8 +24,6 @@ racesow/entities/target_init.as;
 
 racesow/commands/base.as;
 racesow/commands/admin.as;
-racesow/commands/__login.as;
-racesow/commands/__register.as;
 racesow/commands/cancelvote.as;
 racesow/commands/racerestart.as;
 racesow/commands/help.as;
@@ -36,11 +34,14 @@ racesow/commands/noclip.as;
 racesow/commands/privsay.as;
 racesow/commands/mapname.as;
 racesow/commands/maplist.as;
+racesow/commands/oneliner.as;
+racesow/commands/protectednick.as;
 racesow/commands/spec.as;
 racesow/commands/whoisgod.as;
 racesow/commands/weapondefs.as;
 racesow/commands/give.as;
 racesow/commands/top.as;
+racesow/commands/topold.as;
 
 racesow/utils.as;
 racesow/gametype.as;

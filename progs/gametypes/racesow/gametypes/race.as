@@ -48,7 +48,9 @@ class RS_GT_Race : RS_Gametype
         G_ConfigString( CS_SCB_PLAYERTAB_LAYOUT, "%n 112 %s 52 %t 96 %i 48 %l 48 %s 85" );
         G_ConfigString( CS_SCB_PLAYERTAB_TITLES, "Name Clan Time Speed Ping State" );
 
+        RS_CMD_Oneliner cmd_oneliner;
         RS_CMD_Top cmd_top;
+        RS_CMD_TopOld cmd_topold;
         RS_InitCommands();
     }
 
@@ -62,9 +64,17 @@ class RS_GT_Race : RS_Gametype
     void PlayerRespawn( Entity @ent, int old_team, int new_team )
     {
         RS_Gametype::PlayerRespawn( @ent, old_team, new_team );
+        RS_Player @player = RS_getPlayer( @ent );
 
-        if( ent.isGhosting() )
+        if( @player is null || ent.isGhosting() )
             return;
+
+        player.cancelRace();
+        if( player.state == RS_STATE_PRACTICE )
+        {
+            player.startRace();
+            player.race.prejumped = false;
+        }
 
         // set player movement to pass through other players and remove gunblade auto attacking
         ent.client.set_pmoveFeatures( ent.client.pmoveFeatures & ~PMFEAT_GUNBLADEAUTOATTACK | PMFEAT_GHOSTMOVE );

@@ -66,7 +66,7 @@ class RS_Gametype
         gametype.mathAbortDisabled = true;
         gametype.shootingDisabled = false;
         gametype.infiniteAmmo = true;
-        gametype.canForceModels = true;
+        gametype.canForceModels = false;
         gametype.canShowMinimap = false;
         gametype.teamOnlyMinimap = true;
 
@@ -78,8 +78,6 @@ class RS_Gametype
         // Until angelscript supports static class members/methods or better
         // namespacing we can't make a proper plugin achitecture
         RS_CMD_Admin cmd_admin;
-        RS_CMD_Login cmd_login;
-        RS_CMD_Register cmd_register;
         RS_CMD_Cancelvote cmd_cancelvote;
         RS_CMD_RaceRestart cmd_racerestart;
         RS_CMD_Join cmd_join;
@@ -91,6 +89,7 @@ class RS_Gametype
         RS_CMD_Machinegun cmd_machinegun;
         RS_CMD_NoClip cmd_noclip;
         RS_CMD_Privsay cmd_privsay;
+        RS_CMD_ProtectedNick cmd_protectednick;
         RS_CMD_MapName cmd_mapname;
         RS_CMD_Spec cmd_spec;
         RS_CMD_WhoIsGod cmd_whoisgod;
@@ -204,9 +203,6 @@ class RS_Gametype
 
     void PlayerRespawn( Entity @ent, int old_team, int new_team )
     {
-        RS_Player @player = RS_getPlayer( @ent );
-        if( @player !is null )
-            player.cancelRace();
     }
 
     /**

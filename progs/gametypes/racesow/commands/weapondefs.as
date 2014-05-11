@@ -8,7 +8,6 @@ class RS_CMD_WeaponDefs : RS_Command
 		"g_gravity",
         "g_self_knockback",
         "rs_dash_speed",
-        "rs_splashfrac",
 		"rs_grenade_minKnockback",
 		"rs_grenade_maxKnockback",
 		"rs_grenade_splash",
@@ -17,21 +16,25 @@ class RS_CMD_WeaponDefs : RS_Command
 		"rs_grenade_gravity",
 		"rs_grenade_friction",
 		"rs_grenade_prestep",
+        "rs_grenade_splashfrac",
 		"rs_gunblade_minKnockback",
 		"rs_gunblade_maxKnockback",
 		"rs_gunblade_splash",
+        "rs_gunblade_splashfrac",
 		"rs_plasma_minKnockback",
 		"rs_plasma_maxKnockback",
 		"rs_plasma_splash",
 		"rs_plasma_speed",
 		"rs_plasma_prestep",
 		"rs_plasma_hack",
+        "rs_plasma_splashfrac",
 		"rs_rocket_minKnockback",
 		"rs_rocket_maxKnockback",
 		"rs_rocket_splash",
 		"rs_rocket_speed",
 		"rs_rocket_prestep",
-		"rs_rocket_antilag"
+		"rs_rocket_antilag",
+        "rs_rocket_splashfrac"
 	};
 	// Doesn't seem to be a clean way to do this
 	// Values copied from g_racesow.cpp
@@ -39,7 +42,6 @@ class RS_CMD_WeaponDefs : RS_Command
 		"850",	// "g_gravity",
         "1.18", // "g_self_knockback",
         "451",  // "rs_dash_speed",
-        "1.3",    // "rs_splashfrac",
 		"1",	// "rs_grenade_minKnockback",
 		"100",	// "rs_grenade_maxKnockback",
 		"200",	// "rs_grenade_splash",
@@ -48,23 +50,27 @@ class RS_CMD_WeaponDefs : RS_Command
 		"1.22",	// "rs_grenade_gravity",
 		"1.0",	// "rs_grenade_friction",
 		"24",	// "rs_grenade_prestep",
+        "2.5",  // "rs_grenade_splashfrac",
 		"10",	// "rs_gunblade_minKnockback",
 		"60",	// "rs_gunblade_maxKnockback",
 		"80",	// "rs_gunblade_splash",
+        "1.3",  // "rs_gunblade_splashfrac",
 		"1",	// "rs_plasma_minKnockback",
 		"25",	// "rs_plasma_maxKnockback",
 		"45",	// "rs_plasma_splash",
 		"1700",	// "rs_plasma_speed",
 		"16",	// "rs_plasma_prestep",
 		"1",	// "rs_plasma_hack",
+        "1.15", // "rs_plasma_splashfrac",
 		"1",	// "rs_rocket_minKnockback",
 		"90",	// "rs_rocket_maxKnockback",
 		"180",	// "rs_rocket_splash",
 		"950",	// "rs_rocket_speed",
 		"10",	// "rs_rocket_prestep",
-		"0",	// "rs_rocket_antilag"
+		"0",	// "rs_rocket_antilag",
+        "1.3"   // "rs_rocket_splashfrac"
 	};
-	int numCvars = 27;
+	int numCvars;
 
 
 	RS_CMD_WeaponDefs()
@@ -76,6 +82,7 @@ class RS_CMD_WeaponDefs : RS_Command
     		+ "reset <cvar> - Reset a specific cvar to its default value\n"
     		+ "reset - Reset all cvars to their default value\n";
     	register();
+        numCvars = defaults.length();
 	}
 
     bool execute(RS_Player @player, String &args, int argc)

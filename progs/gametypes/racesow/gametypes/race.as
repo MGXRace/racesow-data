@@ -51,6 +51,7 @@ class RS_GT_Race : RS_Gametype
         RS_CMD_Oneliner cmd_oneliner;
         RS_CMD_Top cmd_top;
         RS_CMD_TopOld cmd_topold;
+        RS_CMD_TopAll cmd_topall;
         RS_InitCommands();
     }
 

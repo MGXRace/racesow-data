@@ -42,6 +42,7 @@ racesow/commands/weapondefs.as;
 racesow/commands/give.as;
 racesow/commands/top.as;
 racesow/commands/topold.as;
+racesow/commands/topall.as;
 
 racesow/utils.as;
 racesow/gametype.as;

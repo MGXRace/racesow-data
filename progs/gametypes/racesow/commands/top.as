@@ -1,4 +1,5 @@
 const uint CMD_TOP_FLOODTIME = 3000;
+const uint TOP_DEFAULT_ENTRIES = 20;
 uint[] CMD_TOP_TIMES(maxClients);
 
 /**
@@ -12,7 +13,8 @@ class RS_CMD_Top : RS_Command
 		name = "top";
     	description = "Display the top records on a map";
     	usage = "top - Show top records on the current map\n"
-            + "top <map> <limi> - Show top <limit> records on <map>";
+            + "top <map> - Show " + TOP_DEFAULT_ENTRIES + " records on <map>\n"
+            + "top <map> <limit> - Show <limit> records on <map>";
     	register();
 	}
 
@@ -35,10 +37,19 @@ class RS_CMD_Top : RS_Command
     	if( @player.client is null )
     		return false;
 
-        if( argc != 2 )
-            RS_QueryTop( @player.client, null, 30, false );
-        else
-            RS_QueryTop( @player.client, args.getToken( 0 ), args.getToken( 1 ).toInt(), false );
+        if( argc == 0 )
+            RS_QueryTop( @player.client, null, TOP_DEFAULT_ENTRIES, RS_MAP_TOP );
+        else if( argc == 1 )
+            RS_QueryTop( @player.client, args.getToken( 0 ), TOP_DEFAULT_ENTRIES, RS_MAP_TOP );
+		else if( argc >= 2 )
+		{
+			if( !args.getToken( 1 ).isNumerical() )
+			{
+				sendErrorMessage( @player, "<limit> should be a number" );
+				return false;
+			}
+            RS_QueryTop( @player.client, args.getToken( 0 ), args.getToken( 1 ).toInt(), RS_MAP_TOP );
+		}
 
         CMD_TOP_TIMES[player.client.get_playerNum()] = realTime + CMD_TOP_FLOODTIME;
 		return true;

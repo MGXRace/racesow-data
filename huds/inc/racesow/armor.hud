@@ -34,4 +34,3 @@ if %ARMOR > 0
 		drawNum %ARMOR
 	endif
 endif
-

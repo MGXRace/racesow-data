@@ -6,70 +6,112 @@ setScale #NOSCALE
 moveCursor 0, 50
 setColor 1, 1, 1, 1
 
-if %MATCH_STATE <= 3
-if 1 & %SHOW_SPEED
-	//horizontal bar
-	setAlign #CENTER, #MIDDLE
-	setSize 120, 2
-	drawPicByName gfx/ui/white
-	
-	//description
-	if 0 == 4 & %SHOW_SPEED
-		setFontFamily "Droid Sans"
-		setFontSize 10
-		setAlign #CENTER, #BOTTOM
-		moveCursor 0, -3
-		setColor 1, 1, 1, 0.2
-		drawString "speed"
-		moveCursor 0, 3
-	endif
+if %MATCH_STATE == 3
+	if 1 & %SHOW_SPEED
+		//horizontal bar
+		setAlign #CENTER, #MIDDLE
+		setSize 120, 2
+		drawPicByName gfx/ui/white
+		
+		//description
+		if 0 == 4 & %SHOW_SPEED
+			setFontFamily "Droid Sans"
+			setFontSize 10
+			setAlign #CENTER, #BOTTOM
+			moveCursor 0, -3
+			setColor 1, 1, 1, 0.2
+			drawString "speed"
+			moveCursor 0, 3
+		endif
 
-	//vertical bar
-	moveCursor 16, 16
-	setAlign #CENTER, #MIDDLE
-	setSize 2, 30
-	setColor 1, 1, 1, 1
-	drawPicByName gfx/ui/white
-	
-	//speed number
-	//black background
-	moveCursor -6, -1
-	setAlign #RIGHT, #MIDDLE
-	setFontFamily "Virtue"
-	setFontSize 22
-	setColor 0, 0, 0, 1
-	drawStringNum %SPEED
-	moveCursor 0, 2
-	drawStringNum %SPEED
-	moveCursor 2, -2
-	drawStringNum %SPEED
-	moveCursor 0, 2
-	drawStringNum %SPEED
-	//white number
-	moveCursor -1, -1
-	setColor 1, 1, 1, 1
-	drawStringNum %SPEED
-	
-	//rocketaccel number
-	moveCursor 8, -5
-	setAlign #LEFT, #MIDDLE
-	setFontFamily "Virtue"
-	setFontSize 12
-	if 0 <= %ROCKETACCEL
-		setColor 0, 1, 0, 1
-		drawString "+ " //space prevents warsow from using "+" as operator
-		moveCursor 10, 0
-		drawStringNum %ROCKETACCEL
-		moveCursor -10, 0
-	endif
-	if 0 > %ROCKETACCEL
-		setColor 1, 0, 0, 1
-		drawStringNum %ROCKETACCEL
-	endif
+		//vertical bar
+		moveCursor 16, 16
+		setAlign #CENTER, #MIDDLE
+		setSize 2, 30
+		setColor 1, 1, 1, 1
+		drawPicByName gfx/ui/white
+		
+		//speed number
+		//black background
+		moveCursor -6, -1
+		setAlign #RIGHT, #MIDDLE
+		setFontFamily "Virtue"
+		setFontSize 25
+		setColor 0, 0, 0, 1
+		drawStringNum %SPEED
+		moveCursor 0, 2
+		drawStringNum %SPEED
+		moveCursor 2, -2
+		drawStringNum %SPEED
+		moveCursor 0, 2
+		drawStringNum %SPEED
+		//white number
+		moveCursor -1, -1
+		setColor 1, 1, 1, 1
+		drawStringNum %SPEED
+		
+		//rocketaccel number
+		moveCursor 8, -8
+		setAlign #LEFT, #MIDDLE
+		setFontFamily "Virtue"
+		setFontSize 13
+		if %CHASING == #NOTSET
+			if 0 <= %ROCKETACCEL
+				setColor 0, 0, 0, 1
+				drawString "+ "
+				moveCursor 10, -2
+				drawStringNum %ROCKETACCEL
+				moveCursor -10, 0
+				moveCursor 0, 2
+				drawString "+ "
+				moveCursor 10, 0
+				drawStringNum %ROCKETACCEL
+				moveCursor -10, 0
+				moveCursor 2, -2
+				drawString "+ "
+				moveCursor 10, 0
+				drawStringNum %ROCKETACCEL
+				moveCursor -10, 0
+				moveCursor 0, 2
+				drawString "+ "
+				moveCursor 10, 0
+				drawStringNum %ROCKETACCEL
+				moveCursor -10, 0
+				moveCursor -1, -1
+				setColor 0, 1, 0, 1
+				drawString "+ " //space prevents warsow from using "+" as operator
+				moveCursor 10, 0
+				drawStringNum %ROCKETACCEL
+				moveCursor -10, 0
+			endif
 
-	//jumpspeed number
-	moveCursor 9, 14
-	setColor 1, 1, 1, 1
-	drawStringNum %JUMPSPEED
-endif
+			if 0 > %ROCKETACCEL
+				setColor 0, 0, 0, 1
+				drawStringNum %ROCKETACCEL
+				moveCursor 0, 2
+				drawStringNum %ROCKETACCEL
+				moveCursor 2, -2
+				drawStringNum %ROCKETACCEL
+				moveCursor 0, 2
+				drawStringNum %ROCKETACCEL
+				moveCursor -1, -1
+				setColor 1, 0, 0, 1
+				drawStringNum %ROCKETACCEL
+			endif
+		endif
+
+		//jumpspeed number
+		moveCursor 7, 12
+		setColor 0, 0, 0, 1
+		drawStringNum %JUMPSPEED
+		moveCursor 0, 2
+		drawStringNum %JUMPSPEED
+		moveCursor 2, -2
+		drawStringNum %JUMPSPEED
+		moveCursor 0, 2
+		drawStringNum %JUMPSPEED
+		moveCursor -1, -1
+		setColor 1, 1, 1, 1
+		drawStringNum %JUMPSPEED
+	endif
 endif

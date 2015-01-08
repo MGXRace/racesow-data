@@ -1,126 +1,117 @@
 //
 if %MATCH_STATE <= 3
-if %SHOW_TIMER >= 1
-	//draw Strings:
-	//Personal Best
-	//Server Best
-	//MGX Record
+	if %SHOW_TIMER >= 1
+		//draw Strings:
+		//Personal Best
+		//Server Best
+		//MGX Record
 
-	setFontFamily "Droid Sans"
-	setFontSize 13
-	setFontStyle bold
-	setScale #DEFAULTSCALE
-	setCursor #WIDTH, 550
-	setScale #NOSCALE
-	moveCursor -70, 0
-	
-	if %RACE
+		setFontFamily "Hemi Head"
+		setFontSize 16
+		setFontStyle bold
+		setScale #DEFAULTSCALE
+		setCursor #WIDTH, 550
+		setScale #NOSCALE
+		moveCursor -70, 0
+		
+		if %RACE
+			setColor 0, 0, 0, 1
+			setAlign #RIGHT, #BOTTOM
+			moveCursor 0, -15
+				drawString "Personal Best: "
+			moveCursor 0, 15
+				drawString "Server Best: "
+			moveCursor 0, 15
+				drawString "MGX Record: "
+			moveCursor -2, -32
+			setColor 1, 1, 1, 1
+				drawString "Personal Best: "
+			moveCursor 0, 15
+				drawString "Server Best: "
+			moveCursor 0, 15
+				drawString "MGX Record: "
+			moveCursor 0, -15
+		endif
+
+		//draw Times
 		setColor 0, 0, 0, 1
-		setAlign #RIGHT, #BOTTOM
-		moveCursor 0, -15
-			drawString "Personal Best: "
+		setAlign #LEFT, #BOTTOM
+
+		moveCursor 2, -13
+
+		if %TIME_BEST != #NOTSET
+			drawTimer %TIME_BEST
+		endif
+		if %TIME_BEST == #NOTSET
+			drawString "Not set"
+		endif
+
 		moveCursor 0, 15
-			drawString "Server Best: "
+
+		if %TIME_RECORD != #NOTSET
+			drawTimer %TIME_RECORD
+		endif
+		if %TIME_RECORD == #NOTSET
+			drawString "Not set"
+		endif
+
 		moveCursor 0, 15
-			drawString "MGX Record: "
+
+		if %TIME_ALPHA != #NOTSET
+			drawTimer %TIME_ALPHA
+		endif
+		if %TIME_ALPHA == #NOTSET
+			drawString "Not set"
+		endif
+
 		moveCursor -2, -32
 		setColor 1, 1, 1, 1
-			drawString "Personal Best: "
-		moveCursor 0, 15
-			drawString "Server Best: "
-		moveCursor 0, 15
-			drawString "MGX Record: "
-		moveCursor 0, -15
-	endif
-
-	//draw Times
-	setColor 0, 0, 0, 1
-	setAlign #LEFT, #BOTTOM
-
-	moveCursor 2, -13
-
-	if %TIME_BEST != #NOTSET
-		drawTimer %TIME_BEST
-	endif
-	if %TIME_BEST == #NOTSET
-		drawString "Not set"
-	endif
-
-	moveCursor 0, 15
-
-	if %TIME_RECORD != #NOTSET
-		drawTimer %TIME_RECORD
-	endif
-	if %TIME_RECORD == #NOTSET
-		drawString "Not set"
-	endif
-
-	moveCursor 0, 15
-
-	if %TIME_ALPHA != #NOTSET
-		drawTimer %TIME_ALPHA
-	endif
-	if %TIME_ALPHA == #NOTSET
-		drawString "Not set"
-	endif
-
-	moveCursor -2, -32
-	setColor 1, 1, 1, 1
 
 
-	if %TIME_BEST != #NOTSET
-		drawTimer %TIME_BEST
-	endif
-	if %TIME_BEST == #NOTSET
-		drawString "Not set"
-	endif
-
-	moveCursor 0, 15
-
-	if %TIME_RECORD != #NOTSET
-		drawTimer %TIME_RECORD
-	endif
-	if %TIME_RECORD == #NOTSET
-		drawString "Not set"
-	endif
-
-	moveCursor 0, 15
-
-	if %TIME_ALPHA != #NOTSET
-		drawTimer %TIME_ALPHA
-	endif
-	if %TIME_ALPHA == #NOTSET
-		drawString "Not set"
-	endif
-
-endif
-
-
-if %SHOW_TIMER >= 1
-	//crazy big timer
-
-	setFontFamily "Hemi Head"
-	setFontSize 20
-
-	setScale #DEFAULTSCALE
-	setCursor 383, 15
-	setScale #NOSCALE
-
-	setAlign #LEFT, #TOP
-
-
-
-	if %RACE_STATE != 1
-		if %TIME_BEST == #NOTSET
-			setcolor 0, 0, 0, 1
-			drawTimer %TIME_SELF
-			moveCursor -2, -2
-			setcolor 0, 1, 0, 1
-			drawTimer %TIME_SELF
-			moveCursor 2, 2
-		endif
 		if %TIME_BEST != #NOTSET
-			if %TIME_SELF <= %TIME_BEST
+			drawTimer %TIME_BEST
+		endif
+		if %TIME_BEST == #NOTSET
+			drawString "Not set"
+		endif
+
+		moveCursor 0, 15
+
+		if %TIME_RECORD != #NOTSET
+			drawTimer %TIME_RECORD
+		endif
+		if %TIME_RECORD == #NOTSET
+			drawString "Not set"
+		endif
+
+		moveCursor 0, 15
+
+		if %TIME_ALPHA != #NOTSET
+			drawTimer %TIME_ALPHA
+		endif
+		if %TIME_ALPHA == #NOTSET
+			drawString "Not set"
+		endif
+
+	endif
+
+
+	if %SHOW_TIMER >= 1
+		//crazy big timer
+
+		setFontFamily "Hemi Head"
+		setFontSize 20
+
+		setScale #DEFAULTSCALE
+		setCursor 383, 15
+		setScale #NOSCALE
+
+		setAlign #LEFT, #TOP
+
+
+
+		if %RACE_STATE != 1
+			if %TIME_BEST == #NOTSET
 				setcolor 0, 0, 0, 1
 				drawTimer %TIME_SELF
 				moveCursor -2, -2
@@ -128,56 +119,65 @@ if %SHOW_TIMER >= 1
 				drawTimer %TIME_SELF
 				moveCursor 2, 2
 			endif
-			if %TIME_SELF > %TIME_BEST
-				setcolor 0, 0, 0, 1
-				drawTimer %TIME_SELF - %TIME_BEST
-				moveCursor -2, -2
-				setcolor 1, 0, 0, 1
-				drawTimer %TIME_SELF - %TIME_BEST
+			if %TIME_BEST != #NOTSET
+				if %TIME_SELF <= %TIME_BEST
+					setcolor 0, 0, 0, 1
+					drawTimer %TIME_SELF
+					moveCursor -2, -2
+					setcolor 0, 1, 0, 1
+					drawTimer %TIME_SELF
+					moveCursor 2, 2
+				endif
+				if %TIME_SELF > %TIME_BEST
+					setcolor 0, 0, 0, 1
+					drawTimer %TIME_SELF - %TIME_BEST
+					moveCursor -2, -2
+					setcolor 1, 0, 0, 1
+					drawTimer %TIME_SELF - %TIME_BEST
 
-				moveCursor -12, 2
-				setAlign #LEFT, #TOP
-				setcolor 0, 0, 0, 1
-				drawString "+ " //space prevents warsow from using "-" as operator
-				moveCursor -2, -2
-				setcolor 1, 0, 0, 1
-				drawString "+ " //space prevents warsow from using "-" as operator
-				moveCursor 14, 2
+					moveCursor -12, 2
+					setAlign #LEFT, #TOP
+					setcolor 0, 0, 0, 1
+					drawString "+ " //space prevents warsow from using "-" as operator
+					moveCursor -2, -2
+					setcolor 1, 0, 0, 1
+					drawString "+ " //space prevents warsow from using "-" as operator
+					moveCursor 14, 2
+				endif
 			endif
 		endif
 	endif
-endif
 
-if 1 == 1 & %SHOW_TIMER
-	// 10 seconds countdown
-	if %TIME_SELF < %TIME_BEST
-	if 1000 > %TIME_BEST - %TIME_SELF
-	setFontFamily "Hemi Head"
-	setFontSize 20
-	setScale #DEFAULTSCALE
-	setCursor 400, 0
-	setScale #NOSCALE
-	moveCursor -42, 185
-	setAlign #LEFT, #TOP
-		moveCursor 0, -0.15 * %TIME_BEST - %TIME_SELF
-		if 500 > %TIME_BEST - %TIME_SELF
-			moveCursor -5, 0
-			setFontSize 22
-			setScale #NOSCALE
-		endif
-		if 200 > %TIME_BEST - %TIME_SELF
-			moveCursor -10, 0
-			setFontSize 26
-			setScale #NOSCALE
-		endif
-		setcolor 0, 0, 0, 1
-		drawTimer %TIME_BEST - %TIME_SELF
+	if 1 == 1 & %SHOW_TIMER
+		// 10 seconds countdown
+		if %TIME_SELF < %TIME_BEST
+		if 1000 > %TIME_BEST - %TIME_SELF
+		setFontFamily "Hemi Head"
+		setFontSize 20
+		setScale #DEFAULTSCALE
+		setCursor 400, 0
 		setScale #NOSCALE
-		moveCursor -2, -2
-		setcolor 0, 1, 0, 1
-		drawTimer %TIME_BEST - %TIME_SELF
+		moveCursor -42, 185
+		setAlign #LEFT, #TOP
+			moveCursor 0, -0.15 * %TIME_BEST - %TIME_SELF
+			if 500 > %TIME_BEST - %TIME_SELF
+				moveCursor -5, 0
+				setFontSize 22
+				setScale #NOSCALE
+			endif
+			if 200 > %TIME_BEST - %TIME_SELF
+				moveCursor -10, 0
+				setFontSize 26
+				setScale #NOSCALE
+			endif
+			setcolor 0, 0, 0, 1
+			drawTimer %TIME_BEST - %TIME_SELF
+			setScale #NOSCALE
+			moveCursor -2, -2
+			setcolor 0, 1, 0, 1
+			drawTimer %TIME_BEST - %TIME_SELF
+		endif
+		endif
+		setFontStyle normal
 	endif
-	endif
-	setFontStyle normal
-endif
 endif

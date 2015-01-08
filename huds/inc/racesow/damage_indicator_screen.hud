@@ -48,4 +48,3 @@ if %DAMAGE_INDICATOR_BOTTOM > 0
 	setSize #WIDTH, #HEIGHT / 4
 	drawPicByName gfx/hud/damage_down
 endif
-

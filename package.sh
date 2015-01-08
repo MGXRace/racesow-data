@@ -3,6 +3,7 @@ INVENTORY=(
     gfx
     huds
     progs
+    fonts
     ui
     default.cfg
     rs_defaults.cfg

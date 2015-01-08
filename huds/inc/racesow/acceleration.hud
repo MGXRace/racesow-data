@@ -1,22 +1,24 @@
 //accelmeter bar
-if 1 & %SHOW_ACCEL
-	setFontFamily "Virtue"
-	setFontSize 12
-	
-	setScale #DEFAULTSCALE
-	setCursor 400, 300
-	setScale #NOSCALE
-	moveCursor 0, 120
-	setScale #SCALEBYWIDTH
-	moveCursor -103, 8
+if %MATCH_STATE != 5
+	if 1 & %SHOW_ACCEL
+		setFontFamily "Virtue"
+		setFontSize 12
+		
+		setScale #DEFAULTSCALE
+		setCursor 400, 300
+		setScale #NOSCALE
+		moveCursor 0, 120
+		setScale #SCALEBYWIDTH
+		moveCursor -103, 8
 
-	setSize 206, 16
-	setcolor 1, 1, 1, 0.1
-	setAlign #TOP, #MIDDLE
-	drawPicByName gfx/ui/white
-	
-	moveCursor 3, 0
-	setSize 200, 10
-	setColor 0, 1, 0, 0.3
-	drawBar %ACCELERATION, %MAX_ACCEL
+		setSize 206, 16
+		setcolor 1, 1, 1, 0.1
+		setAlign #TOP, #MIDDLE
+		drawPicByName gfx/ui/white
+		
+		moveCursor 3, 0
+		setSize 200, 10
+		setColor 0, 1, 0, 0.3
+		drawBar %ACCELERATION, %MAX_ACCEL
+	endif
 endif

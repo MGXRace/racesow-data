@@ -4,7 +4,7 @@ if %CHASING != #NOTSET
 	setFontSize 16
 	setColor 1.0 1.0 1.0 0.2
 	setScale #DEFAULTSCALE
-	setCursor 400 150
+	setCursor 400 50
 	setAlign #CENTER, #BOTTOM
 	drawString Chasing:
 	setFontSize 20

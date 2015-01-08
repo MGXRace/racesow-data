@@ -1,76 +1,78 @@
 //Static prejump text while racing
-if %PREJUMP_STATE == 1
-	if %RACE_STATE == 2
-		if %TIME_SELF > -1000
-			setScale #DEFAULTSCALE
-			setCursor 400, 300
-			setScale #NOSCALE
-			setColor 1, 1, 1, 1
-			setFontFamily "Droid Sans"
-			setFontSize 22
-			setAlign #MIDDLE, #CENTER
-			moveCursor -1, -79
-			setColor 0, 0, 0, 0.3
-			drawstring "PREJUMPED!"
-			moveCursor 2, 0
-			drawstring "PREJUMPED!"
-			moveCursor 0, -2
-			drawstring "PREJUMPED!"
-			moveCursor -2, 0
-			drawstring "PREJUMPED!"
-			moveCursor 1, 1
-			setColor 255, 0, 0, 1
-			drawstring "PREJUMPED!"
+if %MATCH_STATE != 5
+	if %PREJUMP_STATE == 1
+		if %RACE_STATE == 2
+			if %TIME_SELF > -1000
+				setScale #DEFAULTSCALE
+				setCursor 400, 300
+				setScale #NOSCALE
+				setColor 1, 1, 1, 1
+				setFontFamily "Hemi Head"
+				setFontSize 22
+				setAlign #MIDDLE, #CENTER
+				moveCursor -1, -79
+				setColor 0, 0, 0, 0.3
+				drawstring "PREJUMPED!"
+				moveCursor 2, 0
+				drawstring "PREJUMPED!"
+				moveCursor 0, -2
+				drawstring "PREJUMPED!"
+				moveCursor -2, 0
+				drawstring "PREJUMPED!"
+				moveCursor 1, 1
+				setColor 255, 0, 0, 1
+				drawstring "PREJUMPED!"
+			endif
 		endif
 	endif
-endif
 
-//Prejump notification while in practicemode
-if %PREJUMP_STATE == 1
+	//Prejump notification while in practicemode	//Omitted until fixed
+//	if %PREJUMP_STATE == 1
+//		if %RACE_STATE == 0
+//			if %TIME_SELF < 100
+//				setScale #DEFAULTSCALE
+//				setCursor 400, 300
+//				setScale #NOSCALE
+//				setColor 1, 1, 1, 1
+//				setFontFamily "Droid Sans"
+//				setFontSize 22
+//				setAlign #MIDDLE, #CENTER
+//				moveCursor -1, -79
+//				setColor 0, 0, 0, 0.3
+//				drawstring "PREJUMPED!"
+//				moveCursor 2, 0
+//				drawstring "PREJUMPED!"
+//				moveCursor 0, -2
+//				drawstring "PREJUMPED!"
+//				moveCursor -2, 0
+//				drawstring "PREJUMPED!"
+//				moveCursor 1, 1
+//				setColor 255, 0, 0, 1
+//				drawstring "PREJUMPED!"
+//			endif
+//		endif
+//	endif
+
+	//Static 
 	if %RACE_STATE == 0
-		if %TIME_SELF < 100
-			setScale #DEFAULTSCALE
-			setCursor 400, 300
-			setScale #NOSCALE
-			setColor 1, 1, 1, 1
-			setFontFamily "Droid Sans"
-			setFontSize 22
-			setAlign #MIDDLE, #CENTER
-			moveCursor -1, -79
-			setColor 0, 0, 0, 0.3
-			drawstring "PREJUMPED!"
-			moveCursor 2, 0
-			drawstring "PREJUMPED!"
-			moveCursor 0, -2
-			drawstring "PREJUMPED!"
-			moveCursor -2, 0
-			drawstring "PREJUMPED!"
-			moveCursor 1, 1
-			setColor 255, 0, 0, 1
-			drawstring "PREJUMPED!"
-		endif
+		setScale #DEFAULTSCALE
+		setCursor 400, 300
+		setScale #NOSCALE
+		setColor 1, 1, 1, 1
+		setFontFamily "Hemi Head"
+		setFontSize 22
+		setAlign #MIDDLE, #CENTER
+		moveCursor -1, -209
+		setColor 0, 0, 0, 0.3
+		drawstring "Practicing"
+		moveCursor 2, 0
+		drawstring "Practicing"
+		moveCursor 0, -2
+		drawstring "Practicing"
+		moveCursor -2, 0
+		drawstring "Practicing"
+		moveCursor 1, 1
+		setColor 0, 125, 125, 1
+		drawstring "Practicing"
 	endif
-endif
-
-//Static 
-if %RACE_STATE == 0
-	setScale #DEFAULTSCALE
-	setCursor 400, 300
-	setScale #NOSCALE
-	setColor 1, 1, 1, 1
-	setFontFamily "Droid Sans"
-	setFontSize 22
-	setAlign #MIDDLE, #CENTER
-	moveCursor -1, -209
-	setColor 0, 0, 0, 0.3
-	drawstring "Practicing"
-	moveCursor 2, 0
-	drawstring "Practicing"
-	moveCursor 0, -2
-	drawstring "Practicing"
-	moveCursor -2, 0
-	drawstring "Practicing"
-	moveCursor 1, 1
-	setColor 0, 125, 125, 1
-	drawstring "Practicing"
 endif

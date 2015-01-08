@@ -14,10 +14,7 @@
 //4 - disable Records
 //8 - disable 10 seconds countdown
 
-include racesow/zoom
-include racesow/team_info
 include racesow/ammo
-include racesow/scores
 include racesow/times
 include racesow/obituaries
 include racesow/powerups
@@ -56,3 +53,5 @@ include racesow/startspeed
 
 //workaround for changing to older huds
 setScale #DEFAULTSCALE
+
+include racesow/auth_state

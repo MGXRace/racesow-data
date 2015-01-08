@@ -2,16 +2,13 @@
 
 setScale #DEFAULTSCALE
 setCursor 0, 384
-
+setFontStyle "normal"
+	setFontFamily "Ubuntu Mono"
 if %VIDWIDTH < 800
-	// old - bitstream_9
-	setFontFamily "Droid Sans"
-	setFontSize 10
+	setFontSize 13
 endif
 if %VIDWIDTH >= 800
-	// old - bitstream_10
-	setFontFamily "Droid Sans"
-	setFontSize 14
+	setFontSize 15
 endif
 
 if %CHAT_MODE > 0
@@ -39,4 +36,3 @@ if %CHAT_MODE > 0
 	setAlign #RIGHT, #BOTTOM
 	drawPicByName gfx/2d/bubblechat    
 endif
-

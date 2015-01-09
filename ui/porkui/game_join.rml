@@ -303,25 +303,7 @@
 		}
 	}
 	
-	void onServerBrowserRowRemove( Element @self, Event @ev )
-	{
-		int numRowsRemoved = ev.getParameter( 'num_rows_removed', '0' ).toInt();
-		if( numRowsRemoved == 0 ) {
-			return;
-		}
-		
-		int firstRowRemoved = ev.getParameter( 'first_row_removed', '0' ).toInt();
 
-		String prop = servergrid.getProp( 'selected-row' );
-		int selectedRowIndex = prop.empty() ? -1 : prop.toInt();
-
-		if( selectedRowIndex >= firstRowRemoved && selectedRowIndex < firstRowRemoved + numRowsRemoved ) {
-			// clear/hide the infoblock
-			serverblock.css( 'display', 'none' );
-			connectbtn.css( 'visibility', 'hidden' );
-			favoritebtn.css( 'visibility', 'hidden' );
-		}
-	}
 
 	void onServerBrowserRowActivate( Element @elem, Event @ev )
 	{
@@ -444,7 +426,6 @@
 					onrowadd="$onServerBrowserRowAdd" 
 					onrowselect="$onServerBrowserRowSelect" 
 					onrowchange="$onServerBrowserRowChange"
-					onrowremove="$onServerBrowserRowRemove"
 					onrowactivate="$onServerBrowserRowActivate">
 					<col fields="favorite" width="24px" formatter="empty">&nbsp;</col>
 					<col fields="ping" width="50px">Ping</col>

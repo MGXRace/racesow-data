@@ -1,5 +1,11 @@
 #player-setup { text-align: center; }
 #player-setup panel { text-align: left; }
+#player-options-form { text-align: left; }
+
+#player-options-form input {
+	width: 200px;	
+	height: 24px;
+}
 
 tabset tab {
 	width: 20%;
@@ -8,8 +14,4 @@ tabset tab {
 
 #crosshair {
 	z-index: 0;
-}
-
-#player-setup h4 { 
-	margin-left: 15%;
 }

@@ -399,7 +399,7 @@ class RS_Player
         sendMessage( @this, S_COLOR_ORANGE + "Race finished: " + S_COLOR_WHITE + TimeToString( newTime )
                 + S_COLOR_ORANGE + " Speed: " + S_COLOR_WHITE + race.endSpeed // finish speed
                 + S_COLOR_ORANGE + " Personal: " + S_COLOR_WHITE + diffString(personalBest, newTime) // personal best
-                + S_COLOR_ORANGE + " Server: " + S_COLOR_WHITE + diffString(refBest, newTime) // server best
+                + S_COLOR_ORANGE + " Diffref: " + S_COLOR_WHITE + diffString(refBest, newTime) // server best
                 + "\n");
     }
 

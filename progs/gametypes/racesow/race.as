@@ -141,7 +141,7 @@ class RS_Race
                 + S_COLOR_WHITE + TimeToString( newTime )
                 + S_COLOR_ORANGE + " Speed: " + S_COLOR_WHITE + player.getSpeed()
                 + S_COLOR_ORANGE + " Personal: " + S_COLOR_WHITE + diffString( personalBest, newTime )
-                + S_COLOR_ORANGE + " Server: " + S_COLOR_WHITE + diffString( refBest, newTime ) + "\n";
+                + S_COLOR_ORANGE + " Diffref: " + S_COLOR_WHITE + diffString( refBest, newTime ) + "\n";
         return true;
     }
 

@@ -5,6 +5,7 @@
 	height:100%;
 	bg-decorator: image;
 	bg-image: /gfx/ui/loadingscreen.tga;
+	visibility: visible;
 }
 
 /* fully transparent background */

@@ -113,7 +113,7 @@
 
 				<br/>
 
-				<button onclick="form.restoreOptions(); video.Reset(self); notificationPopup('Saved');" class="button-cancel">Cancel</button>				
+				<button onclick="form.restoreOptions(); video.Reset(self);" class="button-cancel">Cancel</button>				
 				<button onclick="form.applyOptions(); video.Apply(self);" class="button-apply">Save changes</button>
 			</optionsform>
 		</div>

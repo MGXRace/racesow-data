@@ -212,6 +212,10 @@
 						<div class="title">Grenade Launcher (GL)</div>
 						<keyselect bind="use Grenade Launcher"/>
 						<br />
+
+						<div class="title">Machinegun (MG) (give/use)</div>
+						<keyselect bind="machinegun;use Machinegun"/>
+						<br />
 						
 						<br />
 						<hr class="nicehr"/>
@@ -219,10 +223,6 @@
 						
 						<div class="title">Gunblade (GB)</div>
 						<keyselect bind="use Gunblade"/>
-						<br />
-
-						<div class="title">Machinegun (MG)</div>
-						<keyselect bind="use Machinegun"/>
 						<br />
 						
 						<div class="title">Riotgun (RG)</div>
@@ -238,116 +238,40 @@
 						<br />
 					</div>
 				</panel>
-				<tab>Voice chat</tab>
+				<tab>Race-specific keys</tab>
 				<panel class="dropshadow">
 					<div class="keys">
-						<div class="title">Yes</div>
-						<keyselect bind="vsay yes"/>
+						<div class="title">Restart race</div>
+						<keyselect bind="kill"/>
 						<br/>
 						
-						<div class="title">No</div>
-						<keyselect bind="vsay no"/>
+						<div class="title">Set spawn position</div>
+						<keyselect bind="position prerace"/>
 						<br/>
 						
-						<div class="title">Oops</div>
-						<keyselect bind="vsay oops"/>
+						<div class="title">Reset spawn position</div>
+						<keyselect bind="position prerace clear"/>
 						<br/>
 						
-						<div class="title">Sorry</div>
-						<keyselect bind="vsay sorry"/>
+						<div class="title">Toplist</div>
+						<keyselect bind="top"/>
 						<br/>
 						
-						<div class="title">Thanks</div>
-						<keyselect bind="vsay thanks"/>
+						<br />
+						<hr class="nicehr"/>
+						<br />
+						
+						<div class="title">Practice mode</div>
+						<keyselect bind="practicemode"/>
+						<br/>
+
+						<div class="title">Noclip (fly through walls)</div>
+						<keyselect bind="noclip"/>
 						<br/>
 						
-						<div class="title">Yeehaa</div>
-						<keyselect bind="vsay yeehaa"/>
+						<div class="title">Save position (practicemode)</div>
+						<keyselect bind="position save"/>
 						<br/>
-						
-						<div class="title">Good Game</div>
-						<keyselect bind="vsay goodgame"/>
-						<br/>
-						
-						<div class="title">Booo</div>
-						<keyselect bind="vsay booo"/>
-						<br/>
-						
-						<div class="title">Shut Up</div>
-						<keyselect bind="vsay shutup"/>
-						<br/>
-						
-						<div class="title">Affermative</div>
-						<keyselect bind="vsay_team affermative"/>
-						<br/>
-						
-						<div class="title">Roger</div>
-						<keyselect bind="vsay_team roger"/>
-						<br/>
-						
-						<div class="title">Negative</div>
-						<keyselect bind="vsay_team negative"/>
-						<br/>
-						
-						<div class="title">Goto Quad</div>
-						<keyselect bind="vsay_team gotoquad"/>
-						<br/>						
-							
-						<div class="title">Need Health</div>
-						<keyselect bind="vsay_team needhealth"/>
-						<br/>
-						
-						<div class="title">Need Weapon</div>
-						<keyselect bind="vsay_team needweapon"/>
-						<br/>
-						
-						<div class="title">Need Armor</div>
-						<keyselect bind="vsay_team needarmor"/>
-						<br/>
-						
-						<div class="title">On Defense</div>
-						<keyselect bind="vsay_team ondefense"/>
-						<br/>
-						
-						<div class="title">On Offense</div>
-						<keyselect bind="vsay_team onoffense"/>
-						<br/>
-						
-						<div class="title">No Problem</div>
-						<keyselect bind="vsay_team noproblem"/>
-						<br/>
-						
-						<div class="title">Defend!</div>
-						<keyselect bind="vsay_team defend"/>
-						<br/>
-						
-						<div class="title">Attack!</div>
-						<keyselect bind="vsay_team attack"/>
-						<br/>
-						
-						<div class="title">Need Backup</div>
-						<keyselect bind="vsay_team needbackup"/>
-						<br/>							
-						
-						<div class="title">Need Defense</div>
-						<keyselect bind="vsay_team needdefense"/>
-						<br/>
-						
-						<div class="title">Need Offense</div>
-						<keyselect bind="vsay_team needoffense"/>
-						<br/>
-						
-						<div class="title">Need Help</div>
-						<keyselect bind="vsay_team needhelp"/>
-						<br/>
-						
-						<div class="title">Armor Free</div>
-						<keyselect bind="vsay_team armorfree"/>
-						<br/>
-						
-						<div class="title">Area Secured</div>
-						<keyselect bind="vsay_team areasecured"/>
-						<br/>		
 					</div>				
 				</panel>
 			</tabset>

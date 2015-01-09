@@ -136,7 +136,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	</script>
 	</head>
 <body onload="$onConnfailedLoad" onshow="$onConnfailedShow">
-	<img src="../../gfx/ui/loadingscreen" id="bgimage" id="background" />
+	<img src="../../gfx/ui/loadingscreen" id="bgimage" />
 	<div id="content">
 		<div id="menu-failed">
 			<h1 id="mfailed-title">

@@ -346,7 +346,7 @@ class RS_Player
         if( @record is null || record.getTime() > newTime )
         {
             @record = @race;
-            auth.reportRace( newTime, race.checkpoints );
+            auth.reportRace( newTime, race.checkpoints, oneliner );
             execSpectators( @func, @this, "Personal record!" );
         }
 

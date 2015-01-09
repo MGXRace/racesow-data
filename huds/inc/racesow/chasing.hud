@@ -1,13 +1,21 @@
 //
 if %CHASING != #NOTSET
-	setFontFamily "Kimberley"
+	setScale #DEFAULTSCALE
+	setCursor 400 53
+	setAlign #CENTER, #BOTTOM
+	setSize 90, 28
+	setcolor 0, 0, 0, 0.2
+	setAlign #CENTER, #MIDDLE
+	drawPicByName gfx/ui/white
+
+	setFontFamily "Ubuntu Mono"
 	setFontSize 16
 	setColor 1.0 1.0 1.0 0.2
 	setScale #DEFAULTSCALE
 	setCursor 400 50
 	setAlign #CENTER, #BOTTOM
-	drawString Chasing:
-	setFontSize 20
+	drawString Spectating:
+	setFontSize 25
 	setColor 1.0 1.0 1.0 1
 	setAlign #CENTER, #TOP
 	drawPlayerName %CHASING

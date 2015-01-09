@@ -23,7 +23,7 @@ String diffString( uint oldTime, uint newTime )
     {
         return S_COLOR_RED + "+" + TimeToString( diffTime );
     }
-    else if ( diffTime <= 10 )
+    else if ( diffTime <= -10 )
     {
         return S_COLOR_GREEN + "-" + TimeToString( -diffTime );
     }

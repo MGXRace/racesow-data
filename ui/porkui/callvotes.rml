@@ -68,6 +68,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		void onCallvotesShow( Element @body, Event @evt )
 		{
 			animationsOnShow();
+
+			body.getElementById( 'back-btn' ).css( 'display', window.history_size()>1 ? 'block' : 'none' );
 			
 			callvotesSetDataSources();
 
@@ -234,7 +236,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 				<div id="callvotes-container" class="dropshadow">
 					<div id="callvotes_left_frame">
 						<datagrid id="callvotes_datagrid" source="" onrowselect="$onCallvotesRowSelect">
-							<col fields="name">Name</col>
+							<col fields="name" width="150px">Name</col>
 						</datagrid>
 					</div>
 					<div id="callvotes_spacer_frame" >&nbsp;</div>
@@ -253,7 +255,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 					</div>
 
 					<div id="callvote_active">
-						<input id="callvote_btn_start" type="submit">Call vote</input>
+						<input id="callvote_btn_start" type="submit">Call a vote</input>
 						<span id="callvote_ongoing_text"></span>
 					</div>
 				</div>			
@@ -266,6 +268,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 				</div>
 			</form>
 
+			<button onclick="window.history_back();" id="back-btn">Back</button>
 			<button onclick="window.close();">Return to game</button>		
 		</div>			
 	</div>

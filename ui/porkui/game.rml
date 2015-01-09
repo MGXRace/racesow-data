@@ -180,6 +180,10 @@
 					StringUtils::Format( _T( '"%s" options' ), game.cs( CS_GAMETYPETITLE ) )
 				);
 			}
+
+			if( team == specTeam ) {
+				showMenuButton( 'link-chasecam' );
+			}
 			
 			showMenuButton( 'link-callvotes' );
 

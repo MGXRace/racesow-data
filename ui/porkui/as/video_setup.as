@@ -29,25 +29,25 @@ class VideoSetup
 	bool allowVidRestart;
 	
 	// video profile
-	Cvar ui_video_profile;
+	Cvar ui_video_profile( "ui_video_profile", "medium", CVAR_ARCHIVE );
 	
 	// video mode
-	Cvar vid_mode;
+	Cvar vid_mode( "vid_mode", "-2", 0 );
 	
 	// quality of textures
-	Cvar r_picmip;
+	Cvar r_picmip( "r_picmip", "0", 0 );
 	
 	// filtering
-	Cvar r_texturefilter; // 0==1, 2, 4, .. values
-	Cvar gl_ext_texture_filter_anisotropic_max;		
+	Cvar r_texturefilter( "r_texturefilter", "4", 0 ); // 0==1, 2, 4, .. values
+	Cvar gl_ext_texture_filter_anisotropic_max( "gl_ext_texture_filter_anisotropic_max", "8", 0 );		
 	
 	// lighting
-	Cvar r_lighting_vertexlight;
-	Cvar r_lighting_deluxemapping;
-	Cvar ui_lighting; // used to store index of selector
+	Cvar r_lighting_vertexlight( "r_lighting_vertexlight", "0", 0 );
+	Cvar r_lighting_deluxemapping( "r_lighting_deluxemapping", "1", 0 );
+	Cvar ui_lighting( "ui_lighting", "2", 0 ); // used to store index of selector
 	
 	// shadows
-	Cvar cg_shadows;
+	Cvar cg_shadows( "cg_shadows", "1", CVAR_ARCHIVE );
 	
 	// ids
 	String idProfile;
@@ -66,27 +66,19 @@ class VideoSetup
 		this.idFiltering = idFiltering;
 		this.idLighting = idLighting;
 		this.idShadows = idShadows;
-		
-		// pyramids of the happiness
-		Cvar video_profile( "ui_video_profile", "medium", CVAR_ARCHIVE );
-		Cvar mode( "vid_mode", "-2", 0 );
-		Cvar picmip( "r_picmip", "0", 0 );
-		Cvar texturefilter( "r_texturefilter", "1", 0 );
-		Cvar ext_texture_filter_anisotropic_max( "gl_ext_texture_filter_anisotropic_max", "8", 0 );		
-		Cvar lighting_vertexlight( "r_lighting_vertexlight", "0", 0 );
-		Cvar lighting_deluxemapping( "r_lighting_deluxemapping", "1", 0 );
-		Cvar old_lighting( "ui_lighting", "2", 0 );
-		Cvar shadows( "cg_shadows", "1", CVAR_ARCHIVE );
 
-		ui_video_profile = video_profile;
-		vid_mode = mode;
-		r_picmip = picmip;
-		r_texturefilter = texturefilter;
-		gl_ext_texture_filter_anisotropic_max = ext_texture_filter_anisotropic_max;
-		r_lighting_vertexlight = lighting_vertexlight;
-		r_lighting_deluxemapping = lighting_deluxemapping;
-		ui_lighting = old_lighting;
-		cg_shadows = shadows;
+		// We only have 3 choices in lightning listbox:
+		// vertex lighting: lighting_vertexlight = 1, lighting_deluxemapping = 0
+		// lightmaps: lighting_vertexlight = 0, lighting_deluxemapping = 0
+		// per-pixel lighting: lighting_vertexlight = 0, lighting_deluxemapping = 1
+		// since the variant lighting_vertexlight = 1, lighting_deluxemapping = 1 is
+		// equivalent to vertex lighting.
+		if( r_lighting_vertexlight.value == 1 )
+			ui_lighting.set( 0 );
+		else if( r_lighting_deluxemapping.value == 1 )
+			ui_lighting.set( 2 );
+		else
+			ui_lighting.set( 1 );
 
 		Initialize( @elem );
 	}
@@ -204,13 +196,13 @@ class VideoSetup
 					r_lighting_vertexlight.set("1");
 					r_lighting_deluxemapping.set("0");
 					break;
-				case 2:
-					r_lighting_vertexlight.set("0");
-					r_lighting_deluxemapping.set("1");
-					break;
-				default: // 1
+				case 1:
 					r_lighting_vertexlight.set("0");
 					r_lighting_deluxemapping.set("0");
+					break;
+				default: // 2
+					r_lighting_vertexlight.set("0");
+					r_lighting_deluxemapping.set("1");
 					break;
 			}
 			

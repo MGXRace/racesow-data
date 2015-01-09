@@ -12,5 +12,5 @@ if %RACE_STATE == 1
 	setFontFamily "Droid Sans"
 	setFontSize 16
 	setColorAlpha 1
-	setFontStyle normal
 endif
+setFontStyle normal

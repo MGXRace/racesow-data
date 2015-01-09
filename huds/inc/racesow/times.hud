@@ -178,6 +178,6 @@ if %MATCH_STATE <= 3
 			drawTimer %TIME_BEST - %TIME_SELF
 		endif
 		endif
-		setFontStyle normal
 	endif
 endif
+setFontStyle normal

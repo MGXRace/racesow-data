@@ -20,8 +20,14 @@ class RS_CMD_ProtectedNick : RS_Command
         if( argc == 0 )
             player.auth.setNick( player.client.get_name() );
         else
+		{
+			if( args.removeColorTokens().length() > 15 )
+			{
+				sendErrorMessage( @player, "protectednick cannot be longer than 15 characters" );
+				return false;
+			}
             player.auth.setNick( args );
-
+		}
         return true;
     }
 }

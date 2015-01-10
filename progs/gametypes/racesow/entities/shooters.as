@@ -1,12 +1,13 @@
-Cvar rs_plasma_speed( "rs_plasma_speed", "2400", CVAR_ARCHIVE );
-Cvar rs_plasma_knockback( "rs_plasma_maxKnockback", "20", CVAR_ARCHIVE );
-Cvar rs_plasma_splash( "rs_plasma_splash", "45", CVAR_ARCHIVE );
+Cvar rs_plasma_speed( "rs_plasma_speed", "1700", CVAR_ARCHIVE );
+Cvar rs_plasma_knockback( "rs_plasma_maxKnockback", "22", CVAR_ARCHIVE );
+Cvar rs_plasma_splash( "rs_plasma_splash", "40", CVAR_ARCHIVE );
 Cvar rs_rocket_speed( "rs_rocket_speed", "950", CVAR_ARCHIVE );
 Cvar rs_rocket_knockback( "rs_rocket_maxKnockback", "100", CVAR_ARCHIVE );
-Cvar rs_rocket_splash( "rs_rocket_splash", "140", CVAR_ARCHIVE );
-Cvar rs_grenade_speed( "rs_grenade_speed", "900", CVAR_ARCHIVE );
-Cvar rs_grenade_knockback( "rs_grenade_maxKnockback", "90", CVAR_ARCHIVE );
-Cvar rs_grenade_splash( "rs_grenade_splash", "160", CVAR_ARCHIVE );
+Cvar rs_rocket_splashfrac( "rs_rocket_splashfrac", "2.0", CVAR_ARCHIVE );
+Cvar rs_rocket_splash( "rs_rocket_splash", "150", CVAR_ARCHIVE );
+Cvar rs_grenade_speed( "rs_grenade_speed", "820", CVAR_ARCHIVE );
+Cvar rs_grenade_knockback( "rs_grenade_maxKnockback", "115", CVAR_ARCHIVE );
+Cvar rs_grenade_splash( "rs_grenade_splash", "170", CVAR_ARCHIVE );
 
 //==============
 //RS_UseShooter

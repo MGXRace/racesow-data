@@ -38,7 +38,7 @@ class RS_CMD_Oneliner : RS_Command
             return false;
 
         player.oneliner = false;
-        RS_ReportMap( "", args );
+        RS_ReportMap( "", args, false );
         return true;
     }
 }

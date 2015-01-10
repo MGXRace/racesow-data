@@ -345,7 +345,7 @@ class RS_CMD_AdminTag : RS_Command
 
     bool execute(RS_Player @player, String &args, int argc)
     {
-        RS_ReportMap( args, "" );
+        RS_ReportMap( args, "", false );
         return true;
     }
 }

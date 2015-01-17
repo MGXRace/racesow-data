@@ -4,7 +4,7 @@ if %MATCH_STATE <= 3
 		//draw Strings:
 		//Personal Best
 		//Server Best
-		//MGX Record
+		//World Record
 
 		setFontFamily "Hemi Head"
 		setFontSize 16
@@ -22,14 +22,14 @@ if %MATCH_STATE <= 3
 			moveCursor 0, 15
 				drawString "Server Best: "
 			moveCursor 0, 15
-				drawString "MGX Record: "
+				drawString "World Record: "
 			moveCursor -2, -32
 			setColor 1, 1, 1, 1
 				drawString "Personal Best: "
 			moveCursor 0, 15
 				drawString "Server Best: "
 			moveCursor 0, 15
-				drawString "MGX Record: "
+				drawString "World Record: "
 			moveCursor 0, -15
 		endif
 

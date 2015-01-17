@@ -210,7 +210,7 @@
 						<select cvar="rs_diffref" realtime="1">
 							<option value="personal" selected>Personal Best</option>
 							<option value="server">Server Best</option>
-							<option value="world">MGX record</option>
+							<option value="world">World record</option>
 						</select>
 						<br/>
 

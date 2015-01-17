@@ -312,7 +312,9 @@ class RS_Player
                 @map.worldRecord = @race;
                 execSpectators( @func, @this, S_COLOR_GREEN + "New World record!" );
                 G_PrintMsg(null, client.name + " "
-                                 + S_COLOR_YELLOW + "made a new world record: "
+                                 + S_COLOR_YELLOW + "made a new "
+								 + S_COLOR_BLUE + "world"
+								 + S_COLOR_YELLOW + " record: "
                                  + TimeToString( newTime ) + "\n");
                 sendMessage( @this, "Assert your dominance by leaving a oneliner message on the map!\n" );
                 RS_Player @other;
@@ -333,7 +335,9 @@ class RS_Player
                 @map.serverRecord = @race;
                 execSpectators( @func, @this, S_COLOR_GREEN + "New server record!" );
                 G_PrintMsg(null, client.name + " "
-                                 + S_COLOR_YELLOW + "made a new server record: "
+                                 + S_COLOR_YELLOW + "made a new "
+								 + S_COLOR_GREEN + "server"
+								 + S_COLOR_YELLOW + " record: "
                                  + TimeToString( newTime ) + "\n");
             }
         }

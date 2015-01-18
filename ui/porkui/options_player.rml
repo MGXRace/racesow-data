@@ -119,6 +119,10 @@
 						</select>
 						<br/>
 
+						<div class="title">Show "guwashi" speed meter</div>
+						<input cvar="cg_showGuwashiSpeed" type="checkbox" realtime="1"/>
+						<br/>
+
 						<div class="title">Show strafe helpers</div>
 						<input cvar="cg_strafeHUD" type="checkbox" realtime="1"/>
 						<br/>
@@ -134,6 +138,14 @@
 
 						<div class="title">Show acceleration bar</div>
 						<input cvar="cg_showAcceleration" type="checkbox" realtime="1"/>
+						<br/>
+
+						<div class="title">Show boost speed</div>
+						<input cvar="cg_showBoostSpeed" type="checkbox" realtime="1"/>
+						<br/>
+
+						<div class="title">Show jump speed</div>
+						<input cvar="cg_showJumpInfo" type="checkbox" realtime="1"/>
 						<br/>
 
 						<div class="title">Show pressed keys</div>

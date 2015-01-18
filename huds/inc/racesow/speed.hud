@@ -55,6 +55,7 @@ if %MATCH_STATE == 3
 		setAlign #LEFT, #MIDDLE
 		setFontFamily "Virtue"
 		setFontSize 13
+		if %SHOW_BOOST_SPEED == 1
 		if %CHASING == #NOTSET
 			if 0 <= %ROCKETACCEL
 				setColor 0, 0, 0, 1
@@ -99,9 +100,11 @@ if %MATCH_STATE == 3
 				drawStringNum %ROCKETACCEL
 			endif
 		endif
+		endif
 
 		//jumpspeed number
 		moveCursor 7, 12
+		if %SHOW_JUMP_INFO == 1
 		setColor 0, 0, 0, 1
 		drawStringNum %JUMPSPEED
 		moveCursor 0, 2
@@ -113,5 +116,6 @@ if %MATCH_STATE == 3
 		moveCursor -1, -1
 		setColor 1, 1, 1, 1
 		drawStringNum %JUMPSPEED
+		endif
 	endif
 endif

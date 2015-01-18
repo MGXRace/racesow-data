@@ -55,3 +55,4 @@ include racesow/startspeed
 setScale #DEFAULTSCALE
 
 include racesow/auth_state
+include racesow/speedguwashi

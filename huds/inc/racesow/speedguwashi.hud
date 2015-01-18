@@ -1,0 +1,51 @@
+// speed (with shadow)
+if %SHOW_GUWASHI_SPEED == 1
+
+	// draws the black border
+	setAlign #LEFT, #MIDDLE
+	setColor 0, 0, 0, 0.1
+	setCursor -3 + -118 + 0.5 * #WIDTH, -150 + #HEIGHT
+	setSize 6 + 118 * 2, 38
+	drawPicByName $whiteimage
+
+	// draws the grey backdrop
+	setAlign #LEFT, #MIDDLE
+	setColor 0.2, 0.2, 0.2, 0.1
+	setCursor -118 + 0.5 * #WIDTH, -150 + #HEIGHT
+	setSize 118 * 2, 32
+	drawPicByName $whiteimage
+
+	// draws the bar
+	setColor 1, 1, 1, 0.2
+	setAlign #LEFT, #MIDDLE
+	if %RACE == 0
+		setCursor -118 + 0.5 * #WIDTH, -100 + #HEIGHT
+	endif
+	if %RACE
+		setCursor -118 + 0.5 * #WIDTH, -150 + #HEIGHT
+	endif
+	setSize 118 * 2, 32
+	drawBar %SPEED * 0.1, 100 // 0.05 == 100 / 1000
+	if %SPEED > 1000
+		setColor 1, 1, 0, 0.2
+		drawBar -100 + %SPEED * 0.1, 100 // 0.05 == 100 / 1000
+	endif
+	if %SPEED > 2000
+		setColor 1, 0, 0, 0.2
+		drawBar -150 + %SPEED * 0.1, 100 // 0.05 == 100 / 1000
+	endif
+
+	if %SPEED > 0
+		setColor 0.5 1 0.5 1
+		setAlign #CENTER, #MIDDLE
+		if %RACE == 0
+			setCursor 0.5 * #WIDTH, -100 + #HEIGHT
+		endif
+		if %RACE
+			setCursor 0.5 * #WIDTH, -150 + #HEIGHT
+		endif
+		setSize 12 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 12
+		drawNum %SPEED
+	endif
+
+endif

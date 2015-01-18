@@ -4,7 +4,7 @@ if %AUTH_STATE == #NOTSET
 		setCursor 400, 250
 		setScale #NOSCALE
 		setColor 1, 1, 1, 1
-		setFontFamily "Droid Sans"
+		setFontFamily "Hemi Head"
 		setFontSize 22
 		setAlign #MIDDLE, #CENTER
 		moveCursor -1, -79

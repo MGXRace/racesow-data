@@ -5,7 +5,7 @@ if %SHOW_PICKUP
 		setAlign #CENTER, #TOP
 		setScale #DEFAULTSCALE
 		setCursor 400, #HEIGHT - 100
-		setFontFamily "Kimberley"
+		setFontFamily "Hemi Head"
 		setFontSize 16
 		drawItemName %PICKUP_ITEM
 

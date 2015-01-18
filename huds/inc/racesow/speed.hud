@@ -62,32 +62,29 @@ if %MATCH_STATE == 3
 				drawString "+ "
 				moveCursor 10, -2
 				drawStringNum %ROCKETACCEL
-				moveCursor -10, 0
-				moveCursor 0, 2
+				moveCursor -10, 2
 				drawString "+ "
 				moveCursor 10, 0
 				drawStringNum %ROCKETACCEL
-				moveCursor -10, 0
-				moveCursor 2, -2
+				moveCursor -8, -2
 				drawString "+ "
 				moveCursor 10, 0
 				drawStringNum %ROCKETACCEL
-				moveCursor -10, 0
-				moveCursor 0, 2
+				moveCursor -10, 2
 				drawString "+ "
 				moveCursor 10, 0
 				drawStringNum %ROCKETACCEL
-				moveCursor -10, 0
-				moveCursor -1, -1
+				moveCursor -11, -1
 				setColor 0, 1, 0, 1
 				drawString "+ " //space prevents warsow from using "+" as operator
 				moveCursor 10, 0
 				drawStringNum %ROCKETACCEL
-				moveCursor -10, 0
+				moveCursor -15, 1
 			endif
 
 			if 0 > %ROCKETACCEL
 				setColor 0, 0, 0, 1
+				moveCursor 3, -2
 				drawStringNum %ROCKETACCEL
 				moveCursor 0, 2
 				drawStringNum %ROCKETACCEL
@@ -98,9 +95,9 @@ if %MATCH_STATE == 3
 				moveCursor -1, -1
 				setColor 1, 0, 0, 1
 				drawStringNum %ROCKETACCEL
+				moveCursor -8, 1
 			endif
 		endif
-		moveCursor -1, 1
 		endif
 
 		//jumpspeed number

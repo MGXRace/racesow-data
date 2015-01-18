@@ -1,13 +1,13 @@
 // match message
 if %RACE_STATE == 1
-	setFontFamily "Droid Sans"
+	setFontFamily "Hemi Head"
 	setFontSize 14
 	setFontStyle bold
 	setColorAlpha 0.5
 	setScale #DEFAULTSCALE
 	setSize #WIDTH, 32
 	setAlign #CENTER #TOP
-	setCursor #WIDTH / 2, #HEIGHT * 0.22
+	setCursor #WIDTH / 3, #HEIGHT * 0.22
 	drawHelpString
 	setFontFamily "Droid Sans"
 	setFontSize 16

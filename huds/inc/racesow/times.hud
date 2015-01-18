@@ -23,12 +23,14 @@ if %MATCH_STATE <= 3
 				drawString "Server Best: "
 			moveCursor 0, 15
 				drawString "World Record: "
-			moveCursor -2, -32
-			setColor 1, 1, 1, 1
+			moveCursor -1, -31
+			setColor 1, 1, 0, 1
 				drawString "Personal Best: "
 			moveCursor 0, 15
+			setColor 0, 1, 0, 1
 				drawString "Server Best: "
 			moveCursor 0, 15
+			setColor 0, 0, 1, 1
 				drawString "World Record: "
 			moveCursor 0, -15
 		endif
@@ -37,7 +39,7 @@ if %MATCH_STATE <= 3
 		setColor 0, 0, 0, 1
 		setAlign #LEFT, #BOTTOM
 
-		moveCursor 2, -13
+		moveCursor 1, -14
 
 		if %TIME_BEST != #NOTSET
 			drawTimer %TIME_BEST
@@ -64,7 +66,7 @@ if %MATCH_STATE <= 3
 			drawString "Not set"
 		endif
 
-		moveCursor -2, -32
+		moveCursor -1, -31
 		setColor 1, 1, 1, 1
 
 

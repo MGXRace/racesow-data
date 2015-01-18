@@ -1,6 +1,6 @@
 //
 if %RACE == 1
-	if %WEAPON_ITEM != #WEAP_GUNBLADE
+	if %WEAPON_ITEM
 		setAlign #CENTER #MIDDLE
 		setScale #DEFAULTSCALE
 		setCursor 430, 572

@@ -293,7 +293,7 @@ class RS_Player
 
         if( race.prejumped )
         {
-            execSpectators( @func, @this, "Prejump Time: " + TimeToString( race.getTime() ) );
+            execSpectators( @func, @this, S_COLOR_RED + "Prejumped Time: " + S_COLOR_WHITE + TimeToString( race.getTime() ) );
             sendErrorMessage( @this, "Prejumped records are not recorded." );
             respawnTime = realTime + 3000;
             return;
@@ -310,7 +310,7 @@ class RS_Player
             if( @map.worldRecord is null || map.worldRecord.getTime() > newTime )
             {
                 @map.worldRecord = @race;
-                execSpectators( @func, @this, S_COLOR_GREEN + "New World record!" );
+                execSpectators( @func, @this, S_COLOR_GREEN + "New world record!" );
                 G_PrintMsg(null, client.name + " "
                                  + S_COLOR_YELLOW + "made a new "
 								 + S_COLOR_BLUE + "world"
@@ -351,7 +351,7 @@ class RS_Player
         {
             @record = @race;
             auth.reportRace( newTime, race.checkpoints, oneliner );
-            execSpectators( @func, @this, "Personal record!" );
+            execSpectators( @func, @this, S_COLOR_YELLOW + "Personal record!" );
         }
 
         execSpectators( @func, @this, "Time: " + TimeToString( newTime ) );

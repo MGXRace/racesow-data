@@ -26,7 +26,7 @@
 			f.storeOptions();
 
 			//==== model ====
-			ModelSetup setup( "model-view", "model-skin", "model-color", "model", "skin", "color", false );
+			ModelSetup setup( "model-view", "model-skin", "model-color", "model", "cg_teamALPHAmodel", "skin", "cg_teamALPHAskin", "color", "cg_teamALPHAcolor", false );
 			setup.InitializeModelSetup( @body );
 
 			mSetup = setup;	

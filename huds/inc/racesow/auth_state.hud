@@ -1,5 +1,5 @@
 if %AUTH_STATE == #NOTSET
-	if %RACE_STATE >= 1
+	if %RACE_STATE == 1
 		setScale #DEFAULTSCALE
 		setCursor 400, 250
 		setScale #NOSCALE

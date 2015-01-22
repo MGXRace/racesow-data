@@ -153,6 +153,7 @@ if %MATCH_STATE <= 3
 	if 1 == 1 & %SHOW_TIMER
 		// 10 seconds countdown
 		if %TIME_SELF < %TIME_BEST
+		if %TIME_BEST > 2000
 		if 1000 > %TIME_BEST - %TIME_SELF
 		setFontFamily "Hemi Head"
 		setFontSize 20
@@ -178,6 +179,7 @@ if %MATCH_STATE <= 3
 			moveCursor -2, -2
 			setcolor 0, 1, 0, 1
 			drawTimer %TIME_BEST - %TIME_SELF
+		endif
 		endif
 		endif
 	endif

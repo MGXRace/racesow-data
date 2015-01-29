@@ -14,6 +14,7 @@
 //4 - disable Records
 //8 - disable 10 seconds countdown
 
+include racesow/straferguwashi
 include racesow/ammo
 include racesow/times
 include racesow/obituaries

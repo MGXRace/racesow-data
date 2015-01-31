@@ -192,6 +192,7 @@ class RS_Player
         {
             startRace();
             race.prejumped = false;
+            race.preshot = false;
         }
         else
         {
@@ -299,7 +300,15 @@ class RS_Player
             return;
         }
 
-        // Not practicing or prejumped, its a real race
+        if( race.preshot )
+        {
+            execSpectators( @func, @this, S_COLOR_RED + "Preshot Time: " + S_COLOR_WHITE + TimeToString( race.getTime() ) );
+            sendErrorMessage( @this, "Preshot records are not recorded." );
+            respawnTime = realTime + 3000;
+            return;
+        }
+
+        // Not practicing or prejumped/preshot, its a real race
         auth.incrementRace();
         respawnTime = realTime + 3000;
         @lastRace = @race;
@@ -480,9 +489,13 @@ class RS_Player
             client.setLongHUDStat( STAT_TIME_SELF, race.getTime() / 10 );
             client.setHUDStat( STAT_START_SPEED, race.startSpeed );
             client.setHUDStat( STAT_PREJUMP_STATE, race.prejumped ? 1 : 0 );
+            client.setHUDStat( STAT_PRESHOT_STATE, race.preshot ? 1 : 0 );
         }
         else
+        {
             client.setHUDStat( STAT_PREJUMP_STATE, RS_QueryPjState( client.get_playerNum() ) ? 1 : 0 );
+            client.setHUDStat( STAT_PRESHOT_STATE, RS_QueryPsState( client.get_playerNum() ) ? 1 : 0 );
+        }
 
         if( @map.serverRecord !is null )
             client.setLongHUDStat( STAT_TIME_RECORD, map.serverRecord.getTime() / 10 );

@@ -55,6 +55,12 @@ class RS_Race
     bool prejumped;
 
     /**
+     * True if the race was preshot
+     * @var bool
+     */
+    bool preshot;
+
+    /**
      * Constructor
      */
     RS_Race()
@@ -63,6 +69,7 @@ class RS_Race
         checkpoints.resize( numCheckpoints );
         startSpeed = 0;
         prejumped = false;
+        preshot = false;
     }
 
     /**
@@ -77,8 +84,9 @@ class RS_Race
         startTime = player.client.uCmdTimeStamp;
         startSpeed = player.getSpeed();
         prejumped = RS_QueryPjState( player.client.get_playerNum() );
+        preshot = RS_QueryPsState( player.client.get_playerNum() );
 
-        report = ( prejumped ? S_COLOR_RED + "PREJUMPED " : "" ) + S_COLOR_ORANGE 
+        report = ( prejumped || preshot ? S_COLOR_RED + "PREJUMPED " : "" ) + S_COLOR_ORANGE 
             + "Start speed: " + S_COLOR_WHITE + player.getSpeed() + "\n";
     }
 

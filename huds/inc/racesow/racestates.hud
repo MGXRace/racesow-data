@@ -26,7 +26,33 @@ if %MATCH_STATE != 5
 		endif
 	endif
 
-	//Prejump notification while in practicemode	//Omitted until fixed
+	if %PRESHOT_STATE == 1
+		if %RACE_STATE == 2
+			if %TIME_SELF > -1000
+				setScale #DEFAULTSCALE
+				setCursor 400, 270
+				setScale #NOSCALE
+				setColor 1, 1, 1, 1
+				setFontFamily "Hemi Head"
+				setFontSize 22
+				setAlign #MIDDLE, #CENTER
+				moveCursor -1, -79
+				setColor 0, 0, 0, 0.3
+				drawstring "PRESHOT!"
+				moveCursor 2, 0
+				drawstring "PRESHOT!"
+				moveCursor 0, -2
+				drawstring "PRESHOT!"
+				moveCursor -2, 0
+				drawstring "PRESHOT!"
+				moveCursor 1, 1
+				setColor 255, 0, 0, 1
+				drawstring "PRESHOT!"
+			endif
+		endif
+	endif
+
+//Prejump notification while in practicemode	//Omitted until fixed
 //	if %PREJUMP_STATE == 1
 //		if %RACE_STATE == 0
 //			if %TIME_SELF < 100

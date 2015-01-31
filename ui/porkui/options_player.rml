@@ -124,7 +124,11 @@
 						<br/>
 
 						<div class="title">Show strafe helpers</div>
-						<input cvar="cg_strafeHUD" type="checkbox" realtime="1"/>
+						<select cvar="cg_strafeHUD" realtime="1">
+							<option value="1" selected>standard</option>
+							<option value="2">minimalistic</option>
+							<option value="0">off</option>
+						</select>
 						<br/>
 
 						<div class="title">Show angle meter</div>

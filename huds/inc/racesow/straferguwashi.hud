@@ -1,0 +1,30 @@
+if %MATCH_STATE == 3
+	if %SHOW_STRAFE == 2
+
+		setAlign #CENTER #MIDDLE
+
+		// draws strafe helpers
+		if %STRAFEANGLE && %SHOW_STRAFE != 0
+			if %SPEED > 449
+				setColor 1, 1, 1, 1
+				if 0.9 <= %ACCELERATION / %MAX_ACCEL
+					setColor 0, 1, 0, 1
+				endif
+				if 0.85 <= %ACCELERATION / %MAX_ACCEL
+					if 0.9 > %ACCELERATION / %MAX_ACCEL
+						setColor 0, 0.9, 0, 1
+					endif
+				endif
+				setSize 8 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 3
+				setCursor 400, 300
+				setAlign #LEFT #MIDDLE
+				moveCursor 0.03 * %DIFF_ANGLE + %STRAFEANGLE, 0
+				drawPicByName gfx/hud/racesow/strafearrow_small
+				setAlign #RIGHT #MIDDLE
+				setCursor 400, 300
+				moveCursor 0.03 * %DIFF_ANGLE - %STRAFEANGLE, 0
+				drawPicByName gfx/hud/racesow/strafearrow_small
+			endif
+		endif
+	endif
+endif

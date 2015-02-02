@@ -74,8 +74,7 @@ class RS_GT_Race : RS_Gametype
         if( player.state == RS_STATE_PRACTICE )
         {
             player.startRace();
-            player.race.prejumped = false;
-            player.race.preshot = false;
+            player.practiceReset = false;
         }
 
         // set player movement to pass through other players and remove gunblade auto attacking

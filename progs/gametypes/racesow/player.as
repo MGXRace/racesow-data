@@ -119,6 +119,12 @@ class RS_Player
     bool oneliner;
 
     /**
+     * True if the player as reset timer in practice mode
+     * @var bool
+     */
+    bool practiceReset;
+
+    /**
      * Constructor
      * @param Client client The client to associate with the player
      */
@@ -193,6 +199,7 @@ class RS_Player
             startRace();
             race.prejumped = false;
             race.preshot = false;
+            practiceReset = false;
         }
         else
         {
@@ -250,16 +257,26 @@ class RS_Player
 
     /**
      * startRace
-     * Starts a new race iff the player is not currently racing
+     * Starts a new race if the player is not currently racing
      * @return void
      */
     void startRace()
     {
+        RS_Player @player;
         if( @race !is null && state != RS_STATE_PRACTICE )
             return;
 
-        if( state != RS_STATE_PRACTICE )
+        if( state == RS_STATE_PRACTICE ) 
+        {
+            // Only allow a single reset of timer in practice mode
+            if( practiceReset )
+                return;
+            practiceReset = true;
+        }
+        else
+        {
             state = RS_STATE_RACING;
+        }
 
         @race = @RS_Race( @this );
     }
@@ -378,6 +395,10 @@ class RS_Player
         // If race was finished, stopRace should have reported it
         if( @race !is null && race.endTime == 0 )
             raceReport( @race );
+
+        if( state == RS_STATE_PRACTICE)
+            practiceReset = false;
+
         @race = null;
     }
 

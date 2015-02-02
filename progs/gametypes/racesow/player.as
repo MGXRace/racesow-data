@@ -491,7 +491,7 @@ class RS_Player
             ent.health -= ( frameTime * 0.001f );
 
         // repawn check
-        if( respawnTime != 0 && realTime > respawnTime )
+        if( respawnTime != 0 && realTime > respawnTime && ent.team != TEAM_SPECTATOR )
             respawn();
 
         // update highest speed

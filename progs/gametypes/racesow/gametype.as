@@ -323,7 +323,7 @@ class RS_Gametype
         {
             String vote = args.getToken( 0 );
             RS_Player @victim = RS_getPlayerFromArgs( args.getToken( 1 ) );
-            if( @victim !is null && ( vote == "mute" || vote == "vmute" ||
+            if( @victim !is null && victim.auth.admin && ( vote == "mute" || vote == "vmute" ||
                 vote == "kick" || vote == "kickban" || vote == "remove" ||
                 vote == "joinlock" || vote == "joinunlock" ) )
             {

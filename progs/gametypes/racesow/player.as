@@ -269,7 +269,7 @@ class RS_Player
         if( state == RS_STATE_PRACTICE ) 
         {
             // Only allow a single reset of timer in practice mode
-            if( practiceReset )
+            if( @race !is null && practiceReset )
                 return;
             practiceReset = true;
         }

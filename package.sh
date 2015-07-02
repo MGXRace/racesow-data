@@ -2,6 +2,7 @@
 INVENTORY=(
     gfx
     huds
+    models
     progs
     fonts
     ui

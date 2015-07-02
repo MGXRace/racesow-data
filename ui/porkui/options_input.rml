@@ -253,15 +253,7 @@
 						<keyselect bind="position prerace clear"/>
 						<br/>
 						
-						<div class="title">Toplist (Merged)</div>
-						<keyselect bind="topall"/>
-						<br/>
-
-						<div class="title">Toplist (New only)</div>
-						<keyselect bind="topold"/>
-						<br/>
-
-						<div class="title">Toplist (Old only)</div>
+						<div class="title">Toplist</div>
 						<keyselect bind="top"/>
 						<br/>
 						

@@ -12,7 +12,7 @@ if %MATCH_STATE <= 3
 		setScale #DEFAULTSCALE
 		setCursor #WIDTH, 550
 		setScale #NOSCALE
-		moveCursor -70, 0
+		moveCursor -80, 0
 		
 		if %RACE
 			setColor 0, 0, 0, 1

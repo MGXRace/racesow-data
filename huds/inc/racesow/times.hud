@@ -153,8 +153,8 @@ if %MATCH_STATE <= 3
 	if 1 == 1 & %SHOW_TIMER
 		// 10 seconds countdown
 		if %TIME_SELF < %TIME_BEST
-		if %TIME_BEST > 2000
-		if 1000 > %TIME_BEST - %TIME_SELF
+		if %TIME_BEST > 20000
+		if 10000 > %TIME_BEST - %TIME_SELF
 		setFontFamily "Hemi Head"
 		setFontSize 20
 		setScale #DEFAULTSCALE
@@ -162,13 +162,13 @@ if %MATCH_STATE <= 3
 		setScale #NOSCALE
 		moveCursor -42, 185
 		setAlign #LEFT, #TOP
-			moveCursor 0, -0.15 * %TIME_BEST - %TIME_SELF
-			if 500 > %TIME_BEST - %TIME_SELF
+			moveCursor 0, -0.015 * %TIME_BEST - %TIME_SELF
+			if 5000 > %TIME_BEST - %TIME_SELF
 				moveCursor -5, 0
 				setFontSize 22
 				setScale #NOSCALE
 			endif
-			if 200 > %TIME_BEST - %TIME_SELF
+			if 2000 > %TIME_BEST - %TIME_SELF
 				moveCursor -10, 0
 				setFontSize 26
 				setScale #NOSCALE

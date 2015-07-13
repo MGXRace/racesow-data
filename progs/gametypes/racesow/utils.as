@@ -17,13 +17,13 @@ String diffString( uint oldTime, uint newTime )
     int diffTime = newTime - oldTime;
     if ( oldTime == 0 )
     {
-        return "--:--.--";
+        return "--:--.---";
     }
-    else if ( diffTime >= 10 )
+    else if ( diffTime >= 1 )
     {
         return S_COLOR_RED + "+" + TimeToString( diffTime );
     }
-    else if ( diffTime <= -10 )
+    else if ( diffTime <= -1 )
     {
         return S_COLOR_GREEN + "-" + TimeToString( -diffTime );
     }
@@ -49,7 +49,6 @@ String TimeToString( uint time )
     milli -= min * 60000;
     sec = milli / 1000;
     milli -= sec * 1000;
-    milli = milli / 10;
 
     if ( min == 0 )
         minsString = "00";
@@ -66,8 +65,10 @@ String TimeToString( uint time )
         secsString = sec;
 
     if ( milli == 0 )
-        millString = "00";
+        millString = "000";
     else if ( milli < 10 )
+        millString = "00" + milli;
+    else if ( milli < 100 )
         millString = "0" + milli;
     else
         millString = milli;

@@ -321,7 +321,16 @@ class RS_Gametype
 
         if( cmdString == "callvotecheckpermission" )
         {
-            String vote = args.getToken( 0 );
+            String vote = args.getToken( 0 );			
+            
+            // Check if a normal player tried to call a disabled callvote
+            if( !player.auth.admin && ( vote == "kick" || vote == "kickban" || vote == "remove" ) )
+            {
+                G_PrintMsg( player.client.getEnt(), S_COLOR_YELLOW + "This callvote is disabled.\n" );
+                return false;
+            }
+            
+            // Check if the callvote is directed to a wellbehaving admin
             RS_Player @victim = RS_getPlayerFromArgs( args.getToken( 1 ) );
             if( @victim !is null && victim.auth.admin && ( vote == "mute" || vote == "vmute" ||
                 vote == "kick" || vote == "kickban" || vote == "remove" ||

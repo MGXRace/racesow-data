@@ -5,7 +5,7 @@ setColor 1, 1, 1, 0.2
 setFontFamily "Virtue"
 
 if %TIME_SELF != #NOTSET
-	if %TIME_SELF < 200
+	if %TIME_SELF < 2000
 		if %START_SPEED > 0
 			setFontSize 10
 			setAlign #CENTER, #BOTTOM

@@ -231,6 +231,18 @@
 			<a id="link-main" href="index.rml" class="styled-button">Main menu</a>
 			<button id="btn-return" command="" onclick="$onCmdButtonClick">Return to game</button>
 		</div>
+
+		<div id="menu-commands-rs" class="right" >
+			<a id="rs-binds" "index.rml" href="options_input_race.rml"  class="styled-button">MGXRace binds and settings</a>
+			<button id="rs-toplist-merged" command="cmd topall" onclick="$onCmdButtonClick">Show toplist (merged)</button>
+			<button id="rs-protectednick" command="cmd protectednick" onclick="$onCmdButtonClick">Update your name in toplists</button>
+			<br />
+			Visit us at http://MGXRace.net
+			<br />
+			<br />
+			Texture pack and tutorials available on:<br />
+			http://race.shishigami.eu
+		</div>
 	</div>
 </body>
 </rml>

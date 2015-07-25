@@ -1,0 +1,112 @@
+<rml>
+<head>
+	<title>options</title>
+	<link type="text/template" href="template.rml" />
+	<link rel="stylesheet" type="text/css" href="css/options/input.rcss" />
+	<script>
+		void onInputShow( Element @body, Event @evt )
+		{
+			onTemplateShow( body, evt );
+
+			ElementOptionsForm @optForm = body.getElementById("options-form");
+			if( @optForm == null ) 
+				return;
+
+
+			optForm.storeOptions();	
+
+			animationsOnShow();
+		}
+	</script>
+
+</head>
+<body template="porkui" onshow="$onInputShow">
+
+	<!-- divide the screen to two vertical contexts -->
+	<div id="sidebar">
+		<div id="sidebar2">
+			<!-- options navigation -->
+			<a href="#" onclick="animOpenMenu('options_input_race.rml');">Binds</a>
+			<a href="#" onclick="animOpenMenu('options_hud_race.rml');">HUD settings</a>
+			<a href="#" onclick="animOpenMenu('options_other_race.rml');">Other settings</a>
+		</div>
+	</div>
+	
+	<div id="leftside">
+		
+		<!-- input setup -->
+		<div id="binds">		
+				<optionsform id="options-form"></optionsform>	
+			<tabset>
+				<panel class="dropshadow">	
+				<tab>Binds</tab>
+					<div class="keys">
+
+						<br />
+						General binds
+						<br />
+						<br />
+
+						<div class="title">Restart race</div>
+						<keyselect bind="kill"/>
+						<br/>
+						
+						<div class="title">Set spawn position</div>
+						<keyselect bind="position prerace"/>
+						<br/>
+
+						<div class="title">Reset spawn position</div>
+						<keyselect bind="position prerace clear"/>
+						<br/>
+						
+						<div class="title">Toplist (Merged)</div>
+						<keyselect bind="topall"/>
+						<br/>
+
+						<div class="title">Toplist (New only)</div>
+						<keyselect bind="top"/>
+						<br/>
+
+						<div class="title">Toplist (Old only)</div>
+						<keyselect bind="topold"/>
+						<br/>
+
+						<div class="title">Give/use machinegun (MG)</div>
+						<keyselect bind="machinegun;use Machinegun"/>
+						<br />
+						
+						<br />
+						<hr class="nicehr"/>
+						<br />
+						
+						Practicemode binds
+						<br />
+						<br />
+
+						<div class="title">Practice mode toggle</div>
+						<keyselect bind="practicemode"/>
+						<br/>
+
+						<div class="title">Noclip (free-fly)</div>
+						<keyselect bind="noclip"/>
+						<br/>
+						
+						<div class="title">Save position</div>
+						<keyselect bind="position save"/>
+						<br/>
+
+						<div class="title">Get all weapons</div>
+						<keyselect bind="give all"/>
+						<br/>
+												
+						<br/>
+					</div>		
+				</panel>
+			</tabset>
+		</div>
+		
+		<!-- ******* main view end   ******* -->
+	</div>
+	
+</body>
+</rml>

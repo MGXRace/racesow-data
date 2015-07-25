@@ -1,9 +1,9 @@
 #modal-frame {
-	width: 360px;
+	width: 720px;
 }
 
 #modal-block-rel {
-	left: -212px;  /* - ( 0.5 * modal-frame width + padding-left ) */
+	left: -392px;  /* - ( 0.5 * modal-frame width + padding-left ) */
 	top: -250px;
 }
 
@@ -42,4 +42,18 @@
 */
 	font-size: 1.3em;
 	margin-bottom: 16px;
+}
+
+#menu-commands {
+	width: 50%;
+	text-align: center;
+	float: left;
+}
+#menu-commands-rs {
+	width: 50%;
+	text-align: center;
+}
+
+.right {
+	float: right;
 }

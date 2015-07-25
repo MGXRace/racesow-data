@@ -237,12 +237,12 @@
 			<button id="rs-toplist-merged" command="cmd topall" onclick="$onCmdButtonClick">Show toplist (merged)</button>
 			<button id="rs-protectednick" command="cmd protectednick" onclick="$onCmdButtonClick">Update your name in toplists</button>
 			<br />
-			Visit us at http://MGXRace.net
-			<br />
-			<br />
-			Texture pack and tutorials available on:<br />
-			http://race.shishigami.eu
-		</div>
+			Visit us at <a href="http://mgxrace.net" target="_browser">MGXRace.net</a>
+   			<br />
+   			<br />
+   			Texture pack and tutorials available on:
+   			<a href="http://race.shishigami.eu" target="_browser">race.shishigami.eu</a>
+   		</div>
 	</div>
 </body>
 </rml>

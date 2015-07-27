@@ -18,7 +18,7 @@ if %MATCH_STATE != 5
 		
 		moveCursor 3, 0
 		setSize 200, 10
-		setColor 0, 1, 0, 0.3
+		setColor 1 - %ACCELERATION / %MAX_ACCEL, %ACCELERATION / %MAX_ACCEL, 0, 0.3
 		drawBar %ACCELERATION, %MAX_ACCEL
 	endif
 endif

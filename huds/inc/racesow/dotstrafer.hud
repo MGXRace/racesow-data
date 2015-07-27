@@ -20,28 +20,8 @@ if %MATCH_STATE == 3
 				setColor 1, 0, 0, 0.8
 			endif
 			//good strafe: green
-			if 0.9 <= %ACCELERATION / %MAX_ACCEL
-				setColor 0, 1, 0, 0.8
-			endif
-			if 0.85 <= %ACCELERATION / %MAX_ACCEL
-				if 0.9 > %ACCELERATION / %MAX_ACCEL
-					setColor 0, 0.9, 0, 0.8
-				endif
-			endif
-			if 0.8 <= %ACCELERATION / %MAX_ACCEL
-				if 0.85 > %ACCELERATION / %MAX_ACCEL
-					setColor 0, 0.8, 0, 0.8
-				endif
-			endif
 			if 0.75 <= %ACCELERATION / %MAX_ACCEL
-				if 0.8 > %ACCELERATION / %MAX_ACCEL
-					setColor 0, 0.7, 0, 0.8
-				endif
-			endif
-			if 0.7 <= %ACCELERATION / %MAX_ACCEL
-				if 0.75 > %ACCELERATION / %MAX_ACCEL
-					setColor 0, 0.6, 0, 0.8
-				endif
+				setColor 0, %ACCELERATION / %MAX_ACCEL, 0, 0.8
 			endif
 
 			//standard dotstrafer

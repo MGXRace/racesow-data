@@ -237,7 +237,8 @@
 			<button id="rs-toplist-merged" command="cmd topall" onclick="$onCmdButtonClick">Show toplist (merged)</button>
 			<button id="rs-protectednick" command="cmd protectednick" onclick="$onCmdButtonClick">Update your name in toplists</button>
 			<br />
-			Visit us at <a href="http://mgxrace.net" target="_browser">MGXRace.net</a>
+			Visit our website for map lists, toplists, forums etc:<a href="http://mgxrace.net" target="_browser">MGXRace.net</a>
+
    			<br />
    			<br />
    			Texture pack and tutorials available on:

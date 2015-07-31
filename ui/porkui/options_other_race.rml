@@ -108,6 +108,18 @@
 						<div class="title">Show player names</div>
 						<input cvar="cg_showPlayerNames" type="checkbox" realtime="1"/>
 						<br/>
+
+						<br/>
+						<hr class="nicehr"/>
+						<br/>
+
+						<div class="title">Brightness (useful for dark maps)</div>
+						<input cvar="r_gamma" class="slider" type="range" min="0" max="3" step="0.1" value="1" realtime="1"/>
+						<br/>	
+
+						<div class="title">Fastsky (useful is the sky is bugged)</div>
+						<input cvar="r_fastsky" type="checkbox" realtime="1"/>
+						<br/>
 	
 
 						<br/>

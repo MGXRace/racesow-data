@@ -51,57 +51,61 @@ if %MATCH_STATE == 3
 		drawStringNum %SPEED
 		
 		//rocketaccel number
-		moveCursor 8, -8
 		setAlign #LEFT, #MIDDLE
 		setFontFamily "Virtue"
 		setFontSize 13
 		if %SHOW_BOOST_SPEED == 1
-		if %CHASING == #NOTSET
-			if 0 <= %ROCKETACCEL
-				setColor 0, 0, 0, 1
-				drawString "+ "
-				moveCursor 10, -2
-				drawStringNum %ROCKETACCEL
-				moveCursor -10, 2
-				drawString "+ "
-				moveCursor 10, 0
-				drawStringNum %ROCKETACCEL
-				moveCursor -8, -2
-				drawString "+ "
-				moveCursor 10, 0
-				drawStringNum %ROCKETACCEL
-				moveCursor -10, 2
-				drawString "+ "
-				moveCursor 10, 0
-				drawStringNum %ROCKETACCEL
-				moveCursor -11, -1
-				setColor 0, 1, 0, 1
-				drawString "+ " //space prevents warsow from using "+" as operator
-				moveCursor 10, 0
-				drawStringNum %ROCKETACCEL
-				moveCursor -15, 1
-			endif
+			if %CHASING == #NOTSET
+				if %WEAPON_ITEM == #ITEM_ROCKET_LAUNCHER
+					if 0 <= %ROCKETACCEL
+						moveCursor 6, -8
+						setColor 0, 0, 0, 1
+						drawString "+ "
+						moveCursor 10, -2
+						drawStringNum %ROCKETACCEL
+						moveCursor -10, 2
+						drawString "+ "
+						moveCursor 10, 0
+						drawStringNum %ROCKETACCEL
+						moveCursor -8, -2
+						drawString "+ "
+						moveCursor 10, 0
+						drawStringNum %ROCKETACCEL
+						moveCursor -10, 2
+						drawString "+ "
+						moveCursor 10, 0
+						drawStringNum %ROCKETACCEL
+						moveCursor -11, -1
+						setColor 0, 1, 0, 1
+						drawString "+ " //space prevents warsow from using "+" as operator
+						moveCursor 10, 0
+						drawStringNum %ROCKETACCEL
+						moveCursor -17, 9
+					endif
 
-			if 0 > %ROCKETACCEL
-				setColor 0, 0, 0, 1
-				moveCursor 3, -2
-				drawStringNum %ROCKETACCEL
-				moveCursor 0, 2
-				drawStringNum %ROCKETACCEL
-				moveCursor 2, -2
-				drawStringNum %ROCKETACCEL
-				moveCursor 0, 2
-				drawStringNum %ROCKETACCEL
-				moveCursor -1, -1
-				setColor 1, 0, 0, 1
-				drawStringNum %ROCKETACCEL
-				moveCursor -8, 1
+
+					if 0 > %ROCKETACCEL
+						moveCursor 6, -8
+						setColor 0, 0, 0, 1
+						moveCursor 3, -2
+						drawStringNum %ROCKETACCEL
+						moveCursor 0, 2
+						drawStringNum %ROCKETACCEL
+						moveCursor 2, -2
+						drawStringNum %ROCKETACCEL
+						moveCursor 0, 2
+						drawStringNum %ROCKETACCEL
+						moveCursor -1, -1
+						setColor 1, 0, 0, 1
+						drawStringNum %ROCKETACCEL
+						moveCursor -10, 9
+					endif
+				endif
 			endif
-		endif
 		endif
 
 		//jumpspeed number
-		moveCursor 7, 12
+		moveCursor 10, 4
 		if %SHOW_JUMP_INFO == 1
 		setColor 0, 0, 0, 1
 		drawStringNum %JUMPSPEED

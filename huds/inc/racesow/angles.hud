@@ -13,60 +13,62 @@ setColor 1, 1, 1, 1
 if %MATCH_STATE <= 3
 	if 0 == 2 & %SHOW_SPEED
 		if 1 & %SHOW_ANGLE_METER
-			//vertical bar
-			moveCursor -120, 0
-			setSize 2, 90
-			setAlign #LEFT, #MIDDLE
-			drawPicByName gfx/ui/white
+			if %WEAPON_ITEM != #ITEM_GUNBLADE
+				//vertical bar
+				moveCursor -120, 0
+				setSize 2, 90
+				setAlign #LEFT, #MIDDLE
+				drawPicByName gfx/ui/white
 
-				//move Cursor with mouse position
-			moveCursor 0, 0.0049 * %MOUSE_Y
+					//move Cursor with mouse position
+				moveCursor 0, 0.0049 * %MOUSE_Y
 
-				//horizontal bar
-			setSize 30, 2
-			setAlign #RIGHT, #MIDDLE
-			drawPicByName gfx/ui/white
+					//horizontal bar
+				setSize 30, 2
+				setAlign #RIGHT, #MIDDLE
+				drawPicByName gfx/ui/white
 
-				//angle number
-			setColor 0, 0, 0, 1
-			moveCursor -8, -1
-			setAlign #RIGHT, #TOP
-			drawStringNum 0.01 * %MOUSE_Y
-			setAlign #LEFT, #TOP
-			drawString "°"
-			moveCursor 2, 0
-			setAlign #RIGHT, #TOP
-			drawStringNum 0.01 * %MOUSE_Y
-			setAlign #LEFT, #TOP
-			drawString "°"
-			moveCursor 0, 2
-			setAlign #RIGHT, #TOP
-			drawStringNum 0.01 * %MOUSE_Y
-			setAlign #LEFT, #TOP
-			drawString "°"
-			moveCursor -2, 0
-			setAlign #RIGHT, #TOP
-			drawStringNum 0.01 * %MOUSE_Y
-			setAlign #LEFT, #TOP
-			drawString "°"
-			setColor 1, 1, 1, 1
-			moveCursor 1, -1
-			setAlign #RIGHT, #TOP
-			drawStringNum 0.01 * %MOUSE_Y
-			setAlign #LEFT, #TOP
-			drawString "°"
+					//angle number
+				setColor 0, 0, 0, 1
+				moveCursor -8, -1
+				setAlign #RIGHT, #TOP
+				drawStringNum 0.01 * %MOUSE_Y
+				setAlign #LEFT, #TOP
+				drawString "°"
+				moveCursor 2, 0
+				setAlign #RIGHT, #TOP
+				drawStringNum 0.01 * %MOUSE_Y
+				setAlign #LEFT, #TOP
+				drawString "°"
+				moveCursor 0, 2
+				setAlign #RIGHT, #TOP
+				drawStringNum 0.01 * %MOUSE_Y
+				setAlign #LEFT, #TOP
+				drawString "°"
+				moveCursor -2, 0
+				setAlign #RIGHT, #TOP
+				drawStringNum 0.01 * %MOUSE_Y
+				setAlign #LEFT, #TOP
+				drawString "°"
+				setColor 1, 1, 1, 1
+				moveCursor 1, -1
+				setAlign #RIGHT, #TOP
+				drawStringNum 0.01 * %MOUSE_Y
+				setAlign #LEFT, #TOP
+				drawString "°"
 
-			//description
-			if 0 == 4 & %SHOW_SPEED
-				moveCursor 7, 0
-				// old - "bitstream_7"
-				setFontFamily "Droid Sans"
-				setFontSize 10
-				setAlign #RIGHT, #BOTTOM
-				moveCursor 0, -3
-				setColor 1, 1, 1, 0.2
-				drawString "angle"
-				moveCursor 0, 3
+				//description
+				if 0 == 4 & %SHOW_SPEED
+					moveCursor 7, 0
+					// old - "bitstream_7"
+					setFontFamily "Droid Sans"
+					setFontSize 10
+					setAlign #RIGHT, #BOTTOM
+					moveCursor 0, -3
+					setColor 1, 1, 1, 0.2
+					drawString "angle"
+					moveCursor 0, 3
+				endif
 			endif
 		endif
 

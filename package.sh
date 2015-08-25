@@ -5,6 +5,7 @@ INVENTORY=(
     models
     progs
     fonts
+    scripts
     ui
     default.cfg
     rs_defaults.cfg

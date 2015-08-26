@@ -9,7 +9,7 @@ models/players/gatyapin/gatyapin_body_simple
 
 	if GLSL
 	{
-		cellshade models/players/gatyapin/gatyapin_body.tga env/celldouble - - models/players/gatyapin/gatyapin_body_colorpass.tga - env/celllight
+		celshade models/players/gatyapin/gatyapin_body.tga env/celldouble - - models/players/gatyapin/gatyapin_body_colorpass.tga - env/celllight
 	}
 	endif
 
@@ -107,8 +107,8 @@ models/players/gatyapin/gatyapin_body_fb
 
 	if GLSL
 	{
-		// <base> <cellshade> [diffuse] [decal] [entitydecal] [stripes] [celllight]
-		cellshade $whiteImage env/cellbright models/players/gatyapin/gatyapin_body_colorpass_fb.tga - - - env/celllight
+		// <base> <celshade> [diffuse] [decal] [entitydecal] [stripes] [celllight]
+		celshade $whiteImage env/cellbright models/players/gatyapin/gatyapin_body_colorpass_fb.tga - - - env/celllight
 		rgbGen entity
 	}
 	endif

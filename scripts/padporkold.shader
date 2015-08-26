@@ -9,7 +9,7 @@ models/players/padporkold/padpork_torso_simple
 
 	if GLSL
 	{
-		cellshade models/players/padporkold/padpork_torso.tga env/celldouble - - models/players/padporkold/padpork_torso_colorpass.tga - env/celllight
+		celshade models/players/padporkold/padpork_torso.tga env/celldouble - - models/players/padporkold/padpork_torso_colorpass.tga - env/celllight
 	}
 	endif
 
@@ -66,7 +66,7 @@ models/players/padporkold/padpork_legs_simple
 
 	if GLSL
 	{
-		cellshade models/players/padporkold/padpork_legs.tga env/celldouble - - models/players/padporkold/padpork_legs_colorpass.tga - env/celllight
+		celshade models/players/padporkold/padpork_legs.tga env/celldouble - - models/players/padporkold/padpork_legs_colorpass.tga - env/celllight
 	}
 	endif
 
@@ -124,7 +124,7 @@ models/players/padporkold/padpork_head_simple
 
 	if GLSL
 	{
-		cellshade models/players/padporkold/padpork_head.tga env/celldouble - - - - env/celllight
+		celshade models/players/padporkold/padpork_head.tga env/celldouble - - - - env/celllight
 	}	
 	endif
 
@@ -180,8 +180,8 @@ models/players/padporkold/padpork_torso_fb
 
 	if GLSL
 	{
-		// <base> <cellshade> [diffuse] [decal] [entitydecal] [stripes] [celllight]
-		cellshade $whiteImage env/cellbright models/players/padporkold/padpork_torso_colorpass_fb.tga - - - env/celllight
+		// <base> <celshade> [diffuse] [decal] [entitydecal] [stripes] [celllight]
+		celshade $whiteImage env/cellbright models/players/padporkold/padpork_torso_colorpass_fb.tga - - - env/celllight
 		rgbGen entity
 	}
 	endif
@@ -224,8 +224,8 @@ models/players/padporkold/padpork_legs_fb
 
 	if GLSL
 	{
-		// <base> <cellshade> [diffuse] [decal] [entitydecal] [stripes] [celllight]
-		cellshade $whiteImage env/cellbright models/players/padporkold/padpork_legs_colorpass_fb.tga - - - env/celllight
+		// <base> <celshade> [diffuse] [decal] [entitydecal] [stripes] [celllight]
+		celshade $whiteImage env/cellbright models/players/padporkold/padpork_legs_colorpass_fb.tga - - - env/celllight
 		rgbGen entity
 	}
 	endif
@@ -268,8 +268,8 @@ models/players/padporkold/padpork_head_fb
 
 	if GLSL
 	{
-		// <base> <cellshade> [diffuse] [decal] [entitydecal] [stripes] [celllight]
-		cellshade $whiteImage env/cellbright models/players/padporkold/padpork_head_colorpass_fb.tga - - - env/celllight
+		// <base> <celshade> [diffuse] [decal] [entitydecal] [stripes] [celllight]
+		celshade $whiteImage env/cellbright models/players/padporkold/padpork_head_colorpass_fb.tga - - - env/celllight
 		rgbGen entity
 	}
 	endif

@@ -74,6 +74,10 @@
 						<div class="title">Give/use machinegun (MG)</div>
 						<keyselect bind="machinegun;use Machinegun"/>
 						<br />
+
+						<div class="title">Toggle player visibility</div>
+						<keyselect bind="ghostmodetoggle"/>
+						<br />
 						
 						<br />
 						<hr class="nicehr"/>

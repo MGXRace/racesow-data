@@ -8,6 +8,9 @@ INVENTORY=(
     scripts
     ui
     default.cfg
+    playervisibilityfull.cfg
+    playervisibilitynormal.cfg
+    playervisibilityoff.cfg
     rs_defaults.cfg
 )
 

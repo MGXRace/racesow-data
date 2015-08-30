@@ -20,7 +20,7 @@ if %MATCH_STATE != 5
 				moveCursor -2, 0
 				drawstring "PREJUMPED!"
 				moveCursor 1, 1
-				setColor 255, 0, 0, 1
+				setColor 1, 0, 0, 1
 				drawstring "PREJUMPED!"
 			endif
 		endif
@@ -46,7 +46,7 @@ if %MATCH_STATE != 5
 				moveCursor -2, 0
 				drawstring "PRESHOT!"
 				moveCursor 1, 1
-				setColor 255, 0, 0, 1
+				setColor 1, 0, 0, 1
 				drawstring "PRESHOT!"
 			endif
 		endif
@@ -73,7 +73,7 @@ if %MATCH_STATE != 5
 				moveCursor -2, 0
 				drawstring "PREJUMPED!"
 				moveCursor 1, 1
-				setColor 255, 0, 0, 1
+				setColor 1, 0, 0, 1
 				drawstring "PREJUMPED!"
 			endif
 		endif
@@ -98,9 +98,56 @@ if %MATCH_STATE != 5
 		moveCursor -2, 0
 		drawstring "Practicing"
 		moveCursor 1, 1
-		setColor 0, 125, 125, 1
+		setColor 0, 1, 1, 1
 		drawstring "Practicing"
 	endif
 endif
 
 
+if %PRESHOT_STATE == 1
+	if %RACE_STATE == 1
+		setScale #DEFAULTSCALE
+		setCursor 100, 500
+		setScale #NOSCALE
+		setColor 1, 1, 1, 1
+		setFontFamily "Hemi Head"
+		setFontSize 22
+		setAlign #MIDDLE, #CENTER
+		moveCursor -1, -79
+		setColor 0, 0, 0, 0.3
+		drawstring "Preshot warning"
+		moveCursor 2, 0
+		drawstring "Preshot warning"
+		moveCursor 0, -2
+		drawstring "Preshot warning"
+		moveCursor -2, 0
+		drawstring "Preshot warning"
+		moveCursor 1, 1
+		setColor 1, 1, 0, 1
+		drawstring "Preshot warning"
+	endif
+endif
+
+if %PREJUMP_STATE == 1
+	if %RACE_STATE == 1
+		setScale #DEFAULTSCALE
+		setCursor 100, 520
+		setScale #NOSCALE
+		setColor 1, 1, 1, 1
+		setFontFamily "Hemi Head"
+		setFontSize 22
+		setAlign #MIDDLE, #CENTER
+		moveCursor -1, -79
+		setColor 0, 0, 0, 0.3
+		drawstring "Prejump warning"
+		moveCursor 2, 0
+		drawstring "Prejump warning"
+		moveCursor 0, -2
+		drawstring "Prejump warning"
+		moveCursor -2, 0
+		drawstring "Prejump warning"
+		moveCursor 1, 1
+		setColor 1, 1, 0, 1
+		drawstring "Prejump warning"
+	endif
+endif

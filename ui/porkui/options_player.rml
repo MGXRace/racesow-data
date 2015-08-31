@@ -22,9 +22,6 @@
 			@f = body.getElementById("hud-options-form");
 			f.storeOptions();
 
-			@f = body.getElementById("misc-options-form");
-			f.storeOptions();
-
 			//==== model ====
 			ModelSetup setup( "model-view", "model-skin", "model-color", "model", "cg_teamALPHAmodel", "skin", "cg_teamALPHAskin", "color", "cg_teamALPHAcolor", false );
 			setup.InitializeModelSetup( @body );
@@ -46,6 +43,10 @@
 			<a href="#" onclick="animOpenMenu('options_video.rml');">Video</a>
 			<a href="#" onclick="animOpenMenu('options_audio.rml');">Audio</a>
 			<a href="#" onclick="animOpenMenu('options_input.rml');">Input</a>
+			<br />
+			<hr class="nicehr"/>
+			<br />
+			<a href="#" onclick="animOpenMenu('options_input_race.rml');">MGXRace settings</a>
 		</div>
 	</div>
 	
@@ -106,82 +107,8 @@
 				<tab class="side-tab">HUD</tab>		
 				<panel class="dropshadow">
 					<optionsform id="hud-options-form" onsubmit="$OptionsForm_OnSubmit">
-
-						<div class="title">FOV</div>
-						<input cvar="fov" type="text" class="short text" value="100" realtime="1"/>
-						<br/>
-						
-						<div class="title">Speed meter</div>
-						<select cvar="cg_showSpeed" realtime="1">
-							<option value="1" selected>new style</option>
-							<option value="2">old style</option>
-							<option value="0">none</option>
-						</select>
-						<br/>
-
-						<div class="title">Show "guwashi" speed meter</div>
-						<input cvar="cg_showGuwashiSpeed" type="checkbox" realtime="1"/>
-						<br/>
-
-						<div class="title">Show strafe helpers</div>
-						<select cvar="cg_strafeHUD" realtime="1">
-							<option value="1" selected>standard</option>
-							<option value="2">minimalistic</option>
-							<option value="0">off</option>
-						</select>
-						<br/>
-
-						<div class="title">Show angle meter</div>
-						<select cvar="cg_showAngleMeter" realtime="1">
-							<option value="3" selected>vertical and horizontal</option>
-							<option value="1">vertical</option>
-							<option value="2">horizontal</option>
-							<option value="0">none</option>
-						</select>
-						<br/>
-
-						<div class="title">Show acceleration bar</div>
-						<input cvar="cg_showAcceleration" type="checkbox" realtime="1"/>
-						<br/>
-
-						<div class="title">Show boost speed</div>
-						<input cvar="cg_showBoostSpeed" type="checkbox" realtime="1"/>
-						<br/>
-
-						<div class="title">Show jump speed</div>
-						<input cvar="cg_showJumpInfo" type="checkbox" realtime="1"/>
-						<br/>
-
-						<div class="title">Show pressed keys</div>
-						<select cvar="cg_showPressedKeys" realtime="1">
-							<option value="2" selected>only while spectating</option>
-							<option value="1">always</option>
-							<option value="0">never</option>
-						</select>
-						<br/>
-						
-						<div class="title">Show FPS</div>
-						<input cvar="cg_showFps" type="checkbox" realtime="1"/>
-						<br/>
-
-						<div class="title">Show help</div>
-						<input cvar="cg_showHelp" type="checkbox" realtime="1"/>
-						<br/>
-				
-					
-						<br/>
-						<hr class="nicehr"/>
-
 						<div class="title">Crosshair</div>
 						<dataspinner id="crosshair" cvar="cg_crosshair" source="crosshair.list" fields="image" valuefield="index" formatter="crosshair" realtime="1"/>
-						<br/>
-
-						<div class="title">Show gun model</div>
-						<input cvar="cg_gun" type="checkbox" realtime="1"/>
-						<br/>
-
-						<div class="title">Gun alpha</div>
-						<input cvar="cg_gun_alpha" class="slider" type="range" min="0" max="1" step="0.1" value="0" realtime="1"/>
 						<br/>
 
 						<div class="title">Weapon handedness</div>
@@ -189,67 +116,44 @@
 							<option value="0" selected>right</option>
 							<option value="1">left</option>
 							<option value="2">center</option>
-						</select>
-						<br/>
-
-						<div class="title">Autoswitch to picked up weapons</div>
-						<select cvar="cg_weaponAutoswitch" realtime="1">
-							<option value="0">never</option>
-							<option value="1">if you only have gunblade</option>
-							<option value="2" selected>if stronger than your strongest</option>
-							<option value="3">if not in inventory</option>
-						</select>
-						<br/>
-					</optionsform>
-				</panel>
-
-				<tab class="side-tab">Misc</tab>		
-				<panel class="dropshadow">
-					<optionsform id="misc-options-form" onsubmit="$OptionsForm_OnSubmit">
-						<div class="title">Demos to keep per map</div>
-						<select cvar="rs_autoRaceDemo" realtime="1">
-							<option value="1" selected>only your best run</option>
-							<option value="3">your 3 best runs</option>
-							<option value="5">your 5 best runs</option>
-							<option value="-1">all personal bests</option>
-							<option value="-2">all finished runs</option>
-							<option value="0">none</option>
-						</select>
-						<br/>
-
-						<div class="title">Race reports in console</div>
-						<input cvar="rs_raceReport" type="checkbox" realtime="1"/>
-						<br/>
-
-
-						<div class="title">Checkpoint reference setting</div>
-						<select cvar="rs_diffref" realtime="1">
-							<option value="personal" selected>Personal Best</option>
-							<option value="server">Server Best</option>
-							<option value="world">World record</option>
-						</select>
-						<br/>
-
-						<br/>
+						</select>						
+					
 						<hr class="nicehr"/>
 						<br/>
 
-						<div class="title">Race ghosts</div>
-						<input cvar="cg_raceGhosts" type="checkbox" realtime="1"/>
+						<div class="title">FOV</div>
+						<input cvar="fov" type="text" class="short text" value="100" realtime="1"/>
+						<br/>
+					
+						<div class="title">FOV while using zoom</div>
+						<input cvar="zoomfov" type="text" class="short text" value="40" realtime="1"/>
+						<br/>
+						
+						<hr class="nicehr" />
+						<br/>
+						
+						<div class="title">Simple items</div>
+						<input cvar="cg_simpleItems" type="checkbox" realtime="1"/>
 						<br/>
 
-						<div class="title">Race ghosts alpha</div>
-						<input cvar="cg_raceGhostsAlpha" class="slider" type="range" min="0" max="1" step="0.1" value="0.5" realtime="1"/>
-						<br/>		
-
-						<div class="title">Race ghosts volume</div>
-						<input cvar="cg_raceGhostsVolume" class="slider" type="range" min="0" max="1" step="0.1" value="0.3" realtime="1"/>
-						<br/>	
-
-						<div class="title">Show player names</div>
-						<input cvar="cg_showPlayerNames" type="checkbox" realtime="1"/>
+						<div class="title">Show help</div>
+						<input cvar="cg_showHelp" type="checkbox" realtime="1"/>
 						<br/>
 
+						<div class="title">Show gun model</div>
+						<input cvar="cg_gun" type="checkbox" realtime="1"/>
+						<br/>
+						
+						<div class="title">Gun alpha</div>
+						<input cvar="cg_gun_alpha" class="slider" type="range" min="0" max="1" step="0.1" value="0" realtime="1"/>
+						<br/>
+						
+						<div class="title">Show FPS counter</div>
+						<input cvar="cg_showFps" type="checkbox" realtime="1"/>
+						<br/>
+						
+						<div class="title">Show damage indicator</div>
+						<input cvar="cg_damage_indicator" type="checkbox" realtime="1"/>
 						<br/>
 					</optionsform>
 				</panel>

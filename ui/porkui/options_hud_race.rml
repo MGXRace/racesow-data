@@ -42,9 +42,13 @@
 	<div id="sidebar">
 		<div id="sidebar2">
 			<!-- options navigation -->
-			<a href="#" onclick="animOpenMenu('options_input_race.rml');">Binds</a>
+			<a href="#" onclick="animOpenMenu('options_input_race.rml');">MGXRace Binds</a>
 			<a href="#" onclick="animOpenMenu('options_hud_race.rml');">HUD settings</a>
 			<a href="#" onclick="animOpenMenu('options_other_race.rml');">Other settings</a>
+			<br />
+			<hr class="nicehr"/>
+			<br />
+			<a href="#" onclick="animOpenMenu('options_player.rml');">Warsow settings</a>
 		</div>
 	</div>
 	

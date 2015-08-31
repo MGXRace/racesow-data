@@ -98,6 +98,10 @@
 			<a href="#" onclick="animOpenMenu('options_video.rml');">Video</a>
 			<a href="#" onclick="animOpenMenu('options_audio.rml');">Audio</a>
 			<a href="#" onclick="animOpenMenu('options_input.rml');">Input</a>
+			<br />
+			<hr class="nicehr"/>
+			<br />
+			<a href="#" onclick="animOpenMenu('options_input_race.rml');">MGXRace settings</a>
 		</div>
 	</div>
 	
@@ -237,50 +241,6 @@
 						<keyselect bind="use Electrobolt"/>
 						<br />
 					</div>
-				</panel>
-				<tab>Race-specific keys</tab>
-				<panel class="dropshadow">
-					<div class="keys">
-						<div class="title">Restart race</div>
-						<keyselect bind="kill"/>
-						<br/>
-						
-						<div class="title">Set spawn position</div>
-						<keyselect bind="position prerace"/>
-						<br/>
-						
-						<div class="title">Reset spawn position</div>
-						<keyselect bind="position prerace clear"/>
-						<br/>
-						
-						<div class="title">Toplist (Merged)</div>
-						<keyselect bind="topall"/>
-						<br/>
-
-						<div class="title">Toplist (New only)</div>
-						<keyselect bind="top"/>
-						<br/>
-
-						<div class="title">Toplist (Old only)</div>
-						<keyselect bind="topold"/>
-						<br/>
-						
-						<br />
-						<hr class="nicehr"/>
-						<br />
-						
-						<div class="title">Practice mode</div>
-						<keyselect bind="practicemode"/>
-						<br/>
-
-						<div class="title">Noclip (fly through walls)</div>
-						<keyselect bind="noclip"/>
-						<br/>
-						
-						<div class="title">Save position (practicemode)</div>
-						<keyselect bind="position save"/>
-						<br/>
-					</div>				
 				</panel>
 			</tabset>
 		</div>

@@ -3,7 +3,7 @@
 	<title>options</title>
 	<link type="text/template" href="template.rml" />
 </head>
-<body template="porkui" onshow="window.location = 'options_player.rml';">
+<body template="porkui" onshow="window.location = 'options_input_race.rml';">
 	<!-- divide the screen to two vertical contexts -->
 	<div id="sidebar">
 		<div id="sidebar2">

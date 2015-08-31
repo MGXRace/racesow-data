@@ -107,7 +107,7 @@ endif
 if %PRESHOT_STATE == 1
 	if %RACE_STATE == 1
 		setScale #DEFAULTSCALE
-		setCursor 100, 500
+		setCursor 60, 350
 		setScale #NOSCALE
 		setColor 1, 1, 1, 1
 		setFontFamily "Hemi Head"
@@ -131,7 +131,7 @@ endif
 if %PREJUMP_STATE == 1
 	if %RACE_STATE == 1
 		setScale #DEFAULTSCALE
-		setCursor 100, 520
+		setCursor 60, 370
 		setScale #NOSCALE
 		setColor 1, 1, 1, 1
 		setFontFamily "Hemi Head"

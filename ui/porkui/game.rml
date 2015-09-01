@@ -1,10 +1,29 @@
 <rml>
 <head>
 	<title>game</title>
+	<link rel="stylesheet" type="text/css" href="css/gamemenu.rcss" />
 	<link type="text/template" href="template_ingame.rml" />
 	<script>
 		Element @gamemenu;
 		Element @gamecommands;
+
+		// racesow
+		int lastPosSpeed;
+		String previousSpeed;
+		const int MAX_POS_SPEED = 1000000;
+
+		/* Source: libsrcs/libRocket/libRocket/Include/Rocket/Core/Input.h */
+		const int KI_NUMPAD0 = 51;
+		const int KI_NUMPAD1 = 52;
+		const int KI_NUMPAD2 = 53;
+		const int KI_NUMPAD3 = 54;
+		const int KI_NUMPAD4 = 55;
+		const int KI_NUMPAD5 = 56;
+		const int KI_NUMPAD6 = 57;
+		const int KI_NUMPAD7 = 58;
+		const int KI_NUMPAD8 = 59;
+		const int KI_NUMPAD9 = 60;
+		// !racesow
 
 		void onGameLoad( Element @body, Event @evt )
 		{
@@ -12,6 +31,13 @@
 
 			@gamemenu = body.getElementById( 'menu-ingame' );
 			@gamecommands = gamemenu.getElementById( 'menu-commands' );
+
+			// racesow
+			lastPosSpeed = 0;
+			ElementFormControl @txt = body.getElementById( 'pos-speed' );
+			txt.value = StringUtils::FormatInt( lastPosSpeed, "", 1 );
+			previousSpeed = txt.value;
+			// !racesow
 		}
 
 		void onCmdButtonClick( Element @self, Event @evt )
@@ -142,7 +168,15 @@
 				}
 			}
 			else {
+				// racesow
+				Element @inputfield = gamemenu.getElementById( 'pos-speed' );
+				Element @info = gamemenu.getElementById( 'info-join-game' );
+				// !racesow
 				if( team == specTeam ) {
+					// racesow - hide input box when spectating
+					info.css( 'display', '' );
+					inputfield.css( 'display', 'none' );
+					// !racesow
 
 					if( isTeamBased ) {
 						Element @join_btn_any = gamemenu.getElementById( 'btn-join' );
@@ -170,6 +204,11 @@
 					}
 				}
 				else {
+					// racesow - show buttons and focussed input box when ingame
+					info.css( 'display', 'none' );
+					inputfield.css( 'display', '' );
+					inputfield.focus();
+					// racesow
 					showMenuButton( 'btn-spectate' );
 				}
 			}
@@ -194,13 +233,85 @@
 
 			animationsOnShow();
 		}
+
+		// racesow
+		/**
+		* Update the player's position speed (used in practicemode) through the
+		* command 'position speed x' with x being the new speed
+		*/
+		void updatePosSpeed( )
+		{
+			ElementFormControl @txt = gamemenu.getElementById( 'pos-speed' );
+			int curPosSpeed;
+
+			if( @txt == null )
+				return;
+
+			// if the inputbox is empty, put a placeholder 0
+			if ( txt.value == "" )
+				txt.value = "0";
+			curPosSpeed = txt.value.toInt(); // cast to int to strip non-numeric chars
+			
+			// take care of int overflow
+			if ( curPosSpeed > MAX_POS_SPEED ) {
+				txt.value = previousSpeed;
+				return;
+			}
+			
+			// remove the placeholder 0 if it's at the end
+			if ( previousSpeed == "0" && txt.value.length() > 1 && txt.value.substr( 0, 1 ) != "0" )
+			{
+				txt.value = txt.value.substr( 0, txt.value.length() - 1 );
+				curPosSpeed = txt.value.toInt();
+			}
+			
+			if ( lastPosSpeed == curPosSpeed )
+			{
+				txt.value = StringUtils::FormatInt( txt.value, "", 1 );
+				previousSpeed = txt.value;
+				return;  // don't exec cmd when nothing changed
+			}
+			lastPosSpeed = curPosSpeed;
+			game.exec( "cmd position speed " + curPosSpeed + '\n' );
+			txt.value = StringUtils::FormatInt( lastPosSpeed, "", 1 );
+			previousSpeed = txt.value;
+		}
+
+		/**
+		 * Change the player's position speed by a given amount, then update it
+		 */
+		void changePosSpeed( int change )
+		{
+			if ( change == 0 )
+				return;
+			ElementFormControl @txt = gamemenu.getElementById( 'pos-speed' );
+			int newPosSpeed = lastPosSpeed + change;
+			if ( newPosSpeed < 0 )
+				newPosSpeed = 0;
+			txt.value = StringUtils::FormatInt( newPosSpeed, "", 1 );
+			updatePosSpeed( );
+		}
+		
+		/**
+		* Filter out numpad keypresses to stop propagation of Home/End events
+		*/
+		void ProcessKeyPress( Event @evt, Element @elem )
+		{
+			String key = evt.getParameter("key_identifier", "DUNNO");
+			if (key >= KI_NUMPAD0 && key <= KI_NUMPAD9)
+				evt.stopPropagation();
+		}
+		// !racesow
+		
 	</script>
 </head>
 <body template="porkui_ingame" onload="$onGameLoad" onshow="$onGameShow">
 	<div id="menu-ingame">
+		<!-- racesow -->
 		<div id="mgx-logo" >
 			<img src="../../gfx/logo/mgx_logo.tga" />
 		</div>
+		<!-- !racesow -->
 		<field id="menu-header1" formatter="colorcode" />
 		<field id="menu-header2" formatter="colorcode" />
 
@@ -231,7 +342,8 @@
 			<a id="link-main" href="index.rml" class="styled-button">Main menu</a>
 			<button id="btn-return" command="" onclick="$onCmdButtonClick">Return to game</button>
 		</div>
-
+		
+		<!-- racesow -->
 		<div id="menu-commands-rs" class="right" >
 			<a id="rs-binds" "index.rml" href="options_input_race.rml"  class="styled-button">MGXRace binds and settings</a>
 			<button id="rs-toplist-merged" command="cmd topall" onclick="$onCmdButtonClick">Show toplist (merged)</button>
@@ -243,7 +355,22 @@
    			<br />
    			Texture pack and tutorials available on:
    			<a href="http://race.shishigami.eu" target="_browser">race.shishigami.eu</a>
+			
+   			<br />
+			<p id="bla" class="title">Practicemode speed</p>
+			<!-- only the inputbox -->
+			<input id="pos-speed" type="text" onkeydown="ProcessKeyPress(event, self);" onchange="updatePosSpeed();" value="0" min="0" max="1000000" size="4" readonly />
+			<p id="info-join-game">Join the game to change this setting.</p>
+			<!-- inputbox accompanied with -/+ buttons. Leaving for future reference -->
+			<!--<div id="pos-speed-buttons">
+				<button onclick="changePosSpeed(-5);">-5</button>
+				<button onclick="changePosSpeed(-1);">-1</button>
+				<input id="pos-speed" type="text" onkeydown="ProcessKeyPress(event, self);" onchange="updatePosSpeed();" value="0" min="0" max="1000000" size="4" readonly />
+				<button onclick="changePosSpeed(1);">+1</button>
+				<button onclick="changePosSpeed(5);">+5</button>
+			</div>-->
    		</div>
+		<!-- !racesow -->
 	</div>
 </body>
 </rml>

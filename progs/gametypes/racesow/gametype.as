@@ -344,7 +344,7 @@ class RS_Gametype
             return true;
         }
 
-        if( RS_CommandByName.get( cmdString, @command ) )
+        if( RS_CommandByName.get( cmdString.tolower(), @command ) )
         {
             if( !command.validate( @player, args, argc ) )
                 return false;

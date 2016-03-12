@@ -49,7 +49,7 @@ racesow/gametype.as;
 racesow/position.as;
 racesow/player.as;
 racesow/map.as;
-racesow/race.as;
+racesow/rs_race.as;
 racesow/main.as;
 
-racesow/gametypes/race.as;
+racesow/gametypes/rs_race.as;

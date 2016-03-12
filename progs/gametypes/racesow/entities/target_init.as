@@ -34,12 +34,12 @@ void target_init_use( Entity @self, Entity @other, Entity @activator )
     // weapons
     if ( ( self.spawnFlags & 4 ) == 0 )
     {
-        for ( int i = WEAP_GUNBLADE; i < WEAP_TOTAL; i++ )
+        for ( i = WEAP_GUNBLADE; i < WEAP_TOTAL; i++ )
         {
             activator.client.inventorySetCount( i, 0 );
         }
 
-        for ( int i = AMMO_WEAK_GUNBLADE; i < AMMO_TOTAL; i++ )
+        for ( i = AMMO_WEAK_GUNBLADE; i < AMMO_TOTAL; i++ )
         {
             activator.client.inventorySetCount( i, 0 );
         }

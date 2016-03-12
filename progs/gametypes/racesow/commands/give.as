@@ -47,7 +47,7 @@ class RS_CMD_Give : RS_Command
     			String items = "";
     			for( int i = 0; i < AMMO_TOTAL; i++ )
     			{
-    				Item @item = @G_GetItem( i );
+    				@item = @G_GetItem( i );
     				if( @item is null || !item.isPickable() )
     					continue;
 

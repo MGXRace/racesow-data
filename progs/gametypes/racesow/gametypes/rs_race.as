@@ -114,7 +114,7 @@ class RS_GT_Race : RS_Gametype
             @ent = @team.ent( i );
             RS_Player @player = @RS_getPlayer( ent );
 
-            int playerID = ( ent.isGhosting() && ( match.getState() == MATCH_STATE_PLAYTIME ) ) ? -( ent.get_playerNum() + 1 ) : ent.get_playerNum();
+            playerID = ( ent.isGhosting() && ( match.getState() == MATCH_STATE_PLAYTIME ) ) ? -( ent.get_playerNum() + 1 ) : ent.get_playerNum();
 
             String playerState;
             switch( player.state )

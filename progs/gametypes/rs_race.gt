@@ -2,6 +2,7 @@
 /shared/files.as;
 /shared/utils.as;
 
+generic/quickmenu.as;
 generic/items.as;
 generic/matchstates.as;
 

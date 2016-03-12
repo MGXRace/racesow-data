@@ -113,9 +113,9 @@ class RS_Gametype
             else if( ent.classname == "target_give" )
             {
                 array<Entity@> targets = ent.findTargets();
-                for( uint i = 0; i < targets.length(); i++ )
+                for( uint j = 0; j < targets.length(); j++ )
                 {
-                    Entity @target = targets[i];
+                    Entity @target = targets[j];
                     if( @target is null )
                     {
                         G_Print( S_COLOR_ORANGE  + "Warning: " + S_COLOR_WHITE + "target_give is missing targets\n" );

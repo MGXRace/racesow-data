@@ -1,3 +1,6 @@
+
+Cvar cm_mapHeader( "cm_mapHeader", "", CVAR_ARCHIVE);
+
 /**
  * Racesow Gametype interface
  * Base class that all race gametypes should inherit from.
@@ -42,7 +45,16 @@ class RS_Gametype
         gametype.version = "1.1.0";
         gametype.author = "inc.mgxrace.net";
 
-        gametype.spawnableItemsMask = ( IT_WEAPON | IT_ARMOR | IT_HEALTH );
+        // Allow pickups and ammo for qfusion maps
+        if ( cm_mapHeader == "FBSP" )
+        {
+            gametype.spawnableItemsMask = ( IT_WEAPON | IT_AMMO | IT_ARMOR | IT_POWERUP | IT_HEALTH );
+        }
+        else
+        {
+            gametype.spawnableItemsMask = ( IT_WEAPON | IT_ARMOR | IT_HEALTH );
+        }
+
         if ( gametype.isInstagib )
             gametype.spawnableItemsMask &= ~uint(G_INSTAGIB_NEGATE_ITEMMASK);
 

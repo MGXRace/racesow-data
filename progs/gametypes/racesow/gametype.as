@@ -46,7 +46,7 @@ class RS_Gametype
         gametype.author = "inc.mgxrace.net";
 
         // Allow pickups and ammo for qfusion maps
-        if ( cm_mapHeader == "FBSP" )
+        if ( cm_mapHeader.string == "FBSP" )
         {
             gametype.spawnableItemsMask = ( IT_WEAPON | IT_AMMO | IT_ARMOR | IT_POWERUP | IT_HEALTH );
         }
